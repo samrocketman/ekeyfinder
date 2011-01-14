@@ -1,0 +1,124 @@
+                        Magical Jelly Bean Keyfinder v2.0.8
+
+Frequently Asked Questions                                      March 29th, 2009
+
+                  http://sourceforge.net/projects/keyfinder/
+--------------------------------------------------------------------------------
+
+Q: Can I retrieve the product key from the Windows CD?
+A: No. Product keys are not stored on CD's themselves. When you enter your key
+   while installing, it's checked against an algorithm to verify that the key is
+   valid. If you have an OEM CD from a company (ie. Dell, HP, Compaq) then you
+   can look in a few places. Search the CD for the following files: WINNT.SIF,
+   UNATTEND.TXT or OOBEINFO.INI. These SLP keys won't be of use on their own.
+
+
+Q: How do I change the Windows Product key for XP, Vista or Windows 7?
+A: We have removed the code that supported this after Microsoft released an official app
+   for changing the key in Windows XP. You can find it and further instructions
+   at the following link: http://www.microsoft.com/genuine/selfhelp/PKUInstructions.aspx
+
+
+Q: What if the serial number I retrieve does not work?
+A: Keyfinder works 100% of the time. The key is encrypted using a algorithm and
+   will always reverse properly. Issues arise when you are attempting to use a
+   Windows XP Retail key with a Windows XP OEM CD. Same applies for combining
+   upgrade, retail and OEM versions as well as various service packs. Please
+   note if your system came preinstalled from the OEM and you have not
+   reinstalled XP, the Product key will not likely be valid. OEM's use a SLP key
+   to image the systems and this key will not work for reinstalling.
+   SLP stands for System Locked Pre-install.
+
+
+Q: I don't have product key. Will your program generate one for me?
+A: No. The Keyfinder is not a key generator. It reads the registry and
+   extracts the key that was used to install Windows.
+
+
+Q: Why doesn't the product key returned match the one on my sticker?
+A: If you purchased your PC with Windows already installed from a large 
+   manufacturer such as Dell or HP, it's likely that Windows was installed using
+   an OEM SLP key instead of the actual key for your PC. This saves them (and
+   you) money because it's much more efficient for these large companies to
+   install Windows once and then clone the drive.
+
+
+Q: Does the Keyfinder contain any viruses, trojans, malware, or spyware?
+A: No. I wrote this program for myself, and it just so happened that other
+   people can use it as well. I absolutely loathe spyware, and I would never
+   intentionally install it on anyone's PC. Some antivirus companies have 
+   began blocking their users from software that they consider grayware, and
+   unfortunately the Keyfinder 1.x was included in that because 
+   "Its information gathering capability can be used by a malicious user for
+   malevolent purposes." Please see the Trendmicro write up about it.
+
+
+Q: Can I retrieve the product key from a non-booting Windows installation?
+A: As long as both Windows versions are 2000, XP, 2003, Vista, 2008 or Windows 7,
+   you can use the Load Hive function. You will have to slave the drive and
+   point the Keyfinder to the non-booting Windows directory. e.g. H:\WINDOWS
+
+
+Q: Why did the hive load fail?
+1) Are both Windows versions the same. (Windows 2000, XP, 2003, Vista, 2008, or Windows 7)
+2) Are you pointing it to the dead Windows directory? It will fail if you try
+   to run it on your currently running Windows directory.
+3) Are you running the Keyfinder with Administrator rights? Right click on
+   the Keyfinder and click "Run As" and put in the administrator information.
+4) I think when UAC is enabled in VISTA, registry access is also redirected
+   (Registry Virtualization is enabled) so you are no longer at the root level
+   in the registry. As you can only loads hives at the root level then that may
+   be the reason why the load fails not because of a priviledge error.
+
+
+Q: Do you support Apple OS X?
+A: No. There is a fair chance of having a version in the future.
+
+
+Q: Does keyfinder work with Volume License Keys (VLK) or Multiple Activation
+   Keys (MAK)?
+A: Yes when you run keyfinder it will display the Volume
+   License Key (VLK) of all versions Windows, except for Vista. Microsoft
+   changed the way VLKs are handled on the latest operating system.
+   Windows Vista VLKs have been replaced with Multiple Activation Keys (MAK)
+   that either activate copies through a local Key Management Server (KMS), 
+   which in turn reports back license usage to Microsoft, or activates directly
+   in communication with Microsoft.
+   Currently keyfinder does not report the MAK properly. You might see the
+   product display the Windows Vista License Key as 
+   BBBBB-BBBBB-BBBBB-BBBBB-BBBBB
+
+
+Q: What is a KMS key?
+A: A KMS key is a Volume License Key that is used to establish an activation
+   service that is hosted locally in your environment. After the service is
+   established, you can activate your client and server computers by
+   connecting to the KMS host computer. Computers activated through KMS must
+   reactivate at least once every six months by connecting to the KMS host.
+
+   A KMS key can activate six KMS hosts with 10 activations per host. Each host
+   can be used to activate an unlimited number of computers that are running
+   Windows Server 2008, Windows Vista Business, or Windows Vista Enterprise. 
+   If you need more activations for your KMS key, you can call your Microsoft
+   Activation Center to request an increase.
+
+Source:
+http://www.microsoft.com/licensing/resources/vol/ActivationFAQ/default.mspx
+
+
+Q: What is a Multiple Activation Key?
+A: Multiple Activation Key (MAK) is a Volume License Key that activates your
+   client and server computers by connecting them to a Microsoft activation
+   server one time.  After the computers are activated, no further communication
+   with Microsoft is required.
+
+There are two activation methods for MAK:
+1. MAK Independent Activation. Each computer is activated individually by
+   connecting to Microsoft servers over the Internet or by telephone.
+2. MAK Proxy Activation. By using the Volume Activation Management Tool (VAMT),
+   you can activate multiple computers at the same time through a single
+   connection to Microsoft servers over the Internet or phone.
+
+Source:
+http://www.microsoft.com/licensing/resources/vol/ActivationFAQ/default.mspx
+
