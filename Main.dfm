@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 20
   Top = 20
-  Caption = 'Magical Jelly Bean Keyfinder v'
+  Caption = 'Enchanted Keyfinder v'
   ClientHeight = 501
   ClientWidth = 632
   Color = clBtnFace
@@ -53,7 +53,6 @@ object Form1: TForm1
     ShowHint = False
     TabOrder = 0
     OnClick = ListBox1Click
-    ExplicitHeight = 462
   end
   object Memo1: TMemo
     Left = 232
@@ -71,7 +70,6 @@ object Form1: TForm1
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
-    ExplicitHeight = 462
   end
   object StatusBar1: TStatusBar
     Left = 0
@@ -88,7 +86,6 @@ object Form1: TForm1
       item
         Width = 50
       end>
-    ExplicitTop = 462
   end
   object Panel1: TPanel
     Left = 232
@@ -108,7 +105,6 @@ object Form1: TForm1
     TabOrder = 4
     Visible = False
     OnClick = Panel1Click
-    ExplicitHeight = 462
     object Image1: TImage
       Left = 97
       Top = -7
@@ -292,7 +288,7 @@ object Form1: TForm1
       Width = 247
       Height = 64
       Alignment = taCenter
-      Caption = 'Magical Jelly Bean Keyfinder'
+      Caption = 'Enchanted Keyfinder'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -27
