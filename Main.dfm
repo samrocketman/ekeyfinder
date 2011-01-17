@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
-  ClientHeight = 521
+  ClientHeight = 541
   ClientWidth = 632
   Color = clBtnFace
   Constraints.MaxHeight = 768
@@ -26,7 +26,7 @@ object Form1: TForm1
     Left = 230
     Top = 0
     Width = 2
-    Height = 502
+    Height = 522
     ExplicitLeft = 241
     ExplicitHeight = 250
   end
@@ -34,7 +34,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 230
-    Height = 502
+    Height = 522
     Align = alLeft
     BiDiMode = bdLeftToRight
     Constraints.MinWidth = 100
@@ -53,13 +53,12 @@ object Form1: TForm1
     ShowHint = False
     TabOrder = 0
     OnClick = ListBox1Click
-    ExplicitHeight = 482
   end
   object Memo1: TMemo
     Left = 232
     Top = 0
     Width = 400
-    Height = 502
+    Height = 522
     Align = alClient
     Constraints.MinHeight = 100
     Constraints.MinWidth = 100
@@ -71,11 +70,10 @@ object Form1: TForm1
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
-    ExplicitHeight = 482
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 502
+    Top = 522
     Width = 632
     Height = 19
     Panels = <
@@ -88,13 +86,12 @@ object Form1: TForm1
       item
         Width = 50
       end>
-    ExplicitTop = 482
   end
   object Panel1: TPanel
     Left = 232
     Top = 0
     Width = 400
-    Height = 502
+    Height = 522
     Align = alClient
     Color = clWhite
     Ctl3D = True
@@ -108,7 +105,6 @@ object Form1: TForm1
     TabOrder = 4
     Visible = False
     OnClick = Panel1Click
-    ExplicitHeight = 482
     object Image1: TImage
       Left = 97
       Top = -7
@@ -287,10 +283,10 @@ object Form1: TForm1
       OnClick = Image1Click
     end
     object Label1: TLabel
-      Left = 16
+      Left = 64
       Top = 135
-      Width = 353
-      Height = 64
+      Width = 267
+      Height = 32
       Alignment = taCenter
       Caption = 'Enchanted Keyfinder'
       Font.Charset = ANSI_CHARSET
@@ -332,10 +328,10 @@ object Form1: TForm1
     end
     object Label4: TLabel
       Left = 6
-      Top = 373
-      Width = 161
+      Top = 379
+      Width = 375
       Height = 13
-      Caption = 'Original Code: Aleks Ozolins'
+      Caption = 'Prev Developers: Aleks Ozolins, Swarren08, VersionBoy, mmarx82'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -344,27 +340,12 @@ object Form1: TForm1
       ParentFont = False
       OnClick = Label4Click
     end
-    object Label5: TLabel
-      Left = 114
-      Top = 192
-      Width = 158
-      Height = 16
-      Cursor = crHandPoint
-      Caption = 'MagicalJellyBean.com'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlue
-      Font.Height = -13
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold, fsUnderline]
-      ParentFont = False
-      OnClick = Label5Click
-    end
     object Label8: TLabel
       Left = 30
       Top = 344
-      Width = 234
+      Width = 266
       Height = 13
-      Caption = 'Thank you for using this FREE software. '
+      Caption = 'If you paid for this software then get a refund. '
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -374,12 +355,12 @@ object Form1: TForm1
       OnClick = Label8Click
     end
     object Label6: TLabel
-      Left = 140
-      Top = 214
-      Width = 102
+      Left = 97
+      Top = 180
+      Width = 181
       Height = 16
       Cursor = crHandPoint
-      Caption = 'Support Forum'
+      Caption = 'Community Support Forum'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -13
@@ -389,8 +370,8 @@ object Form1: TForm1
       OnClick = Label6Click
     end
     object Label7: TLabel
-      Left = 124
-      Top = 236
+      Left = 122
+      Top = 202
       Width = 139
       Height = 16
       Cursor = crHandPoint
@@ -404,8 +385,8 @@ object Form1: TForm1
       OnClick = Label7Click
     end
     object Label9: TLabel
-      Left = 124
-      Top = 258
+      Left = 122
+      Top = 224
       Width = 135
       Height = 16
       Cursor = crHandPoint
@@ -418,26 +399,13 @@ object Form1: TForm1
       ParentFont = False
       OnClick = Label9Click
     end
-    object UpdatedBy2: TLabel
-      Left = 240
-      Top = 384
-      Width = 75
+    object Label2: TLabel
+      Left = 30
+      Top = 272
+      Width = 225
       Height = 13
-      Caption = 'and mmarx82'
-    end
-    object UpdatedBy1: TStaticText
-      Left = 184
-      Top = 373
-      Width = 191
-      Height = 17
-      Caption = 'Updated: Swarren08, VersionBoy'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 2
+      Caption = 'Current Developer: Sam Gleske (sag47)'
+      OnClick = Label2Click
     end
     object Memo2: TMemo
       Left = 6
@@ -540,27 +508,24 @@ object Form1: TForm1
         Caption = '&Sourceforge Website'
         OnClick = MnuSourceforgeWebClick
       end
-      object MnuWeb: TMenuItem
-        Caption = '&Original Website'
-        OnClick = MnuWebClick
+      object BugandFeatureTracker1: TMenuItem
+        Caption = 'Bug and Feature &Tracker'
+        OnClick = BugandFeatureTracker1Click
       end
-      object MnuItmAddSupReq: TMenuItem
-        Caption = 'Add Support &Request'
-        OnClick = MnuItmAddSupReqClick
+      object CommunityForums1: TMenuItem
+        Caption = 'Community &Forums'
+        OnClick = CommunityForums1Click
       end
-      object FAQ1: TMenuItem
-        Caption = '&F.A.Q.'
-        OnClick = FAQ1Click
-      end
-      object Help1: TMenuItem
-        Caption = '&Help'
-        OnClick = Help1Click
+      object CommunityWiki1: TMenuItem
+        Caption = 'Community &Wiki'
+        OnClick = CommunityWiki1Click
       end
       object N3: TMenuItem
         Caption = '-'
       end
       object MnuItmWebUpdate: TMenuItem
         Caption = 'Check for &Updates'
+        Enabled = False
         OnClick = MnuItmWebUpdateClick
       end
       object N4: TMenuItem

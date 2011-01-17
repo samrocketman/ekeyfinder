@@ -41,8 +41,6 @@ type
     SaveAs1: TMenuItem;
     ools1:   TMenuItem;
     ModifyConfig1: TMenuItem;
-    MnuWeb:  TMenuItem;
-    FAQ1:    TMenuItem;
     About2:  TMenuItem;
     Options1: TMenuItem;
     FontDialog: TFontDialog;
@@ -53,7 +51,6 @@ type
     lblVersion: TLabel;
     lblLastUpdate: TLabel;
     Label4:  TLabel;
-    Label5:  TLabel;
     PrintAll1: TMenuItem;
     Memo2:   TMemo;
     SaveDialog1: TSaveDialog;
@@ -62,7 +59,6 @@ type
     RemotePC1: TMenuItem;
     N2:      TMenuItem;
     ChangeRegistrationInfo1: TMenuItem;
-    Help1:   TMenuItem;
     Label8:  TLabel;
     AlwaysOnTop1: TMenuItem;
     Label6:  TLabel;
@@ -70,19 +66,22 @@ type
     Label9:  TLabel;
     Memo3:   TMemo;
     XPManifest: TXPManifest;
-    UpdatedBy1: TStaticText;
     N3:      TMenuItem;
     MnuSourceforgeWeb: TMenuItem;
-    MnuItmAddSupReq: TMenuItem;
     MnuItmWebUpdate: TMenuItem;
     N4:      TMenuItem;
-    UpdatedBy2: TLabel;
+    CommunityForums1: TMenuItem;
+    BugandFeatureTracker1: TMenuItem;
+    CommunityWiki1: TMenuItem;
+    Label2: TLabel;
+    procedure Label2Click(Sender: TObject);
+    procedure CommunityWiki1Click(Sender: TObject);
+    procedure CommunityForums1Click(Sender: TObject);
+    procedure BugandFeatureTracker1Click(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
     procedure ListBox1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Exit2Click(Sender: TObject);
-    procedure MnuWebClick(Sender: TObject);
-    procedure FAQ1Click(Sender: TObject);
     procedure FindWinVersion;
     procedure GetVistaKey;
     procedure GetXPKey;
@@ -99,7 +98,6 @@ type
     procedure ParseConfig;
     procedure ConvertSaveFormat;
     procedure About2Click(Sender: TObject);
-    procedure Label5Click(Sender: TObject);
     procedure Label6Click(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
@@ -113,7 +111,6 @@ type
     procedure ModifyConfig1Click(Sender: TObject);
     procedure LoadHive1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Help1Click(Sender: TObject);
     procedure Label7Click(Sender: TObject);
     procedure Label8Click(Sender: TObject);
     procedure ChangeRegistrationInfo1Click(Sender: TObject);
@@ -121,7 +118,6 @@ type
     procedure AlwaysOnTop1Click(Sender: TObject);
     procedure Label9Click(Sender: TObject);
     procedure MnuSourceforgeWebClick(Sender: TObject);
-    procedure MnuItmAddSupReqClick(Sender: TObject);
     procedure MnuItmWebUpdateClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure SaveDialogTypeChange(Sender: TObject);
@@ -727,26 +723,9 @@ begin
   Close;
 end;
 
-procedure TForm1.MnuItmAddSupReqClick(Sender: TObject);
-begin
-  ShellExecute(Handle, nil, PChar(
-    'http://sourceforge.net/tracker/?func=add&group_id=222327&atid=1055202'), nil, nil, SW_NORMAL);
-end;
-
 procedure TForm1.MnuSourceforgeWebClick(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/projects/keyfinder/'), nil, nil, SW_NORMAL);
-end;
-
-procedure TForm1.MnuWebClick(Sender: TObject);
-begin
-  ShellExecute(Handle, nil, PChar('http://www.magicaljellybean.com'), nil, nil, SW_NORMAL);
-end;
-
-procedure TForm1.FAQ1Click(Sender: TObject);
-begin
-  ShellExecute(Handle, nil, PChar('http://www.magicaljellybean.com/keyfinder/faq.shtml'),
-    nil, nil, SW_NORMAL);
 end;
 
 procedure TForm1.FindWinVersion;
@@ -1721,14 +1700,9 @@ begin
   end;
 end;
 
-procedure TForm1.Label5Click(Sender: TObject);
-begin
-  ShellExecute(Handle, nil, PChar('http://www.magicaljellybean.com'), nil, nil, SW_NORMAL);
-end;
-
 procedure TForm1.Label6Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://www.mjbforum.com'), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/phpbb/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
 procedure TForm1.Image1Click(Sender: TObject);
@@ -1757,6 +1731,11 @@ begin
 end;
 
 procedure TForm1.Label1Click(Sender: TObject);
+begin
+  About2Click(Form1);
+end;
+
+procedure TForm1.Label2Click(Sender: TObject);
 begin
   About2Click(Form1);
 end;
@@ -2037,12 +2016,6 @@ begin
     Form1.SaveSettings(Form1);
 end;
 
-procedure TForm1.Help1Click(Sender: TObject);
-begin
-  ShellExecute(Handle, nil, PChar('http://sourceforge.net/docman/?group_id=222327'),
-    nil, nil, SW_NORMAL);
-end;
-
 procedure TForm1.Label7Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/projects/keyfinder/'),
@@ -2138,10 +2111,25 @@ begin
   end;
 end;
 
+procedure TForm1.BugandFeatureTracker1Click(Sender: TObject);
+begin
+  ShellExecute(Handle, nil, PChar('http://sourceforge.net/tracker/?group_id=369948'), nil, nil, SW_NORMAL);
+end;
+
 procedure TForm1.Label9Click(Sender: TObject);
 begin
   OKBottomDlg.Visible := True;
   Form1.Enabled := False;
+end;
+
+procedure TForm1.CommunityForums1Click(Sender: TObject);
+begin
+  ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/phpbb/keyfinder/'), nil, nil, SW_NORMAL);
+end;
+
+procedure TForm1.CommunityWiki1Click(Sender: TObject);
+begin
+  ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/mediawiki/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
 procedure TForm1.ConvertSaveFormat;
