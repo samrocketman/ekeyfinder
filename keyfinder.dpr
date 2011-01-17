@@ -37,6 +37,11 @@ program keyfinder;
 {%TogetherDiagram 'ModelSupport_keyfinder\default.txvpck'}
 {%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txvpck'}
 {%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_keyfinder\registration\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\options\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\remote\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\WinXPKey\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\license\default.txaPackage'}
 
 uses
   Forms,
@@ -45,7 +50,8 @@ uses
   options in 'options.pas' {Form2},
   registration in 'registration.pas' {Form3},
   remote in 'remote.pas' {Form4},
-  license in 'license.pas' {OKBottomDlg};
+  license in 'license.pas' {OKBottomDlg},
+  WinXPKey in 'WinXPKey.pas' {Form5};
 
 {$R *.res}
 
@@ -72,5 +78,6 @@ begin
   Application.CreateForm(TForm3, Form3);
   Application.CreateForm(TForm4, Form4);
   Application.CreateForm(TOKBottomDlg, OKBottomDlg);
+  Application.CreateForm(TForm5, Form5);
   Application.Run;
 end.

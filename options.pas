@@ -26,7 +26,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Registry, IniFiles;
+  Dialogs, StdCtrls;//, Registry, IniFiles;
 
 {function SaveFont1(F_Font: TFont): boolean;
 function SaveFont2(F_Font: TFont): boolean;
@@ -167,20 +167,20 @@ begin
 end;
 
 procedure TForm2.ButOptRestDefClick(Sender: TObject);
-var
-  MyINI: TINIFile;
+//var
+  //MyINI: TINIFile;
 begin
   Form1.ListBox1.Font := Label2.Font;
   Form1.Memo1.Font    := Label3.Font;
   {SaveFont1(Form1.ListBox1.Font);
   SaveFont2(Form1.Memo1.Font);}
-  try
+  {try
     myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
     SaveFont(myINI, 'AppListFont', Form1.ListBox1.Font);
     SaveFont(myINI, 'KeyListFont', Form1.Memo1.Font);
   finally
     myINI.Free;
-  end;
+  end;    }
   Form2.FormCreate(Form2);
   EdtCSV1.Text     := DefDelimCSV;
   EdtLogPath.Text := DefLogPath;

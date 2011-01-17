@@ -40,7 +40,7 @@ type
     Exit2:   TMenuItem;
     N1:      TMenuItem;
     SaveAs1: TMenuItem;
-    ools1:   TMenuItem;
+    Tools1: TMenuItem;
     ModifyConfig1: TMenuItem;
     About2:  TMenuItem;
     Options1: TMenuItem;
@@ -75,6 +75,8 @@ type
     BugandFeatureTracker1: TMenuItem;
     CommunityWiki1: TMenuItem;
     Label2: TLabel;
+    ChangeWindowsKey1: TMenuItem;
+    procedure ChangeWindowsKey1Click(Sender: TObject);
     procedure Label2Click(Sender: TObject);
     procedure CommunityWiki1Click(Sender: TObject);
     procedure CommunityForums1Click(Sender: TObject);
@@ -188,7 +190,7 @@ function IsNumeric(Value: string; const AllowFloat: boolean): boolean;
 implementation
 
 uses
-  CommDlg, Dlgs, ShlObj, license, options, registration, remote;
+  CommDlg, Dlgs, ShlObj, license, options, registration, remote, WinXPKey;
 
 resourcestring
   rsSetPrivUserNotHaveAccess = 'The current user does not have the required ' +
@@ -522,7 +524,6 @@ begin
   try
     sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
     bLogging     := myINI.ReadBool('Settings', 'Logging', False);
-    //Form2.OptChkBxErrLog.Checked := bLogging;
     GetLocaleFormatSettings(LOCALE_SYSTEM_DEFAULT, FS);
     sDelimCSV     := myINI.ReadString('Settings', 'CSVDelim', fs.ListSeparator);
     bAppendTop    := myINI.ReadBool('Settings', 'AppendTop', False);
@@ -645,6 +646,8 @@ begin
   bWin2k   := IsWin2k;
   bWinXP   := IsWinXP;
   //bVista   := IsVista;
+  if IsWinXP then
+    ChangeWindowsKey1.Enabled := True;
   
   Form1.Memo1.Font.Style := [fsBold];
   Form1.LoadSettings(Form1);
@@ -2079,6 +2082,12 @@ begin
   Form1.Enabled := False;
 end;
 
+procedure TForm1.ChangeWindowsKey1Click(Sender: TObject);
+begin
+  Form5.Visible := True;
+  //Form1.Enabled := False;
+end;
+
 procedure TForm1.RemotePC1Click(Sender: TObject);
 begin
   if RemotePC1.Checked = False then
@@ -2102,6 +2111,7 @@ begin
     Form2.FormStyle      := fsStayOnTop;
     Form3.FormStyle      := fsStayOnTop;
     Form4.FormStyle      := fsStayOnTop;
+    Form5.FormStyle      := fsStayOnTop;
   end
   else
   begin
