@@ -4,8 +4,8 @@ object Form5: TForm5
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Change Windows XP Key'
-  ClientHeight = 138
-  ClientWidth = 296
+  ClientHeight = 104
+  ClientWidth = 280
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,19 +14,21 @@ object Form5: TForm5
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
-    Left = 118
-    Top = 103
+    Left = 117
+    Top = 71
     Width = 75
     Height = 25
     Caption = 'Change Key'
     TabOrder = 0
   end
   object Button2: TButton
-    Left = 206
-    Top = 103
+    Left = 198
+    Top = 71
     Width = 75
     Height = 25
     Caption = 'Close'
@@ -36,18 +38,19 @@ object Form5: TForm5
   object GroupBox1: TGroupBox
     Left = 8
     Top = 8
-    Width = 273
-    Height = 89
+    Width = 265
+    Height = 57
     Caption = 'Enter new Windows Product Key'
     TabOrder = 2
     object Edit1: TEdit
       Left = 16
-      Top = 35
+      Top = 19
       Width = 233
       Height = 21
       TabOrder = 0
-      Text = 'Format (XXXX-XXXX-XXXX-XXXX-XXXX)'
-      OnChange = Edit1Change
+      Text = 'Format (XXXXX-XXXXX-XXXXX-XXXXX-XXXXX)'
+      OnClick = Edit1Click
+      OnExit = Edit1Exit
     end
   end
 end
