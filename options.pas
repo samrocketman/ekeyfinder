@@ -103,6 +103,10 @@ begin
   //Button2.Font := Form1.Memo1.Font;
   EdtCSV1.Text     := Form1.sDelimCSV;
   EdtLogPath.Text := sLogFilePath;
+  OptChkBxErrLog.Checked := bLogging;
+  Button5.Enabled := OptChkBxErrLog.Checked;
+  EdtLogPath.Enabled := OptChkBxErrLog.Checked;
+
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
@@ -154,6 +158,7 @@ procedure TForm2.OptChkBxErrLogClick(Sender: TObject);
 begin
   Button5.Enabled := OptChkBxErrLog.Checked;
   EdtLogPath.Enabled := OptChkBxErrLog.Checked;
+  bLogging := OptChkBxErrLog.Checked;
 end;
 
 procedure TForm2.OptChkBxSaveClick(Sender: TObject);
