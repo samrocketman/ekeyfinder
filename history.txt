@@ -1,3 +1,23 @@
+Enchanted Keyfinder (EK) Changelog
+Build 0.1.0.24 -- January 18th, 2011
+----------------------------------
+x.	New Feature: Font settings are now saved and loaded form INI file.  Now
+	EK is portable.
+x.	Changed Feature: Settings dialog has changed.  Now settings auto-save to
+	an INI file.  To restore default settings, simply delete the INI file.
+x.	Fixed bug: where Loading fonts from INI file did not work with Key list.
+x.	Fixed bug: where settings were not correctly loading Log information.
+x.	
+
+
+
+
+
+
+
+
+
+--- Old changelog from Magical Jelly Bean Keyfinder
 Build 2.0.8.01 -- March 29, 2010
 ----------------------------------
  - Fixed - Properly Reading keys from Registry under 64-bit systems (Wow6432Node)

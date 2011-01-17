@@ -1,8 +1,9 @@
 {
     The Enchanted Keyfinder is a free utility that retrieves your
     Product Key (cd key) used to install Windows from your registry.
-    Copyright (C) 1999-2008  Magical Jelly Bean Software
+
     Copyright (C) 2011 Enchanted Keyfinder Project
+    Copyright (C) 1999-2008  Magical Jelly Bean Software
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,9 +29,9 @@ uses
   Dialogs, StdCtrls, Registry, IniFiles;
 
 {function SaveFont1(F_Font: TFont): boolean;
-function SaveFont2(F_Font: TFont): boolean;}
+function SaveFont2(F_Font: TFont): boolean;
 function SetFont1(F_Font: TFont): boolean;
-function SetFont2(F_Font: TFont): boolean;
+function SetFont2(F_Font: TFont): boolean;}
 
 type
   TForm2 = class(TForm)
@@ -94,14 +95,14 @@ begin
   LblAppList.Font := Form1.ListBox1.Font;
   Label3.Font     := Form1.Memo1.Font;
   LblKeyDisp.Font := Form1.Memo1.Font;
-  SetFont1(Form1.ListBox1.Font);
-  SetFont2(Form1.Memo1.Font);
+  {SetFont1(Form1.ListBox1.Font);
+  SetFont2(Form1.Memo1.Font);}
   LblAppList.Font := Form1.ListBox1.Font;
   LblKeyDisp.Font := Form1.Memo1.Font;
   //Button1.Font := Form1.ListBox1.Font;
   //Button2.Font := Form1.Memo1.Font;
   EdtCSV1.Text     := Form1.sDelimCSV;
-  EdtLogPath.Text := Form1.sLogPath;
+  EdtLogPath.Text := sLogFilePath;
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
@@ -146,6 +147,7 @@ var
 begin
   bBrowse := BrowseForFolder(Form1.sLogPath, 'Select The Log Directory...');
   EdtLogPath.Text := Form1.sLogPath;
+  sLogFilePath := Form1.sLogPath;
 end;
 
 procedure TForm2.OptChkBxErrLogClick(Sender: TObject);
@@ -199,7 +201,7 @@ begin
   end;
 end;}
 
-function SetFont1(F_Font: TFont): boolean;
+{function SetFont1(F_Font: TFont): boolean;
 var
   FontInfo: Windows.TLogFont; // font definition structure
   MyReg: TRegistry;
@@ -213,7 +215,7 @@ begin
       MyReg.ValueExists('Font1') then
     begin
       MyReg.ReadBinaryData('Font1', FontInfo, SizeOf(FontInfo));
-      {set Font to the retrieved font}
+      //set Font to the retrieved font
       NewFHnd := CreateFontIndirect(FontInfo);
       Result  := (NewFHnd <> 0);
       if Result then
@@ -222,7 +224,7 @@ begin
   finally
     MyReg.Free;
   end;
-end;
+end;}
 
 {function SaveFont2(F_Font: TFont): boolean;
 var
@@ -241,7 +243,7 @@ begin
   end;
 end;}
 
-function SetFont2(F_Font: TFont): boolean;
+{function SetFont2(F_Font: TFont): boolean;
 var
   FontInfo: Windows.TLogFont; // font definition structure
   MyReg:   TRegistry;
@@ -255,7 +257,7 @@ begin
       MyReg.ValueExists('Font2') then
     begin
       MyReg.ReadBinaryData('Font2', FontInfo, SizeOf(FontInfo));
-      {set Font to the retrieved font}
+      //set Font to the retrieved font
       NewFHnd := CreateFontIndirect(FontInfo);
       Result  := (NewFHnd <> 0);
       if Result then
@@ -264,6 +266,6 @@ begin
   finally
     MyReg.Free;
   end;
-end;
+end;}
 
 end.

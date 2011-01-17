@@ -1,8 +1,9 @@
 {
     The Enchanted Keyfinder is a free utility that retrieves your
     Product Key (cd key) used to install Windows from your registry.
-    Copyright (C) 1999-2008  Magical Jelly Bean Software
+                                               
     Copyright (C) 2011 Enchanted Keyfinder Project
+    Copyright (C) 1999-2008  Magical Jelly Bean Software
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -647,7 +648,7 @@ begin
   
   Form1.Memo1.Font.Style := [fsBold];
   Form1.LoadSettings(Form1);
-  Form1.Memo1.Font.Style := [fsBold];
+  //Form1.Memo1.Font.Style := [fsBold];
   sPCName := GetPCName;
   if sPCName = '' then
     sPCName := 'Unknown';

@@ -53,7 +53,6 @@ object Form1: TForm1
     ShowHint = False
     TabOrder = 0
     OnClick = ListBox1Click
-    ExplicitHeight = 522
   end
   object Memo1: TMemo
     Left = 232
@@ -71,7 +70,6 @@ object Form1: TForm1
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
-    ExplicitHeight = 522
   end
   object StatusBar1: TStatusBar
     Left = 0
@@ -88,7 +86,6 @@ object Form1: TForm1
       item
         Width = 50
       end>
-    ExplicitTop = 522
   end
   object Panel1: TPanel
     Left = 232
@@ -108,7 +105,6 @@ object Form1: TForm1
     TabOrder = 4
     Visible = False
     OnClick = Panel1Click
-    ExplicitHeight = 522
     object Image1: TImage
       Left = 97
       Top = -7
