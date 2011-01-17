@@ -521,6 +521,7 @@ begin
   try
     sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
     bLogging     := myINI.ReadBool('Settings', 'Logging', False);
+    //Form2.OptChkBxErrLog.Checked := bLogging;
     GetLocaleFormatSettings(LOCALE_SYSTEM_DEFAULT, FS);
     sDelimCSV     := myINI.ReadString('Settings', 'CSVDelim', fs.ListSeparator);
     bAppendTop    := myINI.ReadBool('Settings', 'AppendTop', False);

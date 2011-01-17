@@ -25,11 +25,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Registry;
+  Dialogs, StdCtrls, Registry, IniFiles;
 
-function SaveFont1(F_Font: TFont): boolean;
+{function SaveFont1(F_Font: TFont): boolean;
+function SaveFont2(F_Font: TFont): boolean;}
 function SetFont1(F_Font: TFont): boolean;
-function SaveFont2(F_Font: TFont): boolean;
 function SetFont2(F_Font: TFont): boolean;
 
 type
@@ -114,9 +114,19 @@ begin
 end;
 
 procedure TForm2.Button3Click(Sender: TObject);
+{var
+  MyINI: TINIFile;}
 begin
-  SaveFont1(Button1.Font);
-  SaveFont2(Button2.Font);
+  bSaveSettings := OptChkBxSave.Checked;
+  {SaveFont1(Button1.Font);
+  SaveFont2(Button2.Font);}
+  {try
+    myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
+    SaveFont(myINI, 'AppListFont', Form1.ListBox1.Font);
+    SaveFont(myINI, 'KeyListFont', Form1.Memo1.Font);
+  finally
+    myINI.Free;
+  end;     }
   if EdtCSV1.Text = '"' then
   begin
     Application.MessageBox('You can''t use a double quote as a delimiter.', 'CSV Note');
@@ -126,6 +136,7 @@ begin
     Form1.sDelimCSV := EdtCSV1.Text;
   if EdtLogPath.Text <> '' then
     Form1.sLogPath := EdtLogPath.Text;
+  Form1.SaveSettings(Form1);
   Close;
 end;
 
@@ -139,8 +150,8 @@ end;
 
 procedure TForm2.OptChkBxErrLogClick(Sender: TObject);
 begin
-  Button5.Enabled := OptChkBxErrLog.Checked; 
-  EdtLogPath.Enabled := OptChkBxErrLog.Checked; 
+  Button5.Enabled := OptChkBxErrLog.Checked;
+  EdtLogPath.Enabled := OptChkBxErrLog.Checked;
 end;
 
 procedure TForm2.OptChkBxSaveClick(Sender: TObject);
@@ -149,11 +160,20 @@ begin
 end;
 
 procedure TForm2.ButOptRestDefClick(Sender: TObject);
+var
+  MyINI: TINIFile;
 begin
   Form1.ListBox1.Font := Label2.Font;
   Form1.Memo1.Font    := Label3.Font;
-  SaveFont1(Form1.ListBox1.Font);
-  SaveFont2(Form1.Memo1.Font);
+  {SaveFont1(Form1.ListBox1.Font);
+  SaveFont2(Form1.Memo1.Font);}
+  try
+    myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
+    SaveFont(myINI, 'AppListFont', Form1.ListBox1.Font);
+    SaveFont(myINI, 'KeyListFont', Form1.Memo1.Font);
+  finally
+    myINI.Free;
+  end;
   Form2.FormCreate(Form2);
   EdtCSV1.Text     := DefDelimCSV;
   EdtLogPath.Text := DefLogPath;
@@ -162,7 +182,7 @@ begin
   Form2.OptChkBxErrLogClick(Form2);
 end;
 
-function SaveFont1(F_Font: TFont): boolean;
+{function SaveFont1(F_Font: TFont): boolean;
 var
   FontInfo: Windows.TLogFont; // font definition structure
   MyReg: TRegistry;
@@ -177,7 +197,7 @@ begin
   finally
     MyReg.Free;
   end;
-end;
+end;}
 
 function SetFont1(F_Font: TFont): boolean;
 var
@@ -204,7 +224,7 @@ begin
   end;
 end;
 
-function SaveFont2(F_Font: TFont): boolean;
+{function SaveFont2(F_Font: TFont): boolean;
 var
   FontInfo: Windows.TLogFont; // font definition structure
   MyReg: TRegistry;
@@ -219,7 +239,7 @@ begin
   finally
     MyReg.Free;
   end;
-end;
+end;}
 
 function SetFont2(F_Font: TFont): boolean;
 var

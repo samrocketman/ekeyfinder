@@ -26,6 +26,17 @@ program keyfinder;
 {$define debug}   //debug setting - comment out for release version
 {$ASSERTIONS ON}  //debug setting - comment out for release version
 
+{%TogetherDiagram 'ModelSupport_keyfinder\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Unit1\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Unit2\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Unit3\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Unit4\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txvpck'}
+
 uses
   Forms,
   SysUtils,

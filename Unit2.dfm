@@ -153,7 +153,9 @@ object Form2: TForm2
     Width = 90
     Height = 25
     Caption = '&Restore Defaults'
+    Enabled = False
     TabOrder = 4
+    Visible = False
     OnClick = ButOptRestDefClick
   end
   object OptChkBxSave: TCheckBox
@@ -162,7 +164,10 @@ object Form2: TForm2
     Width = 97
     Height = 17
     Caption = '&Save Settings'
+    Checked = True
+    State = cbChecked
     TabOrder = 7
+    Visible = False
     OnClick = OptChkBxSaveClick
   end
   object Button5: TButton

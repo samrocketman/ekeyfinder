@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
-  ClientHeight = 541
+  ClientHeight = 561
   ClientWidth = 632
   Color = clBtnFace
   Constraints.MaxHeight = 768
@@ -26,7 +26,7 @@ object Form1: TForm1
     Left = 230
     Top = 0
     Width = 2
-    Height = 522
+    Height = 542
     ExplicitLeft = 241
     ExplicitHeight = 250
   end
@@ -34,7 +34,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 230
-    Height = 522
+    Height = 542
     Align = alLeft
     BiDiMode = bdLeftToRight
     Constraints.MinWidth = 100
@@ -53,12 +53,13 @@ object Form1: TForm1
     ShowHint = False
     TabOrder = 0
     OnClick = ListBox1Click
+    ExplicitHeight = 522
   end
   object Memo1: TMemo
     Left = 232
     Top = 0
     Width = 400
-    Height = 522
+    Height = 542
     Align = alClient
     Constraints.MinHeight = 100
     Constraints.MinWidth = 100
@@ -70,10 +71,11 @@ object Form1: TForm1
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
+    ExplicitHeight = 522
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 522
+    Top = 542
     Width = 632
     Height = 19
     Panels = <
@@ -86,12 +88,13 @@ object Form1: TForm1
       item
         Width = 50
       end>
+    ExplicitTop = 522
   end
   object Panel1: TPanel
     Left = 232
     Top = 0
     Width = 400
-    Height = 522
+    Height = 542
     Align = alClient
     Color = clWhite
     Ctl3D = True
@@ -105,6 +108,7 @@ object Form1: TForm1
     TabOrder = 4
     Visible = False
     OnClick = Panel1Click
+    ExplicitHeight = 522
     object Image1: TImage
       Left = 97
       Top = -7
@@ -472,8 +476,6 @@ object Form1: TForm1
       Caption = '&Tools'
       object Options1: TMenuItem
         Caption = '&Options...'
-        Enabled = False
-        Visible = False
         OnClick = Options1Click
       end
       object ChangeRegistrationInfo1: TMenuItem
