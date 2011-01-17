@@ -1,7 +1,8 @@
 {
-    The Magical Jelly Bean Keyfinder is a free utility that retrieves your
+    The Enchanted Keyfinder is a free utility that retrieves your
     Product Key (cd key) used to install Windows from your registry.
     Copyright (C) 1999-2008  Magical Jelly Bean Software
+    Copyright (C) 2011 Enchanted Keyfinder Project
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -170,7 +171,7 @@ begin
   MyReg := TRegistry.Create;
   MyReg.RootKey := HKEY_CURRENT_USER;
   try
-    MyReg.OpenKey('Software\Magical Jelly Bean Software\Keyfinder', True);
+    MyReg.OpenKey('Software\Enchanted Keyfinder\Keyfinder', True);
     MyReg.WriteBinaryData('Font1', FontInfo, SizeOf(FontInfo));
     Result := True;
   finally
@@ -188,7 +189,7 @@ begin
   MyReg := TRegistry.Create;
   MyReg.RootKey := HKEY_CURRENT_USER;
   try
-    if MyReg.OpenKey('Software\Magical Jelly Bean Software\Keyfinder', False) and
+    if MyReg.OpenKey('Software\Enchanted Keyfinder\Keyfinder', False) and
       MyReg.ValueExists('Font1') then
     begin
       MyReg.ReadBinaryData('Font1', FontInfo, SizeOf(FontInfo));
@@ -212,7 +213,7 @@ begin
   MyReg := TRegistry.Create;
   MyReg.RootKey := HKEY_CURRENT_USER;
   try
-    MyReg.OpenKey('Software\Magical Jelly Bean Software\Keyfinder', True);
+    MyReg.OpenKey('Software\Enchanted Keyfinder\Keyfinder', True);
     MyReg.WriteBinaryData('Font2', FontInfo, SizeOf(FontInfo));
     Result := True;
   finally
@@ -230,7 +231,7 @@ begin
   MyReg := TRegistry.Create;
   MyReg.RootKey := HKEY_CURRENT_USER;
   try
-    if MyReg.OpenKey('Software\Magical Jelly Bean Software\Keyfinder', False) and
+    if MyReg.OpenKey('Software\Enchanted Keyfinder\Keyfinder', False) and
       MyReg.ValueExists('Font2') then
     begin
       MyReg.ReadBinaryData('Font2', FontInfo, SizeOf(FontInfo));

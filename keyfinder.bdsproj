@@ -106,7 +106,7 @@
 			<Compiler Name="CodePage"></Compiler>
 		</Compiler>
 		<Linker>
-			<Linker Name="MapFile">3</Linker>
+			<Linker Name="MapFile">0</Linker>
 			<Linker Name="OutputObjs">0</Linker>
 			<Linker Name="GenerateHpps">False</Linker>
 			<Linker Name="ConsoleApp">1</Linker>
@@ -119,8 +119,8 @@
 			<Linker Name="ExeDescription">Magical Jelly Bean Keyfinder</Linker>
 		</Linker>
 		<Directories>
-			<Directories Name="OutputDir">C:\MJBS Keyfinder v2.0\test</Directories>
-			<Directories Name="UnitOutputDir">C:\MJBS Keyfinder v2.0\UOD</Directories>
+			<Directories Name="OutputDir">C:\Documents and Settings\Administrator\Desktop\Output</Directories>
+			<Directories Name="UnitOutputDir">C:\Documents and Settings\Administrator\Desktop\Output</Directories>
 			<Directories Name="PackageDLLOutputDir"></Directories>
 			<Directories Name="PackageDCPOutputDir"></Directories>
 			<Directories Name="SearchPath">$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\JVCL\run</Directories>
@@ -134,7 +134,7 @@
 			<Parameters Name="HostApplication"></Parameters>
 			<Parameters Name="Launcher"></Parameters>
 			<Parameters Name="UseLauncher">False</Parameters>
-			<Parameters Name="DebugCWD">C:\MJBS Keyfinder v2.0\test</Parameters>
+			<Parameters Name="DebugCWD">C:\Documents and Settings\Administrator\Desktop\Output</Parameters>
 			<Parameters Name="Debug Symbols Search Path"></Parameters>
 			<Parameters Name="LoadAllSymbols">True</Parameters>
 			<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
@@ -147,10 +147,10 @@
 		<VersionInfo>
 			<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
 			<VersionInfo Name="AutoIncBuild">True</VersionInfo>
-			<VersionInfo Name="MajorVer">2</VersionInfo>
-			<VersionInfo Name="MinorVer">0</VersionInfo>
-			<VersionInfo Name="Release">8</VersionInfo>
-			<VersionInfo Name="Build">1</VersionInfo>
+			<VersionInfo Name="MajorVer">0</VersionInfo>
+			<VersionInfo Name="MinorVer">1</VersionInfo>
+			<VersionInfo Name="Release">0</VersionInfo>
+			<VersionInfo Name="Build">3</VersionInfo>
 			<VersionInfo Name="Debug">False</VersionInfo>
 			<VersionInfo Name="PreRelease">True</VersionInfo>
 			<VersionInfo Name="Special">False</VersionInfo>
@@ -160,15 +160,15 @@
 			<VersionInfo Name="CodePage">1252</VersionInfo>
 		</VersionInfo>
 		<VersionInfoKeys>
-			<VersionInfoKeys Name="CompanyName"></VersionInfoKeys>
-			<VersionInfoKeys Name="FileDescription">Magical Jelly Bean Keyfinder</VersionInfoKeys>
-			<VersionInfoKeys Name="FileVersion">2.0.8.1</VersionInfoKeys>
+			<VersionInfoKeys Name="CompanyName">Enchanted Keyfinder Project</VersionInfoKeys>
+			<VersionInfoKeys Name="FileDescription">Enchanted Keyfinder</VersionInfoKeys>
+			<VersionInfoKeys Name="FileVersion">0.1.0.3</VersionInfoKeys>
 			<VersionInfoKeys Name="InternalName">keyfinder</VersionInfoKeys>
 			<VersionInfoKeys Name="LegalCopyright">GPL</VersionInfoKeys>
 			<VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
 			<VersionInfoKeys Name="OriginalFilename">keyfinder.exe</VersionInfoKeys>
-			<VersionInfoKeys Name="ProductName">Magical Jelly Bean Keyfinder</VersionInfoKeys>
-			<VersionInfoKeys Name="ProductVersion">2.0.7.0</VersionInfoKeys>
+			<VersionInfoKeys Name="ProductName">Enchanted Keyfinder</VersionInfoKeys>
+			<VersionInfoKeys Name="ProductVersion">0.1</VersionInfoKeys>
 			<VersionInfoKeys Name="Comments">Product key recovery utility</VersionInfoKeys>
 		</VersionInfoKeys>
 	</Delphi.Personality>

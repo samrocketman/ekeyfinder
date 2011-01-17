@@ -1,7 +1,8 @@
 {
-    The Magical Jelly Bean Keyfinder is a free utility that retrieves your
+    The Enchanted Keyfinder is a free utility that retrieves your
     Product Key (cd key) used to install Windows from your registry.
     Copyright (C) 1999-2008  Magical Jelly Bean Software
+    Copyright (C) 2011 Enchanted Keyfinder Project
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -53,7 +54,7 @@ begin
     Exit;
   end;
   Application.Initialize;
-  Application.Title := 'Magical Jelly Bean Keyfinder';
+  Application.Title := 'Enchanted Keyfinder';
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TForm2, Form2);
   Application.CreateForm(TForm3, Form3);
