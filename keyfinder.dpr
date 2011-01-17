@@ -42,10 +42,10 @@ uses
   Forms,
   SysUtils,
   Main in 'Main.pas' {Form1},
-  Unit2 in 'Unit2.pas' {Form2},
-  Unit3 in 'Unit3.pas' {Form3},
-  Unit4 in 'Unit4.pas' {Form4},
-  Unit1 in 'Unit1.pas' {OKBottomDlg};
+  options in 'options.pas' {Form2},
+  registration in 'registration.pas' {Form3},
+  remote in 'remote.pas' {Form4},
+  license in 'license.pas' {OKBottomDlg};
 
 {$R *.res}
 

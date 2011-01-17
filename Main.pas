@@ -188,7 +188,7 @@ function IsNumeric(Value: string; const AllowFloat: boolean): boolean;
 implementation
 
 uses
-  CommDlg, Dlgs, ShlObj, Unit1, Unit2, Unit3, Unit4;
+  CommDlg, Dlgs, ShlObj, license, options, registration, remote;
 
 resourcestring
   rsSetPrivUserNotHaveAccess = 'The current user does not have the required ' +
