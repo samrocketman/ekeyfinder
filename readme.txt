@@ -1,12 +1,12 @@
-                       Magical Jelly Bean Keyfinder v2.0.8
-README                                                        March 29th, 2009
+                        Enchanted Keyfinder v0.1 Beta
+README                                                      January 17th, 2011
 
                   http://sourceforge.net/projects/keyfinder/
 --------------------------------------------------------------------------------
 
 Product Overview
 ----------------
-The Magical Jelly Bean Keyfinder is a freeware utility that retrieves
+The Enchanted Keyfinder is a free and open source utility that retrieves
 your Product Key used to install windows from your registry or from an
 unbootable Windows installation.
 It works on Windows 95, 98, ME, NT, 2000, XP, Vista and Windows 7.
@@ -136,12 +136,12 @@ Reporting Bugs
 If you experience something you believe is a bug, please fill out the
 online form at:
 
-http://sourceforge.net/tracker/?group_id=222327
+http://sourceforge.net/tracker/?group_id=369948
 
 Do not assume someone else will report it.
 
 Please describe the problem in as much detail as possible.
-Iinclude the following information:
+Include the following information:
 
   - Version of keyfinder (as shown in the About dialog)
   - Operating system and version

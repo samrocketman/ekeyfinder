@@ -1,6 +1,6 @@
-                        Magical Jelly Bean Keyfinder v2.0.8
+                         Enchanted Keyfinder v0.1 Beta
 
-Frequently Asked Questions                                      March 29th, 2009
+Frequently Asked Questions                                  January 17th, 2011
 
                   http://sourceforge.net/projects/keyfinder/
 --------------------------------------------------------------------------------

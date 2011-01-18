@@ -1471,6 +1471,7 @@ begin
                 FormatAdobeKey(sTmp);
             end;
 
+            //add entry to the list
             if j > 1 then
               Memo1.Lines.Add(LeftStr(s, j - 1) + ': ' + sTmp)
             else
