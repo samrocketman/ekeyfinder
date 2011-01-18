@@ -3,6 +3,7 @@ Build 0.1.0.xx -- January xx, 2011
 ----------------------------------
 x.	Updated feature: Modified the XP change product key feature so you don't 
 	have to restart keyfinder to see the updated key.
+x.	Updated About dialog with new logo and information.
 
 Build 0.1.0.82 Beta -- January 17th, 2011
 ----------------------------------

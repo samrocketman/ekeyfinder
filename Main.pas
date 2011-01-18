@@ -47,11 +47,8 @@ type
     FontDialog: TFontDialog;
     ListBox2: TListBox;
     Panel1:  TPanel;
-    Image1:  TImage;
-    Label1:  TLabel;
     lblVersion: TLabel;
     lblLastUpdate: TLabel;
-    Label4:  TLabel;
     PrintAll1: TMenuItem;
     Memo2:   TMemo;
     SaveDialog1: TSaveDialog;
@@ -84,6 +81,11 @@ type
     Label13: TLabel;
     Label14: TLabel;
     Label15: TLabel;
+    Logo: TImage;
+    Label1: TLabel;
+    Refresh1: TMenuItem;
+    procedure Refresh1Click(Sender: TObject);
+    procedure Label13Click(Sender: TObject);
     procedure Label15Click(Sender: TObject);
     procedure Label10Click(Sender: TObject);
     procedure Label5Click(Sender: TObject);
@@ -113,7 +115,7 @@ type
     procedure ConvertSaveFormat;
     procedure About2Click(Sender: TObject);
     procedure Label6Click(Sender: TObject);
-    procedure Image1Click(Sender: TObject);
+    procedure LogoClick(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
     procedure Label4Click(Sender: TObject);
     procedure lblLastUpdateClick(Sender: TObject);
@@ -176,8 +178,8 @@ var
   bWin2k, bWinXP, bVista, bWinNT4: boolean;
 
 const
-  kfVersion   = '0.1 Beta';
-  kfDate      = 'January 17th, 2011';
+  kfVersion   = '0.1 Beta 2';
+  kfDate      = 'January 18th, 2011';
   DefDelimCSV = ',';
   DefLogPath  = '.';
   KEY_WOW64_64KEY = $0100;
@@ -749,8 +751,6 @@ procedure TForm1.FindWinVersion;
 var
   MyReg: TRegistry;
 begin
-  MyReg := TRegistry.Create;
-  MyReg.RootKey := HKEY_LOCAL_MACHINE;
 
 {  if RemotePC1.Checked then
   begin
@@ -769,14 +769,19 @@ begin
     end;
   end;
 }
-  // This bit won't work for NT 4 as there is no ProductName value
-  if MyReg.OpenKey(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', False) and
-    MyReg.ValueExists('ProductName') then
-  begin
-    ListBox1.Items.Add(MyReg.ReadString('ProductName'));
-    ListBox2.Items.Add('WinXP');
+  try
+    MyReg := TRegistry.Create;
+    MyReg.RootKey := HKEY_LOCAL_MACHINE;
+    // This bit won't work for NT 4 as there is no ProductName value
+    if MyReg.OpenKey(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', False) and
+      MyReg.ValueExists('ProductName') then
+    begin
+      ListBox1.Items.Add(MyReg.ReadString('ProductName'));
+      ListBox2.Items.Add('WinXP');
+    end;
+  finally
+    MyReg.Free;
   end;
-  MyReg.Free;
 
   if bWinNT4 then   // Test for NT 4.0
   begin
@@ -785,18 +790,21 @@ begin
   end;
 
   // Win 9x/me check
-  MyReg := TRegistry.Create;
-  MyReg.RootKey := HKEY_LOCAL_MACHINE;
-  if MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Windows\CurrentVersion') and
-    MyReg.ValueExists('Version') then
-  begin
-    ListBox2.Items.Add('Win9x');
+  try
+    MyReg := TRegistry.Create;
+    MyReg.RootKey := HKEY_LOCAL_MACHINE;
+    if MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Windows\CurrentVersion') and
+      MyReg.ValueExists('Version') then
+    begin
+      ListBox2.Items.Add('Win9x');
     if MyReg.ReadString('ProductName') <> '' then
       ListBox1.Items.Add(MyReg.ReadString('ProductName'))
     else
       ListBox1.Items.Add(MyReg.ReadString('Version'));
+    end;
+  finally
+    MyReg.Free;
   end;
-  MyReg.Free;
 end; // FindWinVersion
 
 procedure TForm1.GetVistaKey;
@@ -1322,6 +1330,11 @@ begin
   end;
 end;
 
+procedure TForm1.Refresh1Click(Sender: TObject);
+begin
+  ProgramInit;
+end;
+
 procedure TForm1.ParseConfig;
 function FindRegistryValue(RootKey: HKEY;           //Funtion Finds Wildcard Key Name and Path
                                RootPath: String; 
@@ -1723,7 +1736,7 @@ begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/phpbb/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.Image1Click(Sender: TObject);
+procedure TForm1.LogoClick(Sender: TObject);
 begin
   About2Click(Form1);
   //ShellExecute(Handle, nil, PChar('http://www.magicaljellybean.com'), nil, nil, SW_NORMAL);
@@ -1759,6 +1772,11 @@ begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/users/sag47'), nil, nil, SW_NORMAL);
 end;
 
+procedure TForm1.Label13Click(Sender: TObject);
+begin
+  ShellExecute(Handle, nil, PChar('http://davidwoodfx.blogspot.com'), nil, nil, SW_NORMAL);
+end;
+
 procedure TForm1.Label15Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://gimper.net/'), nil, nil, SW_NORMAL);
@@ -1766,7 +1784,7 @@ end;
 
 procedure TForm1.Label1Click(Sender: TObject);
 begin
-  About2Click(Form1);
+  ShellExecute(Handle, nil, PChar('https://sourceforge.net/apps/phpbb/keyfinder/viewtopic.php?f=1&t=3'), nil, nil, SW_NORMAL);
 end;
 
 procedure TForm1.Label2Click(Sender: TObject);
