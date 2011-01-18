@@ -646,6 +646,7 @@ var
 begin
   Height   := 480;
   Width    := 640;
+
   //bLogging := False;
   //bAutoHive := False;
   //bAutoSave    := False;
@@ -1724,7 +1725,8 @@ end;
 
 procedure TForm1.Image1Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://www.magicaljellybean.com'), nil, nil, SW_NORMAL);
+  About2Click(Form1);
+  //ShellExecute(Handle, nil, PChar('http://www.magicaljellybean.com'), nil, nil, SW_NORMAL);
 end;
 
 procedure TForm1.Panel1Click(Sender: TObject);
