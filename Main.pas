@@ -1489,12 +1489,12 @@ begin
               else
                 FormatAdobeKey(sTmp);
             end;
-
+            //fix bug for blank entry
             //MessageDlg('Lines:  ' + IntToStr(Memo1.Lines.Count) + '; Length: ' + IntToStr(Length(sTmp)), mtInformation , [mbOK], 0);
             //add entry to the list
             if j > 1 then
             begin
-              if Length(sTmp) > 0 then
+              if Length(sTmp) > 0 then      
                 Memo1.Lines.Add(LeftStr(s, j - 1) + ': ' + sTmp);
               //Memo1.Lines.Count;
             end
@@ -1533,7 +1533,22 @@ begin
           Form1.ListBox1Click(Form1);
         end;
       end;
+
+      if Memo1.Lines.Count < 2 then
+      begin
+        ListBox1.Items.Delete(i);
+        ListBox2.Items.Delete(i);
+      end;
+
+
     end;
+
+  //fix bug to remove empty keys
+  {for i := 0 to (ListBox1.Items.Count - 1) do
+  begin
+    MessageDlg(ListBox2.Items.Text, mtInformation , [mbOK], 0);
+  end; }
+
   StatusBar1.Panels.Items[2].Text := 'Detected: ' + IntToStr(ListBox2.Items.Count);
 end;
 
