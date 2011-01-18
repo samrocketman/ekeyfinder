@@ -1346,7 +1346,7 @@ var
   PrefixKey: String; 
 begin 
   I := 1; 
-  while i < length(ValueWithWildCard) do 
+  while i < length(ValueWithWildCard) do
    begin 
     if ValueWithWildCard[i] = '*' then break; 
     PrefixKey := PrefixKey+ValueWithWildCard[i]; 
@@ -1465,7 +1465,12 @@ begin
           if (MyReg.OpenKeyReadOnly(sRegOpenKey)) then
           begin
           if FindRegistryValue(MyReg.Rootkey,sRegOpenKey,sRegValue) <> Null then
-          sTmp := MyReg.ReadString(FindRegistryValue(MyReg.Rootkey,sRegOpenKey,sRegValue));
+          try
+            sTmp := MyReg.ReadString(FindRegistryValue(MyReg.Rootkey,sRegOpenKey,sRegValue));
+          except
+            on E : Exception do
+              sTmp := 'Error! Invalid data type.  Check key.';
+          end;
 
             // Do a quick test for an Adobe entry in .cfg and decode if true
             if (pos('adobe ', LowerCase(ListBox1.Items.Strings[i])) <> 0) and
@@ -1485,11 +1490,17 @@ begin
                 FormatAdobeKey(sTmp);
             end;
 
+            //MessageDlg('Lines:  ' + IntToStr(Memo1.Lines.Count) + '; Length: ' + IntToStr(Length(sTmp)), mtInformation , [mbOK], 0);
             //add entry to the list
             if j > 1 then
-              Memo1.Lines.Add(LeftStr(s, j - 1) + ': ' + sTmp)
+            begin
+              if Length(sTmp) > 0 then
+                Memo1.Lines.Add(LeftStr(s, j - 1) + ': ' + sTmp);
+              //Memo1.Lines.Count;
+            end
             else
-              Memo1.Lines.Add(sTmp);
+              if Length(sTmp) > 0 then
+                Memo1.Lines.Add(sTmp);
             end
 
           else
