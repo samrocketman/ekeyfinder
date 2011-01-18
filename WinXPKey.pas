@@ -69,6 +69,7 @@ var
   SEInfo: TShellExecuteInfo;
   ExitCode: DWORD;
 begin
+
   // Write file to temp
   fileName := GetTempDirectory + 'chgxp.vbs';
   AssignFile(myFile, fileName);
@@ -76,7 +77,7 @@ begin
   WriteLn(myFile, 'ON ERROR RESUME NEXT');
   WriteLn(myFile, 'if Wscript.arguments.count<1 then');
   WriteLn(myFile, 'Wscript.echo "An error has occurred. Please file a bug in the tracker."');
-  WriteLn(myFile, 'Wscript.quit');
+  WriteLn(myFile, 'Wscript.quit(1)');
   WriteLn(myFile, 'end if');
   WriteLn(myFile, 'Dim VOL_PROD_KEY');
   WriteLn(myFile, 'VOL_PROD_KEY = Wscript.arguments.Item(0)');
@@ -84,11 +85,12 @@ begin
   WriteLn(myFile, 'for each Obj in GetObject("winmgmts:{impersonationLevel=impersonate}").InstancesOf ("win32_WindowsProductActivation")');
   WriteLn(myFile, 'result = Obj.SetProductKey (VOL_PROD_KEY)');
   WriteLn(myFile, 'if err = 0 then');
-  WriteLn(myFile, 'WScript.Echo "Your product key has been successfully updated. Please restart the Keyfinder to verify it."');
+  WriteLn(myFile, 'WScript.Echo "Your product key has been successfully updated."');
   WriteLn(myFile, 'end if');
   WriteLn(myFile, 'if err <> 0 then');
   WriteLn(myFile, 'WScript.Echo "An error has occurred. This was probably caused by the keying of an invalid number. Please check it and try again."');
-  WriteLn(myFile, 'Err.Clear');
+  //WriteLn(myFile, 'Err.Clear');
+  WriteLn(myFile, 'Wscript.quit(err)');
   WriteLn(myFile, 'end if');
   WriteLn(myFile, 'Next');
   CloseFile(myFile);
@@ -112,7 +114,13 @@ begin
     Application.ProcessMessages;
     GetExitCodeProcess(SEInfo.hProcess, ExitCode) ;
   until (ExitCode <> STILL_ACTIVE) or Application.Terminated;
-      DeleteFile(fileName);
+    DeleteFile(fileName);
+    if ExitCode = 0 then
+    begin
+      Close;   
+      Form1.ListBox1.Selected[0] := True;
+      Form1.ListBox1Click(Form1);
+    end;
   end;
 
   //Instant Execution

@@ -1,4 +1,9 @@
 Enchanted Keyfinder (EK) Changelog
+Build 0.1.0.xx -- January xx, 2011
+----------------------------------
+x.	Updated feature: Modified the XP change product key feature so you don't 
+	have to restart keyfinder to see the updated key.
+
 Build 0.1.0.82 Beta -- January 17th, 2011
 ----------------------------------
 1.	New Feature: Windows XP Product Key can be changed using EK.
