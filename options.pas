@@ -146,10 +146,11 @@ begin
 end;
 
 procedure TForm2.Button5Click(Sender: TObject);
-var
-  bBrowse: boolean;
+//var
+  //bBrowse: boolean;
 begin
-  bBrowse := BrowseForFolder(Form1.sLogPath, 'Select The Log Directory...');
+  //bBrowse := BrowseForFolder(Form1.sLogPath, 'Select The Log Directory...');
+  BrowseForFolder(Form1.sLogPath, 'Select The Log Directory...');
   EdtLogPath.Text := Form1.sLogPath;
   sLogFilePath := Form1.sLogPath;
 end;

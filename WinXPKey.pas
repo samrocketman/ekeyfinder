@@ -30,6 +30,9 @@ var
 
 implementation
 
+uses
+  Main;
+
 {$R *.dfm}
 
 {Get path to temp DIR from Windows Env Variable}
@@ -151,7 +154,7 @@ end;
 
 procedure TForm5.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  //Form1.Enabled := True;
+  Form1.Enabled := True;
 end;
 
 procedure TForm5.FormCreate(Sender: TObject);

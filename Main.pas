@@ -76,6 +76,17 @@ type
     CommunityWiki1: TMenuItem;
     Label2: TLabel;
     ChangeWindowsKey1: TMenuItem;
+    Label3: TLabel;
+    Label5: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    procedure Label15Click(Sender: TObject);
+    procedure Label10Click(Sender: TObject);
+    procedure Label5Click(Sender: TObject);
     procedure ChangeWindowsKey1Click(Sender: TObject);
     procedure Label2Click(Sender: TObject);
     procedure CommunityWiki1Click(Sender: TObject);
@@ -1725,6 +1736,11 @@ begin
   About2Click(Form1);
 end;
 
+procedure TForm1.Label5Click(Sender: TObject);
+begin
+  ShellExecute(Handle, nil, PChar('http://www.pages.drexel.edu/~sag47/'), nil, nil, SW_NORMAL);
+end;
+
 procedure TForm1.lblLastUpdateClick(Sender: TObject);
 begin
   About2Click(Form1);
@@ -1733,6 +1749,16 @@ end;
 procedure TForm1.lblVersionClick(Sender: TObject);
 begin
   About2Click(Form1);
+end;
+
+procedure TForm1.Label10Click(Sender: TObject);
+begin
+  ShellExecute(Handle, nil, PChar('http://sourceforge.net/users/sag47'), nil, nil, SW_NORMAL);
+end;
+
+procedure TForm1.Label15Click(Sender: TObject);
+begin
+  ShellExecute(Handle, nil, PChar('http://gimper.net/'), nil, nil, SW_NORMAL);
 end;
 
 procedure TForm1.Label1Click(Sender: TObject);
@@ -2085,7 +2111,7 @@ end;
 procedure TForm1.ChangeWindowsKey1Click(Sender: TObject);
 begin
   Form5.Visible := True;
-  //Form1.Enabled := False;
+  Form1.Enabled := False;
 end;
 
 procedure TForm1.RemotePC1Click(Sender: TObject);
@@ -2111,6 +2137,7 @@ begin
     Form2.FormStyle      := fsStayOnTop;
     Form3.FormStyle      := fsStayOnTop;
     Form4.FormStyle      := fsStayOnTop;
+    Form5.FormStyle      := fsStayOnTop;
   end
   else
   begin
@@ -2119,7 +2146,7 @@ begin
     Form2.FormStyle      := fsNormal;
     Form3.FormStyle      := fsNormal;
     Form4.FormStyle      := fsNormal;
-    Form5.FormStyle      := fsStayOnTop;
+    Form5.FormStyle      := fsNormal;
   end;
 end;
 
