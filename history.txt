@@ -1,7 +1,8 @@
 Enchanted Keyfinder (EK) Changelog
-Build 0.1.0.24 -- January 18th, 2011
+Build 0.1.0.24 -- January 17th, 2011
 ----------------------------------
-x.	New Feature: Font settings are now saved and loaded form INI file.  Now
+x.	New Feature: Windows XP Product Key can be changed using EK.
+x.	New Feature: All settings are now saved and loaded form INI file.  Now
 	EK is portable.
 x.	Changed Feature: Settings dialog has changed.  Now settings auto-save to
 	an INI file.  To restore default settings, simply delete the INI file.

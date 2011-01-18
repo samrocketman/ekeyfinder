@@ -2111,7 +2111,6 @@ begin
     Form2.FormStyle      := fsStayOnTop;
     Form3.FormStyle      := fsStayOnTop;
     Form4.FormStyle      := fsStayOnTop;
-    Form5.FormStyle      := fsStayOnTop;
   end
   else
   begin
@@ -2120,6 +2119,7 @@ begin
     Form2.FormStyle      := fsNormal;
     Form3.FormStyle      := fsNormal;
     Form4.FormStyle      := fsNormal;
+    Form5.FormStyle      := fsStayOnTop;
   end;
 end;
 

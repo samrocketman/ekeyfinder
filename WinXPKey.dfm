@@ -24,7 +24,9 @@ object Form5: TForm5
     Width = 75
     Height = 25
     Caption = 'Change Key'
+    Enabled = False
     TabOrder = 0
+    OnClick = Button1Click
   end
   object Button2: TButton
     Left = 198
@@ -49,6 +51,7 @@ object Form5: TForm5
       Height = 21
       TabOrder = 0
       Text = 'Format (XXXXX-XXXXX-XXXXX-XXXXX-XXXXX)'
+      OnChange = Edit1Change
       OnClick = Edit1Click
       OnExit = Edit1Exit
     end
