@@ -47,6 +47,7 @@ type
     FontDialog: TFontDialog;
     ListBox2: TListBox;
     Panel1:  TPanel;
+    RefreshPanel:  TPanel;
     lblVersion: TLabel;
     lblLastUpdate: TLabel;
     PrintAll1: TMenuItem;
@@ -84,6 +85,7 @@ type
     Logo: TImage;
     Label1: TLabel;
     Refresh1: TMenuItem;
+    lblRefresh: TLabel;
     procedure Refresh1Click(Sender: TObject);
     procedure Label13Click(Sender: TObject);
     procedure Label15Click(Sender: TObject);
@@ -1332,7 +1334,20 @@ end;
 
 procedure TForm1.Refresh1Click(Sender: TObject);
 begin
+  //Refresh the program     
+  lblRefresh.Top := Round( Height/2 - lblRefresh.Height/2 );
+  lblRefresh.Left := Round( Width/2 - lblRefresh.Width/2 );
+  RefreshPanel.Visible := True;
+  RefreshPanel.Height := Height;
+  RefreshPanel.Width := Width;
+  ListBox1.Visible := False;
+  Memo1.Visible := False; 
+  Form1.Enabled := False;
   ProgramInit;
+  Form1.Enabled := True;
+  RefreshPanel.Visible := False;
+  ListBox1.Visible := True;
+  Memo1.Visible := True;
 end;
 
 procedure TForm1.ParseConfig;

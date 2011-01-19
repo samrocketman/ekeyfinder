@@ -1,13 +1,19 @@
 Enchanted Keyfinder (EK) Changelog
-Build 0.1.0.xx -- January xx, 2011
+Build 0.1.0.142 Beta 2 -- January xx, 2011
 ----------------------------------
-x.	Updated feature: Modified the XP change product key feature so you don't 
+1.	Added Refresh to File menu for when users are testing config file.
+2.	Updated feature: Modified the XP change product key feature so you don't 
 	have to restart keyfinder to see the updated key.
-x.	Updated About dialog with new logo and information.
-x.	Fixed bug where EK would fail from invalide data type when reading strings
+3.	Updated About dialog with new logo and information.
+4.	Fixed bug where EK would fail from invalide data type when reading strings
 	from the registry.  This would cause an incomplete list of found keys.
-x.	Fixed bug where programs with blank keys, such as Half-Life, would show up
+5.	Fixed bug where programs with blank keys, such as Half-Life, would show up
 	even when it is not installed.
+6.	Updated cfg file.
+
+Build 0.1.0.84 Beta -- January 18th, 2011
+----------------------------------
+1.	Spelling correction for Arzoroc.
 
 Build 0.1.0.82 Beta -- January 17th, 2011
 ----------------------------------

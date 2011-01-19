@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
-  ClientHeight = 621
+  ClientHeight = 641
   ClientWidth = 632
   Color = clWhite
   Constraints.MaxHeight = 768
@@ -26,7 +26,7 @@ object Form1: TForm1
     Left = 230
     Top = 0
     Width = 2
-    Height = 602
+    Height = 622
     ExplicitLeft = 241
     ExplicitHeight = 250
   end
@@ -34,7 +34,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 230
-    Height = 602
+    Height = 622
     Align = alLeft
     BiDiMode = bdLeftToRight
     Constraints.MinWidth = 100
@@ -53,13 +53,12 @@ object Form1: TForm1
     ShowHint = False
     TabOrder = 0
     OnClick = ListBox1Click
-    ExplicitHeight = 582
   end
   object Memo1: TMemo
     Left = 232
     Top = 0
     Width = 400
-    Height = 602
+    Height = 622
     Align = alClient
     Constraints.MinHeight = 100
     Constraints.MinWidth = 100
@@ -71,11 +70,10 @@ object Form1: TForm1
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
-    ExplicitHeight = 582
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 602
+    Top = 622
     Width = 632
     Height = 19
     Panels = <
@@ -88,13 +86,43 @@ object Form1: TForm1
       item
         Width = 50
       end>
-    ExplicitTop = 582
+  end
+  object RefreshPanel: TPanel
+    Left = 232
+    Top = 0
+    Width = 400
+    Height = 622
+    Align = alClient
+    Ctl3D = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = True
+    ParentCtl3D = False
+    ParentFont = False
+    TabOrder = 5
+    Visible = False
+    object lblRefresh: TLabel
+      Left = 88
+      Top = 50
+      Width = 115
+      Height = 16
+      Caption = 'Refreshing Config...'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
   end
   object Panel1: TPanel
     Left = 232
     Top = 0
     Width = 400
-    Height = 602
+    Height = 622
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
@@ -108,7 +136,6 @@ object Form1: TForm1
     TabOrder = 4
     Visible = False
     OnClick = Panel1Click
-    ExplicitHeight = 582
     object lblVersion: TLabel
       Left = 30
       Top = 300
@@ -1126,8 +1153,6 @@ object Form1: TForm1
       Caption = '&File'
       object Refresh1: TMenuItem
         Caption = '&Refresh'
-        Enabled = False
-        Visible = False
         OnClick = Refresh1Click
       end
       object SaveAs1: TMenuItem
