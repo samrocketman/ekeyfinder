@@ -1,5 +1,5 @@
 Enchanted Keyfinder (EK) Changelog
-Build 0.1.0.142 Beta 2 -- January xx, 2011
+Build 0.1.0.142 Beta 2 -- January 18th, 2011
 ----------------------------------
 1.	Added Refresh to File menu for when users are testing config file.
 2.	Updated feature: Modified the XP change product key feature so you don't 
