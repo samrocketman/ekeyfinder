@@ -2,10 +2,17 @@ Enchanted Keyfinder (EK) Changelog
 Build 0.1.0.xxx Beta x -- January 20th, 2011
 ----------------------------------
 
-x.	Fixed a minor UI bug when pressing cancel after clicking Load Hive
-	menu.  "Loading Hive..." did not go away.
 x.	Added support for retrieving Microsoft Office 2010 installation
 	key.
+x.	Added update support for live downloading of unstable versions.
+	Falls back to to giving the user the option to manually download
+	it.
+x.	Enhanced downloading of the keyfinder.cfg.  If it fails it falls
+	back to giving the user the option to manually download it.
+x.	Fixed bug #3163261 Load Hive doesn't work.  Now it works more
+	reliably.
+x.	Fixed a minor UI bug when pressing cancel after clicking Load Hive
+	menu.  Hive status messages did not go away.
 
 Build 0.1.0.209 Beta 3 -- January 20th, 2011
 ----------------------------------

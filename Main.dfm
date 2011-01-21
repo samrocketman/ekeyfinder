@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
-  ClientHeight = 681
+  ClientHeight = 701
   ClientWidth = 632
   Color = clWhite
   TransparentColorValue = clFuchsia
@@ -27,7 +27,7 @@ object Form1: TForm1
     Left = 230
     Top = 0
     Width = 2
-    Height = 662
+    Height = 682
     ExplicitLeft = 241
     ExplicitHeight = 250
   end
@@ -35,7 +35,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 230
-    Height = 662
+    Height = 682
     Align = alLeft
     BiDiMode = bdLeftToRight
     Constraints.MinWidth = 100
@@ -59,7 +59,7 @@ object Form1: TForm1
     Left = 232
     Top = 0
     Width = 400
-    Height = 662
+    Height = 682
     Align = alClient
     Constraints.MinHeight = 100
     Constraints.MinWidth = 100
@@ -74,7 +74,7 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 662
+    Top = 682
     Width = 632
     Height = 19
     Panels = <
@@ -92,7 +92,7 @@ object Form1: TForm1
     Left = 232
     Top = 0
     Width = 400
-    Height = 662
+    Height = 682
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
@@ -123,7 +123,7 @@ object Form1: TForm1
     Left = 232
     Top = 0
     Width = 400
-    Height = 662
+    Height = 682
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET

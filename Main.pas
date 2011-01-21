@@ -174,6 +174,7 @@ var
   sReportsPath: string;
   sLogFilePath: string;
   bLogging:  boolean;
+  followUnstable: boolean;
   bSaveSettings: boolean;
   sUserHivePath,
   sSoftwareHivePath: string;
@@ -181,6 +182,8 @@ var
 
 const
   kfVersion   = '0.1 Beta 3';
+  kfStableVersion = '';
+  kfUnstableVersion = kfVersion;
   kfDate      = 'January 20th, 2011';
   DefDelimCSV = ',';
   DefLogPath  = '.';
@@ -551,6 +554,10 @@ begin
     sReportsPath  := myINI.ReadString('Settings', 'ReportsPath', '');
     sUserHivePath := myINI.ReadString('Settings', 'UserHivePath', '');
     sSoftwareHivePath := myINI.ReadString('Settings', 'SoftwareHivePath', '');
+    if kfVersion = kfUnstableVersion then
+      followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', True)
+    else
+      followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', False);
     LoadFont(myINI, 'AppListFont', Form1.ListBox1.Font);
     LoadFont(myINI, 'KeyListFont', Form1.Memo1.Font);
   finally
@@ -576,6 +583,7 @@ begin
     myINI.WriteString('Settings', 'ReportsPath', sReportsPath);
     myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
     myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
+    myINI.WriteBool('Settings', 'UnstableUpdates', followUnstable);
     SaveFont(myINI, 'AppListFont', Form1.ListBox1.Font);
     SaveFont(myINI, 'KeyListFont', Form1.Memo1.Font);
     myINI.UpdateFile;
@@ -2024,8 +2032,14 @@ begin
       MyReg := TRegistry.Create;
       MyReg.RootKey := HKEY_LOCAL_MACHINE;
 
-      iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE'),
-        PChar(sHiveLoc2 + '\system32\config\software'));
+      //try different paths for the Backup hive
+      if FileExists(sHiveLoc2 + '\software') then
+        iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE'), PChar(sHiveLoc2 + '\software'))
+      else if FileExists(sHiveLoc2 + '\WINDOWS\system32\config\software') then
+        iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE'), PChar(sHiveLoc2 + '\WINDOWS\system32\config\software'))
+      else
+        iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE'), PChar(sHiveLoc2 + '\system32\config\software'));
+
       if iRtnCode = ERROR_SUCCESS then
       begin
         sHiveLoc := 'KF_HIVE';
@@ -2033,15 +2047,22 @@ begin
         ChangeRegistrationInfo1.Enabled := False;
         RemotePC1.Enabled := False;
         StatusBar1.Panels.Items[0].Text := 'Hive loaded';
-        ProgramInit;
+        Refresh1Click(nil);
+        //ProgramInit;
         Exit;
       end
       // try loading the backup hive 'software.sav' assuming win2k or XP
       else if iRtnCode <> ERROR_SUCCESS then
       begin
         StatusBar1.Panels.Items[0].Text := 'Trying to load backup Hive...';
-        iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_SAV'),
-          PChar(sHiveLoc2 + '\system32\config\software.sav'));
+        //try different paths
+        if FileExists(sHiveLoc2 + '\software.sav') then
+          iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_SAV'), PChar(sHiveLoc2 + '\software.sav'))
+        else if FileExists(sHiveLoc2 + '\WINDOWS\system32\config\software.sav') then
+          iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_SAV'), PChar(sHiveLoc2 + '\WINDOWS\system32\config\software.sav'))
+        else
+          iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_SAV'), PChar(sHiveLoc2 + '\system32\config\software.sav'));
+
         if iRtnCode = ERROR_SUCCESS then
         begin
           sHiveLoc := 'KF_HIVE_SAV';
@@ -2049,14 +2070,20 @@ begin
           ChangeRegistrationInfo1.Enabled := False;
           RemotePC1.Enabled := False;
           StatusBar1.Panels.Items[0].Text := 'Backup hive loaded';
-          ProgramInit;
+          Refresh1Click(nil);
+          //ProgramInit;
           Exit;
         end
         else if iRtnCode <> ERROR_SUCCESS then
         begin
           StatusBar1.Panels.Items[0].Text := 'Trying to load backup hive...';
-          iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_REGBAK'),
-            PChar(sHiveLoc2 + '\repair\software'));
+
+          //try different locations for repair
+          if FileExists(sHiveLoc2 + '\WINDOWS\repair\software') then
+            iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_REGBAK'), PChar(sHiveLoc2 + '\WINDOWS\repair\software'))
+          else
+            iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_REGBAK'), PChar(sHiveLoc2 + '\repair\software'));
+
           if iRtnCode = ERROR_SUCCESS then
           begin
             sHiveLoc := 'KF_HIVE_REGBAK';
@@ -2064,7 +2091,8 @@ begin
             ChangeRegistrationInfo1.Enabled := False;
             RemotePC1.Enabled := False;
             StatusBar1.Panels.Items[0].Text := 'Backup hive loaded';
-            ProgramInit;
+            Refresh1Click(nil);
+            //ProgramInit;
             Exit;
           end;
         end;
@@ -2104,7 +2132,9 @@ begin
       LoadHive1.Caption := rsMnuItmLoadHive;
       ChangeRegistrationInfo1.Enabled := True;
       //    RemotePC1.Enabled := True;
-      ProgramInit;
+      StatusBar1.Panels.Items[0].Text := '';
+      Refresh1Click(nil);
+      //ProgramInit;
       Exit;
     end;
     // Try the backup key too
@@ -2113,8 +2143,10 @@ begin
       sHiveLoc := 'Software';
       LoadHive1.Caption := rsMnuItmLoadHive;
       ChangeRegistrationInfo1.Enabled := True;
-      //    RemotePC1.Enabled := True;
-      ProgramInit;
+      //    RemotePC1.Enabled := True;    
+      StatusBar1.Panels.Items[0].Text := '';
+      Refresh1Click(nil);
+      //ProgramInit;
     end;
     // Try the repair key too
     if MyReg.UnLoadKey('KF_HIVE_RPR') then
@@ -2122,8 +2154,10 @@ begin
       sHiveLoc := 'Software';
       LoadHive1.Caption := rsMnuItmLoadHive;
       ChangeRegistrationInfo1.Enabled := True;
-      //    RemotePC1.Enabled := True;
-      ProgramInit;
+      //    RemotePC1.Enabled := True;    
+      StatusBar1.Panels.Items[0].Text := '';
+      Refresh1Click(nil);
+      //ProgramInit;
     end;
   finally
     MyReg.CloseKey;
@@ -2170,7 +2204,7 @@ end;
 procedure TForm1.MnuItmWebUpdateClick(Sender: TObject);
 var
   kfUpdate, cfgUpdate : Boolean;
-  CFGVer, newCFG, newVersion, kfURL, cfgURL, Section : string;
+  CFGVer, newCFG, kfStableURL, kfStableDownload, kfUnstableURL, kfUnstableDownload, StableVersion, UnstableVersion, cfgURL, Section : string;
   myINI: TINIFile;
 
 begin
@@ -2208,8 +2242,13 @@ begin
     try
       Section := 'Update Software';
       myINI := TINIFile.Create(GetTempDirectory + 'update.ini');
-      newVersion := myINI.ReadString(Section,'CurrentVersion','');
-      kfURL := myINI.ReadString(Section,'URL','');
+      //newVersion := myINI.ReadString(Section,'CurrentVersion','');
+      StableVersion := myINI.ReadString(Section,'StableVersion','');
+      kfStableURL := myINI.ReadString(Section,'StableURL','');
+      kfStableDownload := myINI.ReadString(Section,'StableDownload','');
+      UnstableVersion := myINI.ReadString(Section,'UnstableVersion','');
+      kfUnstableURL := myINI.ReadString(Section,'UnstableURL','');
+      kfUnstableDownload := myINI.ReadString(Section,'UnstableDownload','');
       newCFG := myINI.ReadString(Section,'ConfigVersion','');
       cfgURL := myINI.ReadString(Section,'ConfigPath','');
       CFGVer := RightStr(sCFGVer,Length(sCFGVer) - Pos(' ',sCFGVer));
@@ -2217,14 +2256,46 @@ begin
     finally
       myINI.Free;
     end;
-
+    //ShowMessage(UnstableVersion + sLineBreak + kfUnstableVersion);
     //Enchanted Keyfinder update check
-    if not (newVersion = kfVersion) then
+    if ((not FileExists(ChangeFileExt(Application.ExeName, '.ini'))) and (kfVersion = kfUnstableVersion)) or followUnstable then
+    begin
+      //if (there isn't an options file) and (the software is the unstable version) then automatically check for unstable updates
+      //also do this if there is an options file and unstable updates is enabled
+      kfUpdate := True;
+      if not (UnstableVersion = kfUnstableVersion) then
+      begin
+        if MessageDlg('There is a new version of Keyfinder: v' + UnstableVersion + sLineBreak + 'Download replacement update?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+        begin
+          if FileExists(ChangeFileExt(Application.ExeName, '.bak')) then
+            DeleteFile(PChar(ChangeFileExt(Application.ExeName, '.bak')));
+          RenameFile(Application.ExeName, ChangeFileExt(Application.ExeName, '.bak'));
+          DoDownload(kfUnstableDownload,ChangeFileExt(Application.ExeName, '.exe'));
+          if FileExists(ChangeFileExt(Application.ExeName, '.exe')) then
+          begin
+            ShellExecute(Handle, nil, PChar(ChangeFileExt(Application.ExeName, '.exe')), nil, nil, SW_NORMAL);
+            Close;
+          end
+          else
+          begin
+            RenameFile(ChangeFileExt(Application.ExeName, '.bak'), ChangeFileExt(Application.ExeName, '.exe'));
+            if MessageDlg('The update seems to have failed.  Do you want to visit the download page?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+              ShellExecute(Handle, nil, PChar(kfUnstableURL), nil, nil, SW_NORMAL);
+
+          end;
+        end;
+      end;
+      
+    end;
+
+    //old update method
+    {if not (newVersion = kfVersion) then
     begin
       if MessageDlg('There is a new version of Keyfinder: v' + newVersion + sLineBreak + 'Do you want to visit the download page?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
         ShellExecute(Handle, nil, PChar(kfURL), nil, nil, SW_NORMAL);
       kfUpdate := True;
-    end;
+
+    end;}
 
 
     //keyfinder.cfg update check
@@ -2245,6 +2316,13 @@ begin
         begin
           MessageDlg( 'Success!' , mtInformation , [mbOK], 0);
           Refresh1Click(nil);
+        end
+        else
+        begin
+          if MessageDlg('Automatic update of keyfinder.cfg seems to have failed.' + sLineBreak + 'Would you like to try to manually download the new config?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+          begin
+            ShellExecute(Handle, nil, PChar(cfgURL), nil, nil, SW_NORMAL);
+          end;
         end;
       cfgUpdate := True;
     end
@@ -2273,8 +2351,7 @@ end;
 
 procedure TForm1.Label7Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://sourceforge.net/projects/keyfinder/'),
-    nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar('http://sourceforge.net/projects/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
 procedure TForm1.Label8Click(Sender: TObject);
