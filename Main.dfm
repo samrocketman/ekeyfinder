@@ -54,7 +54,6 @@ object Form1: TForm1
     ShowHint = False
     TabOrder = 0
     OnClick = ListBox1Click
-    ExplicitHeight = 622
   end
   object Memo1: TMemo
     Left = 232
@@ -72,7 +71,6 @@ object Form1: TForm1
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
-    ExplicitHeight = 622
   end
   object StatusBar1: TStatusBar
     Left = 0
@@ -89,7 +87,6 @@ object Form1: TForm1
       item
         Width = 50
       end>
-    ExplicitTop = 622
   end
   object RefreshPanel: TPanel
     Left = 232
@@ -108,7 +105,6 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 5
     Visible = False
-    ExplicitHeight = 622
     object lblRefresh: TLabel
       Left = 88
       Top = 50
@@ -141,7 +137,6 @@ object Form1: TForm1
     TabOrder = 4
     Visible = False
     OnClick = Panel1Click
-    ExplicitHeight = 622
     object lblVersion: TLabel
       Left = 30
       Top = 300
@@ -1631,7 +1626,6 @@ object Form1: TForm1
           FFFF00FFFF00FFFF00FF78483678483678483678483678483678483678483678
           4836FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
         Caption = 'Check for &Updates'
-        Enabled = False
         OnClick = MnuItmWebUpdateClick
       end
       object N4: TMenuItem

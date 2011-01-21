@@ -30,8 +30,7 @@ var
 
 implementation
 
-uses
-  Main;
+uses Main;
 
 {$R *.dfm}
 

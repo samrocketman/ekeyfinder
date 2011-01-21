@@ -11,5 +11,7 @@
     <Transaction>2011/01/17 15:19:05.296.dfm,C:\Documents and Settings\Administrator\Desktop\keyfinder\Unit2.dfm=C:\Documents and Settings\Administrator\Desktop\keyfinder\options.dfm</Transaction>
     <Transaction>2011/01/17 15:43:46.218.pas,C:\Documents and Settings\Administrator\Desktop\keyfinder\Unit5.pas=C:\Documents and Settings\Administrator\Desktop\keyfinder\WinXPKey.pas</Transaction>
     <Transaction>2011/01/17 15:43:46.234.dfm,C:\Documents and Settings\Administrator\Desktop\keyfinder\Unit5.dfm=C:\Documents and Settings\Administrator\Desktop\keyfinder\WinXPKey.dfm</Transaction>
+    <Transaction>2011/01/20 18:43:06.860.pas,C:\Documents and Settings\Administrator\Desktop\keyfinder\Unit6.pas=C:\Documents and Settings\Administrator\Desktop\keyfinder\update.pas</Transaction>
+    <Transaction>2011/01/20 18:43:06.875.dfm,C:\Documents and Settings\Administrator\Desktop\keyfinder\Unit6.dfm=C:\Documents and Settings\Administrator\Desktop\keyfinder\update.dfm</Transaction>
   </Transactions>
 </BorlandProject>

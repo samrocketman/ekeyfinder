@@ -190,6 +190,9 @@ begin
   Form2.OptChkBxErrLogClick(Form2);
 end;
 
+//old method for storing font settings.
+//kept for archive purposes, do not reinstate
+//keyfinder should remain portable
 {function SaveFont1(F_Font: TFont): boolean;
 var
   FontInfo: Windows.TLogFont; // font definition structure

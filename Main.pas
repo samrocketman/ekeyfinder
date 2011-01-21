@@ -205,7 +205,8 @@ function IsNumeric(Value: string; const AllowFloat: boolean): boolean;
 implementation
 
 uses
-  CommDlg, Dlgs, ShlObj, license, options, registration, remote, WinXPKey;
+  CommDlg, Dlgs, ShlObj, license, options, registration, remote, WinXPKey,
+  update;
 
 resourcestring
   rsSetPrivUserNotHaveAccess = 'The current user does not have the required ' +
@@ -2097,8 +2098,9 @@ end;
 
 procedure TForm1.MnuItmWebUpdateClick(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar(
-    'http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
+  //ShellExecute(Handle, nil, PChar('http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
+  Form6.Visible := True;
+  Form1.Enabled := False;
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -2200,6 +2202,7 @@ begin
     Form3.FormStyle      := fsStayOnTop;
     Form4.FormStyle      := fsStayOnTop;
     Form5.FormStyle      := fsStayOnTop;
+    Form6.FormStyle      := fsStayOnTop;
   end
   else
   begin
@@ -2208,7 +2211,8 @@ begin
     Form2.FormStyle      := fsNormal;
     Form3.FormStyle      := fsNormal;
     Form4.FormStyle      := fsNormal;
-    Form5.FormStyle      := fsNormal;
+    Form5.FormStyle      := fsNormal; 
+    Form6.FormStyle      := fsNormal;
   end;
 end;
 

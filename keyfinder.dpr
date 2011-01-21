@@ -51,7 +51,8 @@ uses
   registration in 'registration.pas' {Form3},
   remote in 'remote.pas' {Form4},
   license in 'license.pas' {OKBottomDlg},
-  WinXPKey in 'WinXPKey.pas' {Form5};
+  WinXPKey in 'WinXPKey.pas' {Form5},
+  update in 'update.pas' {Form6};
 
 {$R *.res}
 
@@ -79,5 +80,6 @@ begin
   Application.CreateForm(TForm4, Form4);
   Application.CreateForm(TOKBottomDlg, OKBottomDlg);
   Application.CreateForm(TForm5, Form5);
+  Application.CreateForm(TForm6, Form6);
   Application.Run;
 end.
