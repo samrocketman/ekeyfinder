@@ -26,7 +26,7 @@ uses
   Classes, ComCtrls, Controls, Dialogs, ExtCtrls, Forms,
   Graphics, Grids,
   IniFiles, jpeg, Menus, Messages, Printers, Registry, ShellAPI, StdCtrls,
-  StrUtils, SysUtils, ValEdit, Variants, Windows, XPMan;
+  StrUtils, SysUtils, ValEdit, Variants, Windows, XPMan, ExtActns;
 
 type
   TForm1 = class(TForm)
@@ -2097,10 +2097,22 @@ begin
 end;
 
 procedure TForm1.MnuItmWebUpdateClick(Sender: TObject);
+var
+  test : Integer;
 begin
+  //future update dialog
   //ShellExecute(Handle, nil, PChar('http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
-  Form6.Visible := True;
-  Form1.Enabled := False;
+  //Form6.Visible := True;
+  //Form1.Enabled := False;
+
+  //Temporary update dialog
+  //yes=6 and no=7
+  if MessageDlg('This will connect to the internet to check for any Keyfinder or cfg updates.  Do you want to continue?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+  begin
+    MessageDlg( 'success' , mtInformation , [mbOK], 0);
+  end;
+  
+
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);

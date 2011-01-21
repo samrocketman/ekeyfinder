@@ -15,7 +15,6 @@ object Form6: TForm6
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Stage1: TLabel
@@ -740,7 +739,6 @@ object Form6: TForm6
     Top = 27
     Width = 249
     Height = 17
-    Position = 50
     TabOrder = 0
   end
 end
