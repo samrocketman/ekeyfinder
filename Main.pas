@@ -181,7 +181,7 @@ var
   bWin2k, bWinXP, bVista, bWinNT4: boolean;
 
 const
-  kfVersion   = '0.1 Beta 3';
+  kfVersion   = '0.1 Beta 4';
   kfStableVersion = '';
   kfUnstableVersion = kfVersion;
   kfDate      = 'January 20th, 2011';
@@ -2262,9 +2262,9 @@ begin
     begin
       //if (there isn't an options file) and (the software is the unstable version) then automatically check for unstable updates
       //also do this if there is an options file and unstable updates is enabled
-      kfUpdate := True;
       if not (UnstableVersion = kfUnstableVersion) then
       begin
+        kfUpdate := True;
         if MessageDlg('There is a new version of Keyfinder: v' + UnstableVersion + sLineBreak + 'Download replacement update?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
         begin
           if FileExists(ChangeFileExt(Application.ExeName, '.bak')) then
@@ -2301,17 +2301,8 @@ begin
     //keyfinder.cfg update check
     if not FileExists(ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
     begin
-      if MessageDlg('You don''t appear to have a keyfinder.cfg file.  This will allow you to detect the keys of more software.' + sLineBreak + 'Do you want the latest version?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
-        if DoDownload(cfgURL,ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
-        begin
-          MessageDlg( 'Success!' , mtInformation , [mbOK], 0);
-          Refresh1Click(nil);
-        end;
       cfgUpdate := True;
-    end
-    else if not (CFGVer = newCFG) then
-    begin
-      if MessageDlg('There is a new version of keyfinder.cfg: ' + newCFG + '  This will allow you to detect the keys of more software.' + sLineBreak + 'Do you want the latest version?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+      if MessageDlg('You don''t appear to have a keyfinder.cfg file.  This will allow you to detect the keys of more software.' + sLineBreak + 'Do you want the latest version?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
         if DoDownload(cfgURL,ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
         begin
           MessageDlg( 'Success!' , mtInformation , [mbOK], 0);
@@ -2324,10 +2315,28 @@ begin
             ShellExecute(Handle, nil, PChar(cfgURL), nil, nil, SW_NORMAL);
           end;
         end;
+    end
+    else if not (CFGVer = newCFG) then
+    begin
       cfgUpdate := True;
+      if MessageDlg('There is a new version of keyfinder.cfg: ' + newCFG + sLineBreak + 'This will allow you to detect the keys of more software.' + sLineBreak + 'Do you want the latest version?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+        if DoDownload(cfgURL,ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
+        begin
+          MessageDlg( 'Success!' , mtInformation , [mbOK], 0);
+          Refresh1Click(nil);
+        end
+        else
+        begin
+          if MessageDlg('Automatic update of keyfinder.cfg seems to have failed.' + sLineBreak + 'Would you like to try to manually download the new config?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+          begin
+            ShellExecute(Handle, nil, PChar(cfgURL), nil, nil, SW_NORMAL);
+          end;
+        end;
     end
     else
     begin
+      //this statement executes if there was a software update but I still want
+      //to let the user know that their config is up to date.
       if kfUpdate then
         MessageDlg( 'You have the latest keyfinder.cfg.' , mtInformation , [mbOK], 0);
     end;

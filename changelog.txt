@@ -1,17 +1,16 @@
 Enchanted Keyfinder (EK) Changelog
-Build 0.1.0.xxx Beta x -- January 20th, 2011
+Build 0.1.0.260 Beta 4 -- January 21st, 2011
 ----------------------------------
-
-x.	Added support for retrieving Microsoft Office 2010 installation
+1.	Added support for retrieving Microsoft Office 2010 installation
 	key.
-x.	Added update support for live downloading of unstable versions.
+2.	Added update support for live downloading of unstable versions.
 	Falls back to to giving the user the option to manually download
 	it.
-x.	Enhanced downloading of the keyfinder.cfg.  If it fails it falls
+3.	Enhanced downloading of the keyfinder.cfg.  If it fails it falls
 	back to giving the user the option to manually download it.
-x.	Fixed bug #3163261 Load Hive doesn't work.  Now it works more
+4.	Fixed bug #3163261 Load Hive doesn't work.  Now it works more
 	reliably.
-x.	Fixed a minor UI bug when pressing cancel after clicking Load Hive
+5.	Fixed a minor UI bug when pressing cancel after clicking Load Hive
 	menu.  Hive status messages did not go away.
 
 Build 0.1.0.209 Beta 3 -- January 20th, 2011
@@ -23,13 +22,14 @@ Build 0.1.0.209 Beta 3 -- January 20th, 2011
 Build 0.1.0.142 Beta 2 -- January 18th, 2011
 ----------------------------------
 1.	Added Refresh to File menu for when users are testing config file.
-2.	Updated feature: Modified the XP change product key feature so you don't 
-	have to restart keyfinder to see the updated key.
+2.	Updated feature: Modified the XP change product key feature so you 
+	don't have to restart keyfinder to see the updated key.
 3.	Updated About dialog with new logo and information.
-4.	Fixed bug where EK would fail from invalide data type when reading strings
-	from the registry.  This would cause an incomplete list of found keys.
-5.	Fixed bug where programs with blank keys, such as Half-Life, would show up
-	even when it is not installed.
+4.	Fixed bug where EK would fail from invalide data type when reading 
+	strings from the registry.  This would cause an incomplete list of 
+	found keys.
+5.	Fixed bug where programs with blank keys, such as Half-Life, would 
+	show up even when it is not installed.
 6.	Updated cfg file.
 
 Build 0.1.0.84 Beta -- January 18th, 2011
@@ -39,12 +39,15 @@ Build 0.1.0.84 Beta -- January 18th, 2011
 Build 0.1.0.82 Beta -- January 17th, 2011
 ----------------------------------
 1.	New Feature: Windows XP Product Key can be changed using EK.
-2.	New Feature: All settings are now saved and loaded from an INI file.  Now
-	EK is portable.
-3.	Changed Feature: Settings dialog has changed.  Now settings auto-save to
-	an INI file.  To restore default settings, simply delete the INI file.
-4.	Fixed bug: where Loading fonts from INI file did not work with Key list.
-5.	Fixed bug: where settings were not correctly loading Log information.
+2.	New Feature: All settings are now saved and loaded from an INI 
+	file.  Now EK is portable.
+3.	Changed Feature: Settings dialog has changed.  Now settings 
+	auto-save to an INI file.  To restore default settings, simply 
+	delete the INI file.
+4.	Fixed bug: where Loading fonts from INI file did not work with Key 
+	list.
+5.	Fixed bug: where settings were not correctly loading Log 
+	information.
 6.	Thoroughly tested loading and saving of settings.
 
 
@@ -54,119 +57,6 @@ Build 0.1.0.82 Beta -- January 17th, 2011
 
 
 
-
---- Old changelog from Magical Jelly Bean Keyfinder
-Build 2.0.8.01 -- March 29, 2010
-----------------------------------
- - Fixed - Properly Reading keys from Registry under 64-bit systems (Wow6432Node)
- - Fixed - Program no longer omited as long as one registry item exists for that
-           program even if other registry items do not.
- - Added - Determining if there is a wildcard in the config file and finding the
-           key associated with it. EG. Nero
- - Added - Computer Name to be displayed with Operating System Information 
- - Added - More program keys detected.
-
-Build 2.0.7.50 -- September 10, 2009
-----------------------------------
- - Fixed. Photoshop7 serial should not be decoded.
- - Added more program keys detected.
-
-Build 2.0.7.13 -- February 03, 2009
-----------------------------------
- - Fixed problem with displaying Media Center edition when running in Vista.
-
-Build 2.0.7.01 -- February 03, 2009
-----------------------------------
- - Added. Microsoft Product Part Number is displayed if known.
-
-Build 2.0.6.36 -- January 23, 2009
-----------------------------------
- - Added. Keyfinder will try load backup copies of Windows hives to find 
-   keys in the registry.
-
-Build 2.0.6.33 -- December 10, 2008
------------------------------------
- - Fixed buffer overflow when MS CD Key is corrupt in the registry.
- 
-Build 2.0.6.30 -- December 09, 2008
------------------------------------
- - Added. Keyfinder now uses the Operating System locale listseperator 
-   character if none specified. This helps with importing CSV files created 
-   by keyfinder. 
- 
-Build 2.0.6.25 -- December 08, 2008
------------------------------------
- - Fixed program hang when /close is only command line paramater.
- - Added over 60 more keys to the detection list
-
-Build 2.0.6.20 -- November 28, 2008
------------------------------------
- - Added a status line counter for number of keys loaded and detected.
- 
-Build 2.0.6.17 -- November 21, 2008
------------------------------------
- - Added reading of numeric key values from registry.
- 
-Build 2.0.6.06 -- November 02, 2008
-----------------------------------
- - Fixed 'Range check error' on Windows 2008.
- - Possible fix for reading keys on 64 bit Windows
- - Fixed Adobe CD Key format.
-
-Build 2.0.6.01 -- September 25, 2008
-------------------------------------
- - Added a Update web link on the help menu.
- - Added check for /close being the only parameter on the command line.
-
-Build 2.0.5.21 -- September 19, 2008
-------------------------------------
- - Fixed command line switches were ignored if typed in uppercase or mixed case.
- - Revised command line switch decriptions in README.
-
-Build 2.0.5.20 -- September 9, 2008
------------------------------------
- - Added check for invalid Windows XP Product ID's.
-
-Build 2.0.5.16 -- September 2, 2008
------------------------------------
- - Added the SourceForge web link to the help menu.
- 
-Build 2.0.5.14 Beta 2 -- September 1, 2008
-------------------------------------------
- - Load Hive menu option fixed.
- - Added an Options menu item.
-
-Build 2.0.5.10 Beta 1 -- August 25, 2008
-----------------------------------------
- - Fixed Fonts dialog menu option.
- - Added Options dialog which will display and allow changes to some of the
-   command line options.
- 
-Build 2.0.4.05 -- August 22, 2008
----------------------------------
- - Range check error at startup fixed. Blank lines in keyfinder.cfg are now
-   ignored.
- - Added XP Manifest resource.
- - Small UI update.
- - Fixed bug when calling SaveDialog. The file extension wasn't changing when
-   selecting different file types.
- 
-Build 2.0.3.31 -- August 19, 2008
----------------------------------
- - Added Version resource.
- - Changed file names to fix unknown namespace issue in Delphi compiler.
- - CSV output corruption fix.
- - Keyfinder runs on NT 4 OS correctly now without crashing.
- 
-Build 2.0.3.01 -- August 13, 2008
----------------------------------
- - Font changes are saved under HKCU now.
- - CSV output format enhanced.
- - New delimiter command line  switch "/delim" for csv output in other countries.
- - Ignore spaces at end of lines in keyfinder.cfg preventing the entire line
-   from being ignored by th program.
- - Minimize the application if "/close" parameter given.
- - Display OS Service Pack level, Registered Name and Organisation.
- - Display Product ID for Microsoft products found.
- - Display keys for Windows Defender and Internet Explorer if installed.
- 
+Enchanted Keyfinder base was built upon 
+Magical Jelly Bean Keyfinder 2.0.8 --- Old changelog from 
+http://sourceforge.net/projects/keyfinder/files/Old%20Releases/
