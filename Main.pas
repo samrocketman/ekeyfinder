@@ -206,8 +206,7 @@ function IsNumeric(Value: string; const AllowFloat: boolean): boolean;
 implementation
 
 uses
-  CommDlg, Dlgs, ShlObj, license, options, registration, remote, WinXPKey,
-  update, ActnList;
+  CommDlg, Dlgs, ShlObj, license, options, registration, remote, WinXPKey, ActnList;
 
 resourcestring
   rsSetPrivUserNotHaveAccess = 'The current user does not have the required ' +
@@ -2145,6 +2144,22 @@ begin
   //ShellExecute(Handle, nil, PChar('http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
   //Form6.Visible := True;
   //Form1.Enabled := False;
+  {EXE:=ParamStr(0);
+  BAK:=ChangeFileExt(EXE,'.BAK');
+  IF FileExists(BAK) THEN DeleteFile(BAK);
+  <If Update Available and ready for download>
+    RenameFile(EXE,BAK);
+    <Save downloaded file as EXE>
+    <Execute EXE>
+    ExitProcess(0)
+  <End>
+  Comment by Keld R. Hansen [http://www.heartware.dk] on May 29, 11:52 }
+
+  //This works in renaming the current executable!
+  //RenameFile(Application.ExeName, ChangeFileExt(Application.ExeName, '.bak'))
+  //This does not work in deleting the current running executable
+  //DeleteFile( PChar( Application.ExeName ) );
+
 
   //Temporary update dialog
   //yes=6 and no=7
@@ -2209,7 +2224,7 @@ begin
       MessageDlg( 'Nothing to update.' , mtInformation , [mbOK], 0);
     if FileExists(GetTempDirectory + 'update.ini') then
       DeleteFile( PChar(GetTempDirectory + 'update.ini') );
-  end;
+  end;       
   
 
 end;
@@ -2313,7 +2328,7 @@ begin
     Form3.FormStyle      := fsStayOnTop;
     Form4.FormStyle      := fsStayOnTop;
     Form5.FormStyle      := fsStayOnTop;
-    Form6.FormStyle      := fsStayOnTop;
+    //Form6.FormStyle      := fsStayOnTop;
   end
   else
   begin
@@ -2323,7 +2338,7 @@ begin
     Form3.FormStyle      := fsNormal;
     Form4.FormStyle      := fsNormal;
     Form5.FormStyle      := fsNormal; 
-    Form6.FormStyle      := fsNormal;
+    //Form6.FormStyle      := fsNormal;
   end;
 end;
 
