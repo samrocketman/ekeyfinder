@@ -1707,6 +1707,40 @@ begin
       end;
     end;
   end;
+
+  // Office 2010
+  if MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\14.0\Registration') then
+  begin
+    MyReg.GetKeyNames(blah);
+    MyReg.CloseKey;
+    for I := 1 to blah.Count do
+    begin
+      J := I - 1;
+      K := blah.Strings[J];
+      if LeftStr(K, 1) = '{' then
+      begin
+        MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\14.0\Registration\' + K);
+        if MyReg.ValueExists('DigitalProductID') then
+        begin
+          if MyReg.ReadString('ProductName') <> '' then
+            ListBox1.Items.Add(MyReg.ReadString('ProductName'))
+          else
+          begin
+            MyReg.CloseKey;
+            MyReg.OpenKeyReadOnly(sHiveLoc +
+              '\Microsoft\Windows\CurrentVersion\Uninstall\' + K);
+            if MyReg.ReadString('DisplayName') <> '' then
+              ListBox1.Items.Add(MyReg.ReadString('DisplayName'))
+            else
+              ListBox1.Items.Add('Unidentifiable Office 2010 Installation');
+          end;
+          ListBox2.Items.Add('Office14' + K);
+        end;
+        MyReg.CloseKey;
+      end;
+    end;
+  end;
+
   blah.Free;
   MyReg.Free;
 end;
