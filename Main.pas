@@ -1335,14 +1335,14 @@ end;
 
 procedure TForm1.Refresh1Click(Sender: TObject);
 begin
-  //Refresh the program     
+  //Refresh the program
   lblRefresh.Top := Round( Height/2 - lblRefresh.Height/2 );
   lblRefresh.Left := Round( Width/2 - lblRefresh.Width/2 );
   RefreshPanel.Visible := True;
   RefreshPanel.Height := Height;
   RefreshPanel.Width := Width;
   ListBox1.Visible := False;
-  Memo1.Visible := False; 
+  Memo1.Visible := False;
   Form1.Enabled := False;
   ProgramInit;
   Form1.Enabled := True;
@@ -2096,20 +2096,114 @@ begin
   end;
 end;
 
+{Get path to temp DIR from Windows Env Variable}
+function GetTempDirectory: String;
+var
+  tempFolder: array[0..MAX_PATH] of Char;
+begin
+  GetTempPath(MAX_PATH, @tempFolder);
+  result := StrPas(tempFolder);
+end;
+
+{download a remote file to a local file}
+function DoDownload(const rFile: string;const lFile: string): Boolean;
+begin
+  Result := True;
+
+  with TDownloadURL.Create(nil) do
+  try
+    URL := rFile;
+    Filename := lFile;
+    //downloader.OnDownloadProgress := Form6.URL_OnDownloadProgress;
+    try
+      ExecuteTarget(nil);
+    except
+      on E : Exception do
+      begin
+        ShowMessage(E.Message);
+        Result := False;
+      end;
+          //MessageDlg('Can''t read keyfinder.cfg. Error: ' + E.Message, mtError, [mbOK], 0);
+      //Result := False;
+    end;
+  finally
+    Free;
+  end;
+end;
+
 procedure TForm1.MnuItmWebUpdateClick(Sender: TObject);
 var
-  test : Integer;
+  test : Boolean;
+  CFGVer : string;
+  newCFG : string;
+  newVersion : string;
+  myINI: TINIFile;
+  kfURL : string
 begin
   //future update dialog
   //ShellExecute(Handle, nil, PChar('http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
   //Form6.Visible := True;
   //Form1.Enabled := False;
 
+  {var
+  myINI: TINIFile;
+begin
+  try
+    myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
+    myINI.WriteString('Settings', 'LogFilePath', sLogFilePath);
+    myINI.WriteBool('Settings', 'Logging', bLogging);
+    myINI.WriteString('Settings', 'CSVDelim', sDelimCSV);
+    myINI.WriteBool('Settings', 'AppendTop', bAppendTop);
+    myINI.WriteBool('Settings', 'AutoSave', bAutoSave);
+    myINI.WriteBool('Settings', 'LoadHive', bAutoHive);
+    myINI.WriteBool('Settings', 'LogOverwrite', bLogOverwrite);
+    myINI.WriteBool('Settings', 'PrintKeys', bToBePrinted);
+    myINI.WriteString('Settings', 'SavePath', sAutoSaveDir);
+    myINI.WriteString('Settings', 'ReportsPath', sReportsPath);
+    myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
+    myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
+    SaveFont(myINI, 'AppListFont', Form1.ListBox1.Font);
+    SaveFont(myINI, 'KeyListFont', Form1.Memo1.Font);
+    myINI.UpdateFile;
+  finally
+    myINI.Free;
+  end;}
+
   //Temporary update dialog
   //yes=6 and no=7
   if MessageDlg('This will connect to the internet to check for any Keyfinder or cfg updates.  Do you want to continue?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
   begin
-    MessageDlg( 'success' , mtInformation , [mbOK], 0);
+    //download update.ini to parse version information
+    if not DoDownload('http://keyfinder.sourceforge.net/update.ini',GetTempDirectory + 'update.ini') then
+      Exit;
+    try
+      myINI := TINIFile.Create(GetTempDirectory + 'update.ini');
+      myINI.ReadString('Update Software','CurrentVersion');
+    finally
+      myINI.Free;
+    end;
+
+
+    //keyfinder.cfg update
+    if not FileExists(ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
+    begin
+      if MessageDlg('You don''t appear to have a keyfinder.cfg file.  This will allow you to detect the keys of more software.  Do you want the latest version?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+        if DoDownload('http://keyfinder.sourceforge.net/keyfinder.cfg',ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
+        begin
+          MessageDlg( 'Success!' , mtInformation , [mbOK], 0);
+          Refresh1Click(nil);
+        end
+        else
+          MessageDlg( 'fail' , mtInformation , [mbOK], 0);
+    end;
+    {i := Pos(' ', CurrentLine);
+              s := TrimRight(RightStr(CurrentLine, Length(CurrentLine) - i));
+              i := Pos(' ', s) + 1;
+              CurrentLine := TrimRight(LeftStr(s, +i));}
+    CFGVer := RightStr(sCFGVer,Length(sCFGVer) - Pos(' ',sCFGVer));
+    CFGVer := RightStr(CFGVer,Length(CFGVer) - Pos(' ',CFGVer));
+
+    MessageDlg( CFGVer , mtInformation , [mbOK], 0);
   end;
   
 
