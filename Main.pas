@@ -180,14 +180,15 @@ var
   bWin2k, bWinXP, bVista, bWinNT4: boolean;
 
 const
-  kfVersion   = '0.1 Beta 2';
-  kfDate      = 'January 18th, 2011';
+  kfVersion   = '0.1 Beta 3';
+  kfDate      = 'January 20th, 2011';
   DefDelimCSV = ',';
   DefLogPath  = '.';
   KEY_WOW64_64KEY = $0100;
 
   SE_PRIVILEGE_DISABLED = 0;
   SE_RESTORE_NAME = 'SeRestorePrivilege';
+  sLineBreak = {$IFDEF LINUX} AnsiChar(#10) {$ENDIF} {$IFDEF MSWINDOWS} AnsiString(#13#10) {$ENDIF};
 
 function IsWow64: boolean;
 function BrowseForFolder(var Foldr: string; const Title: string): boolean;
@@ -206,7 +207,7 @@ implementation
 
 uses
   CommDlg, Dlgs, ShlObj, license, options, registration, remote, WinXPKey,
-  update;
+  update, ActnList;
 
 resourcestring
   rsSetPrivUserNotHaveAccess = 'The current user does not have the required ' +
@@ -2117,14 +2118,14 @@ begin
     //downloader.OnDownloadProgress := Form6.URL_OnDownloadProgress;
     try
       ExecuteTarget(nil);
+      //Execute
+      //ExecuteAction(Execute);
     except
       on E : Exception do
       begin
         ShowMessage(E.Message);
         Result := False;
       end;
-          //MessageDlg('Can''t read keyfinder.cfg. Error: ' + E.Message, mtError, [mbOK], 0);
-      //Result := False;
     end;
   finally
     Free;
@@ -2133,77 +2134,79 @@ end;
 
 procedure TForm1.MnuItmWebUpdateClick(Sender: TObject);
 var
-  test : Boolean;
-  CFGVer : string;
-  newCFG : string;
-  newVersion : string;
+  kfUpdate, cfgUpdate : Boolean;
+  CFGVer, newCFG, newVersion, kfURL, cfgURL, Section : string;
   myINI: TINIFile;
-  kfURL : string
+
 begin
   //future update dialog
   //ShellExecute(Handle, nil, PChar('http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
   //Form6.Visible := True;
   //Form1.Enabled := False;
 
-  {var
-  myINI: TINIFile;
-begin
-  try
-    myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
-    myINI.WriteString('Settings', 'LogFilePath', sLogFilePath);
-    myINI.WriteBool('Settings', 'Logging', bLogging);
-    myINI.WriteString('Settings', 'CSVDelim', sDelimCSV);
-    myINI.WriteBool('Settings', 'AppendTop', bAppendTop);
-    myINI.WriteBool('Settings', 'AutoSave', bAutoSave);
-    myINI.WriteBool('Settings', 'LoadHive', bAutoHive);
-    myINI.WriteBool('Settings', 'LogOverwrite', bLogOverwrite);
-    myINI.WriteBool('Settings', 'PrintKeys', bToBePrinted);
-    myINI.WriteString('Settings', 'SavePath', sAutoSaveDir);
-    myINI.WriteString('Settings', 'ReportsPath', sReportsPath);
-    myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
-    myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
-    SaveFont(myINI, 'AppListFont', Form1.ListBox1.Font);
-    SaveFont(myINI, 'KeyListFont', Form1.Memo1.Font);
-    myINI.UpdateFile;
-  finally
-    myINI.Free;
-  end;}
-
   //Temporary update dialog
   //yes=6 and no=7
   if MessageDlg('This will connect to the internet to check for any Keyfinder or cfg updates.  Do you want to continue?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
   begin
+    kfUpdate := False;
+    cfgUpdate := False;
+
     //download update.ini to parse version information
     if not DoDownload('http://keyfinder.sourceforge.net/update.ini',GetTempDirectory + 'update.ini') then
       Exit;
     try
+      Section := 'Update Software';
       myINI := TINIFile.Create(GetTempDirectory + 'update.ini');
-      myINI.ReadString('Update Software','CurrentVersion');
+      newVersion := myINI.ReadString(Section,'CurrentVersion','');
+      kfURL := myINI.ReadString(Section,'URL','');
+      newCFG := myINI.ReadString(Section,'ConfigVersion','');
+      cfgURL := myINI.ReadString(Section,'ConfigPath','');
+      CFGVer := RightStr(sCFGVer,Length(sCFGVer) - Pos(' ',sCFGVer));
+      CFGVer := RightStr(CFGVer,Length(CFGVer) - Pos(' ',CFGVer));
     finally
       myINI.Free;
     end;
 
+    //Enchanted Keyfinder update check
+    if not (newVersion = kfVersion) then
+    begin
+      if MessageDlg('There is a new version of Keyfinder: v' + newVersion + sLineBreak + 'Do you want to visit the download page?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+        ShellExecute(Handle, nil, PChar(kfURL), nil, nil, SW_NORMAL);
+      kfUpdate := True;
+    end;
 
-    //keyfinder.cfg update
+
+    //keyfinder.cfg update check
     if not FileExists(ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
     begin
-      if MessageDlg('You don''t appear to have a keyfinder.cfg file.  This will allow you to detect the keys of more software.  Do you want the latest version?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
-        if DoDownload('http://keyfinder.sourceforge.net/keyfinder.cfg',ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
+      if MessageDlg('You don''t appear to have a keyfinder.cfg file.  This will allow you to detect the keys of more software.' + sLineBreak + 'Do you want the latest version?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+        if DoDownload(cfgURL,ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
         begin
           MessageDlg( 'Success!' , mtInformation , [mbOK], 0);
           Refresh1Click(nil);
-        end
-        else
-          MessageDlg( 'fail' , mtInformation , [mbOK], 0);
+        end;
+      cfgUpdate := True;
+    end
+    else if not (CFGVer = newCFG) then
+    begin
+      if MessageDlg('There is a new version of keyfinder.cfg: ' + newCFG + '  This will allow you to detect the keys of more software.' + sLineBreak + 'Do you want the latest version?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+        if DoDownload(cfgURL,ExtractFilePath(Application.ExeName) + 'keyfinder.cfg') then
+        begin
+          MessageDlg( 'Success!' , mtInformation , [mbOK], 0);
+          Refresh1Click(nil);
+        end;
+      cfgUpdate := True;
+    end
+    else
+    begin
+      if kfUpdate then
+        MessageDlg( 'You have the latest keyfinder.cfg.' , mtInformation , [mbOK], 0);
     end;
-    {i := Pos(' ', CurrentLine);
-              s := TrimRight(RightStr(CurrentLine, Length(CurrentLine) - i));
-              i := Pos(' ', s) + 1;
-              CurrentLine := TrimRight(LeftStr(s, +i));}
-    CFGVer := RightStr(sCFGVer,Length(sCFGVer) - Pos(' ',sCFGVer));
-    CFGVer := RightStr(CFGVer,Length(CFGVer) - Pos(' ',CFGVer));
 
-    MessageDlg( CFGVer , mtInformation , [mbOK], 0);
+    if not (kfUpdate or cfgUpdate) then
+      MessageDlg( 'Nothing to update.' , mtInformation , [mbOK], 0);
+    if FileExists(GetTempDirectory + 'update.ini') then
+      DeleteFile( PChar(GetTempDirectory + 'update.ini') );
   end;
   
 

@@ -1,7 +1,9 @@
 Enchanted Keyfinder (EK) Changelog
-Build 0.1.0.142 Beta 2 -- January 18th, 2011
+Build 0.1.0.209 Beta 3 -- January 20th, 2011
 ----------------------------------
-x.	Added icons to the menus
+1.	Added icons to the menus.
+2.	Implmented online updates to ease the process of checking for a new
+	version.
 
 Build 0.1.0.142 Beta 2 -- January 18th, 2011
 ----------------------------------
