@@ -1,4 +1,9 @@
 Enchanted Keyfinder (EK) Changelog
+Build 0.1.0.xxx Beta x -- January 20th, 2011
+----------------------------------
+x.	Fixed a minor UI bug when pressing cancel after clicking Load Hive
+	menu.  "Loading Hive..." did not go away.
+
 Build 0.1.0.209 Beta 3 -- January 20th, 2011
 ----------------------------------
 1.	Added icons to the menus.

@@ -2052,7 +2052,9 @@ begin
       RevokePrivilege(SE_RESTORE_NAME);
       bAutoHive := False;  // Turn off autohive for next time through.
     end;
-    end;
+  end
+  else
+    StatusBar1.Panels.Items[0].Text := '';
 end;
 
 procedure TForm1.UnLoadHive;
