@@ -66,7 +66,7 @@ type
   end;
 
 var
-  Form2: TForm2;
+  frm_Options: TForm2;
 
 implementation
 
@@ -77,31 +77,31 @@ uses
 
 procedure TForm2.Button1Click(Sender: TObject);
 begin
-  Form1.FontDialog.Font := Form1.ListBox1.Font;
-  Form1.FontDialog.Execute;
-  Form1.ListBox1.Font := Form1.FontDialog.Font;
+  frm_MainWindow.FontDialog.Font := frm_MainWindow.ListBox1.Font;
+  frm_MainWindow.FontDialog.Execute;
+  frm_MainWindow.ListBox1.Font := frm_MainWindow.FontDialog.Font;
   //Button1.Font := Form1.ListBox1.Font;
-  LblAppList.Font := Form1.ListBox1.Font;
+  LblAppList.Font := frm_MainWindow.ListBox1.Font;
 end;
 
 procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form1.Enabled := True;
+  frm_MainWindow.Enabled := True;
 end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-  Label2.Font     := Form1.ListBox1.Font;
-  LblAppList.Font := Form1.ListBox1.Font;
-  Label3.Font     := Form1.Memo1.Font;
-  LblKeyDisp.Font := Form1.Memo1.Font;
+  Label2.Font     := frm_MainWindow.ListBox1.Font;
+  LblAppList.Font := frm_MainWindow.ListBox1.Font;
+  Label3.Font     := frm_MainWindow.Memo1.Font;
+  LblKeyDisp.Font := frm_MainWindow.Memo1.Font;
   {SetFont1(Form1.ListBox1.Font);
   SetFont2(Form1.Memo1.Font);}
-  LblAppList.Font := Form1.ListBox1.Font;
-  LblKeyDisp.Font := Form1.Memo1.Font;
+  LblAppList.Font := frm_MainWindow.ListBox1.Font;
+  LblKeyDisp.Font := frm_MainWindow.Memo1.Font;
   //Button1.Font := Form1.ListBox1.Font;
   //Button2.Font := Form1.Memo1.Font;
-  EdtCSV1.Text     := Form1.sDelimCSV;
+  EdtCSV1.Text     := frm_MainWindow.sDelimCSV;
   EdtLogPath.Text := sLogFilePath;
   OptChkBxErrLog.Checked := bLogging;
   Button5.Enabled := OptChkBxErrLog.Checked;
@@ -111,10 +111,10 @@ end;
 
 procedure TForm2.Button2Click(Sender: TObject);
 begin
-  Form1.FontDialog.Font := Form1.Memo1.Font;
-  Form1.FontDialog.Execute;
-  Form1.Memo1.Font := Form1.FontDialog.Font;
-  LblKeyDisp.Font  := Form1.Memo1.Font;
+  frm_MainWindow.FontDialog.Font := frm_MainWindow.Memo1.Font;
+  frm_MainWindow.FontDialog.Execute;
+  frm_MainWindow.Memo1.Font := frm_MainWindow.FontDialog.Font;
+  LblKeyDisp.Font  := frm_MainWindow.Memo1.Font;
   //Button2.Font := Form1.Memo1.Font;
 end;
 
@@ -138,10 +138,10 @@ begin
     Exit;
   end;
   if EdtCSV1.Text <> '' then
-    Form1.sDelimCSV := EdtCSV1.Text;
+    frm_MainWindow.sDelimCSV := EdtCSV1.Text;
   if EdtLogPath.Text <> '' then
-    Form1.sLogPath := EdtLogPath.Text;
-  Form1.SaveSettings(Form1);
+    frm_MainWindow.sLogPath := EdtLogPath.Text;
+  frm_MainWindow.SaveSettings(frm_MainWindow);
   Close;
 end;
 
@@ -150,9 +150,9 @@ procedure TForm2.Button5Click(Sender: TObject);
   //bBrowse: boolean;
 begin
   //bBrowse := BrowseForFolder(Form1.sLogPath, 'Select The Log Directory...');
-  BrowseForFolder(Form1.sLogPath, 'Select The Log Directory...');
-  EdtLogPath.Text := Form1.sLogPath;
-  sLogFilePath := Form1.sLogPath;
+  BrowseForFolder(frm_MainWindow.sLogPath, 'Select The Log Directory...');
+  EdtLogPath.Text := frm_MainWindow.sLogPath;
+  sLogFilePath := frm_MainWindow.sLogPath;
 end;
 
 procedure TForm2.OptChkBxErrLogClick(Sender: TObject);
@@ -171,8 +171,8 @@ procedure TForm2.ButOptRestDefClick(Sender: TObject);
 //var
   //MyINI: TINIFile;
 begin
-  Form1.ListBox1.Font := Label2.Font;
-  Form1.Memo1.Font    := Label3.Font;
+  frm_MainWindow.ListBox1.Font := Label2.Font;
+  frm_MainWindow.Memo1.Font    := Label3.Font;
   {SaveFont1(Form1.ListBox1.Font);
   SaveFont2(Form1.Memo1.Font);}
   {try
@@ -182,12 +182,12 @@ begin
   finally
     myINI.Free;
   end;    }
-  Form2.FormCreate(Form2);
+  frm_Options.FormCreate(frm_Options);
   EdtCSV1.Text     := DefDelimCSV;
   EdtLogPath.Text := DefLogPath;
   OptChkBxErrLog.Checked := False;
   OptChkBxSave.Checked := False;
-  Form2.OptChkBxErrLogClick(Form2);
+  frm_Options.OptChkBxErrLogClick(frm_Options);
 end;
 
 //old method for storing font settings.

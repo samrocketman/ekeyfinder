@@ -50,7 +50,7 @@ type
   end;
 
 var
-  Form4: TForm4;
+  frm_Remote: TForm4;
 
 implementation
 
@@ -61,7 +61,7 @@ uses
 
 procedure TForm4.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form1.Enabled := True;
+  frm_MainWindow.Enabled := True;
 end;
 
 procedure TForm4.Button2Click(Sender: TObject);
@@ -81,8 +81,8 @@ begin
   end
   else
   begin
-    Form1.RemotePC1.Checked := True;
-    Form1.ProgramInit;
+    frm_MainWindow.RemotePC1.Checked := True;
+    frm_MainWindow.ProgramInit;
     Close;
   end;
 end;

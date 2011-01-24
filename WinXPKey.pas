@@ -26,7 +26,7 @@ type
   end;
 
 var
-  Form5: TForm5;
+  frm_ChangeXPkey: TForm5;
 
 implementation
 
@@ -117,8 +117,8 @@ begin
     if ExitCode = 0 then
     begin
       Close;   
-      Form1.ListBox1.Selected[0] := True;
-      Form1.ListBox1Click(Form1);
+      frm_MainWindow.ListBox1.Selected[0] := True;
+      frm_MainWindow.ListBox1Click(frm_MainWindow);
     end;
   end;
 
@@ -161,7 +161,7 @@ end;
 
 procedure TForm5.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form1.Enabled := True;
+  frm_MainWindow.Enabled := True;
 end;
 
 procedure TForm5.FormCreate(Sender: TObject);

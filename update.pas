@@ -21,7 +21,7 @@ type
   end;
 
 var
-  Form6: TForm6;
+  frm_UpdateApp: TForm6;
 
 implementation
 
@@ -42,7 +42,7 @@ begin
   try
   downloader.URL := URL;
   downloader.Filename := Filename;
-  downloader.OnDownloadProgress := Form6.URL_OnDownloadProgress;
+  downloader.OnDownloadProgress := frm_UpdateApp.URL_OnDownloadProgress;
   downloader.ExecuteTarget(nil);
   finally
     downloader.Free;
@@ -63,7 +63,7 @@ end;
 
 procedure TForm6.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form1.Enabled := True;
+  frm_MainWindow.Enabled := True;
 end;
 
 end.

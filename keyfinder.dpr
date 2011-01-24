@@ -27,26 +27,12 @@ program keyfinder;
 {$define debug}   //debug setting - comment out for release version
 {$ASSERTIONS ON}  //debug setting - comment out for release version
 
-{%TogetherDiagram 'ModelSupport_keyfinder\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Unit1\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Unit2\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Unit3\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Unit4\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\default.txvpck'}
-{%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txvpck'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txvpck'}
-{%TogetherDiagram 'ModelSupport_keyfinder\registration\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\options\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\remote\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\WinXPKey\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\license\default.txaPackage'}
+
 
 uses
   Forms,
   SysUtils,
-  Main in 'Main.pas' {Form1},
+  Main in 'Main.pas' {MainForm},
   options in 'options.pas' {Form2},
   registration in 'registration.pas' {Form3},
   remote in 'remote.pas' {Form4},
@@ -74,12 +60,12 @@ begin
   end;
   Application.Initialize;
   Application.Title := 'Enchanted Keyfinder';
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TForm2, Form2);
-  Application.CreateForm(TForm3, Form3);
-  Application.CreateForm(TForm4, Form4);
+  Application.CreateForm(Tmainform, frm_MainWindow);
+  Application.CreateForm(Tform2, frm_Options);
+  Application.CreateForm(Tform3, frm_Registration);
+  Application.CreateForm(Tform4, frm_Remote);
   Application.CreateForm(TOKBottomDlg, OKBottomDlg);
-  Application.CreateForm(TForm5, Form5);
-  Application.CreateForm(TForm6, Form6);
+  Application.CreateForm(Tform5, frm_ChangeXPkey);
+  Application.CreateForm(Tform6, frm_UpdateApp);
   Application.Run;
 end.

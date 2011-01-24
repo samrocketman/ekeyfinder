@@ -50,7 +50,7 @@ type
   end;
 
 var
-  Form3: TForm3;
+  frm_Registration: TForm3;
   keychange, ownerchange, organizationchange: boolean;
 
 implementation
@@ -67,7 +67,7 @@ var
 begin
   if ownerchange = true then
   begin
-    if Form1.ListBox2.Items.Strings[0] = 'WinXP' then
+    if frm_MainWindow.ListBox2.Items.Strings[0] = 'WinXP' then
     begin
       Registry:=TRegistry.Create;
       Registry.RootKey:=HKEY_LOCAL_MACHINE;
@@ -79,7 +79,7 @@ begin
       Registry.Free;
     end;
 
-    if Form1.ListBox2.Items.Strings[0] = 'Win9x' then
+    if frm_MainWindow.ListBox2.Items.Strings[0] = 'Win9x' then
     begin
       Registry:=TRegistry.Create;
       Registry.RootKey:=HKEY_LOCAL_MACHINE;
@@ -94,7 +94,7 @@ begin
 
   if organizationchange = true then
   begin
-    if Form1.ListBox2.Items.Strings[0] = 'WinXP' then
+    if frm_MainWindow.ListBox2.Items.Strings[0] = 'WinXP' then
     begin
       Registry:=TRegistry.Create;
       Registry.RootKey:=HKEY_LOCAL_MACHINE;
@@ -106,7 +106,7 @@ begin
       Registry.Free;
     end;
 
-    if Form1.ListBox2.Items.Strings[0] = 'Win9x' then
+    if frm_MainWindow.ListBox2.Items.Strings[0] = 'Win9x' then
     begin
       Registry:=TRegistry.Create;
       Registry.RootKey:=HKEY_LOCAL_MACHINE;
@@ -120,8 +120,8 @@ begin
   end;
   
   Close;
-  Form1.ListBox1.Selected[0] := True;
-  Form1.ListBox1Click(Form1);
+  frm_MainWindow.ListBox1.Selected[0] := True;
+  frm_MainWindow.ListBox1Click(frm_MainWindow);
 end;
 
 procedure TForm3.Button2Click(Sender: TObject);
@@ -132,7 +132,7 @@ end;
 
 procedure TForm3.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form1.Enabled := True;
+  frm_MainWindow.Enabled := True;
 end;
 
 procedure TForm3.Edit2KeyPress(Sender: TObject; var Key: Char);

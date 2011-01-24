@@ -1,4 +1,4 @@
-object Form1: TForm1
+object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
@@ -165,7 +165,7 @@ object Form1: TForm1
       ParentFont = False
       OnClick = lblLastUpdateClick
     end
-    object Label8: TLabel
+    object lbl_IfYouPaid: TLabel
       Left = 30
       Top = 344
       Width = 266
@@ -177,9 +177,9 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      OnClick = Label8Click
+      OnClick = lbl_IfYouPaidClick
     end
-    object Label6: TLabel
+    object lbl_ForumsLink: TLabel
       Left = 114
       Top = 180
       Width = 157
@@ -192,9 +192,9 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = Label6Click
+      OnClick = lbl_ForumsLinkClick
     end
-    object Label7: TLabel
+    object lbl_SFLink: TLabel
       Left = 133
       Top = 202
       Width = 119
@@ -207,9 +207,9 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = Label7Click
+      OnClick = lbl_SFLinkClick
     end
-    object Label9: TLabel
+    object lbl_LicLink: TLabel
       Left = 135
       Top = 224
       Width = 115
@@ -222,24 +222,24 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = Label9Click
+      OnClick = lbl_LicLinkClick
     end
-    object Label2: TLabel
+    object lbl_CurrentDev: TLabel
       Left = 30
       Top = 281
       Width = 108
       Height = 13
       Caption = 'Current Developer:'
-      OnClick = Label2Click
+      OnClick = lbl_CurrentDevClick
     end
-    object Label3: TLabel
+    object lbl_LogoBy: TLabel
       Left = 30
       Top = 379
       Width = 46
       Height = 13
       Caption = 'Logo by'
     end
-    object Label5: TLabel
+    object lbl_SamLink: TLabel
       Left = 138
       Top = 281
       Width = 57
@@ -252,9 +252,9 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = Label5Click
+      OnClick = lbl_SamLinkClick
     end
-    object Label10: TLabel
+    object lbl_SagLink: TLabel
       Left = 212
       Top = 281
       Width = 29
@@ -267,7 +267,7 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = Label10Click
+      OnClick = lbl_SagLinkClick
     end
     object Label11: TLabel
       Left = 201
@@ -283,7 +283,7 @@ object Form1: TForm1
       Height = 13
       Caption = ')'
     end
-    object Label13: TLabel
+    object lbl_DavidLink: TLabel
       Left = 82
       Top = 379
       Width = 60
@@ -296,16 +296,16 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = Label13Click
+      OnClick = lbl_DavidLinkClick
     end
-    object Label14: TLabel
+    object lbl_CourtLink: TLabel
       Left = 148
       Top = 379
       Width = 64
       Height = 13
       Caption = 'courtesy of'
     end
-    object Label15: TLabel
+    object lbl_GimperLink: TLabel
       Left = 218
       Top = 379
       Width = 51
@@ -318,7 +318,7 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = Label15Click
+      OnClick = lbl_GimperLinkClick
     end
     object Logo: TImage
       Left = 55
@@ -1092,7 +1092,7 @@ object Form1: TForm1
         7FFFD9}
       OnClick = LogoClick
     end
-    object Label1: TLabel
+    object lbl_ContribLink: TLabel
       Left = 138
       Top = 246
       Width = 108
@@ -1105,7 +1105,7 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = Label1Click
+      OnClick = lbl_ContribLinkClick
     end
     object Memo2: TMemo
       Left = 6
