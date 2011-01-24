@@ -1,4 +1,4 @@
-object Form5: TForm5
+object Form_ChangeXPKey: TForm_ChangeXPKey
   Left = 0
   Top = 0
   BorderIcons = []

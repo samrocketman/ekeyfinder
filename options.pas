@@ -34,7 +34,7 @@ function SetFont1(F_Font: TFont): boolean;
 function SetFont2(F_Font: TFont): boolean;}
 
 type
-  TForm2 = class(TForm)
+  TForm_Options = class(TForm)
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
@@ -66,7 +66,7 @@ type
   end;
 
 var
-  frm_Options: TForm2;
+  frm_Options: TForm_Options;
 
 implementation
 
@@ -75,7 +75,7 @@ uses
 
 {$R *.dfm}
 
-procedure TForm2.Button1Click(Sender: TObject);
+procedure TForm_Options.Button1Click(Sender: TObject);
 begin
   frm_MainWindow.FontDialog.Font := frm_MainWindow.ListBox1.Font;
   frm_MainWindow.FontDialog.Execute;
@@ -84,12 +84,12 @@ begin
   LblAppList.Font := frm_MainWindow.ListBox1.Font;
 end;
 
-procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TForm_Options.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frm_MainWindow.Enabled := True;
 end;
 
-procedure TForm2.FormCreate(Sender: TObject);
+procedure TForm_Options.FormCreate(Sender: TObject);
 begin
   Label2.Font     := frm_MainWindow.ListBox1.Font;
   LblAppList.Font := frm_MainWindow.ListBox1.Font;
@@ -109,7 +109,7 @@ begin
 
 end;
 
-procedure TForm2.Button2Click(Sender: TObject);
+procedure TForm_Options.Button2Click(Sender: TObject);
 begin
   frm_MainWindow.FontDialog.Font := frm_MainWindow.Memo1.Font;
   frm_MainWindow.FontDialog.Execute;
@@ -118,7 +118,7 @@ begin
   //Button2.Font := Form1.Memo1.Font;
 end;
 
-procedure TForm2.Button3Click(Sender: TObject);
+procedure TForm_Options.Button3Click(Sender: TObject);
 {var
   MyINI: TINIFile;}
 begin
@@ -145,7 +145,7 @@ begin
   Close;
 end;
 
-procedure TForm2.Button5Click(Sender: TObject);
+procedure TForm_Options.Button5Click(Sender: TObject);
 //var
   //bBrowse: boolean;
 begin
@@ -155,19 +155,19 @@ begin
   sLogFilePath := frm_MainWindow.sLogPath;
 end;
 
-procedure TForm2.OptChkBxErrLogClick(Sender: TObject);
+procedure TForm_Options.OptChkBxErrLogClick(Sender: TObject);
 begin
   Button5.Enabled := OptChkBxErrLog.Checked;
   EdtLogPath.Enabled := OptChkBxErrLog.Checked;
   bLogging := OptChkBxErrLog.Checked;
 end;
 
-procedure TForm2.OptChkBxSaveClick(Sender: TObject);
+procedure TForm_Options.OptChkBxSaveClick(Sender: TObject);
 begin
   bSaveSettings := OptChkBxSave.Checked; 
 end;
 
-procedure TForm2.ButOptRestDefClick(Sender: TObject);
+procedure TForm_Options.ButOptRestDefClick(Sender: TObject);
 //var
   //MyINI: TINIFile;
 begin

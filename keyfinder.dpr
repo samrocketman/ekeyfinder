@@ -33,12 +33,12 @@ uses
   Forms,
   SysUtils,
   Main in 'Main.pas' {MainForm},
-  options in 'options.pas' {Form2},
-  registration in 'registration.pas' {Form3},
-  remote in 'remote.pas' {Form4},
+  options in 'options.pas' {Form_Options},
+  registration in 'registration.pas' {Form_Registration},
+  remote in 'remote.pas' {Form_Remote},
   license in 'license.pas' {OKBottomDlg},
-  WinXPKey in 'WinXPKey.pas' {Form5},
-  update in 'update.pas' {Form6};
+  WinXPKey in 'WinXPKey.pas' {Form_ChangeXPKey},
+  update in 'update.pas' {Form_UpdateApp};
 
 {$R *.res}
 
@@ -61,11 +61,11 @@ begin
   Application.Initialize;
   Application.Title := 'Enchanted Keyfinder';
   Application.CreateForm(Tmainform, frm_MainWindow);
-  Application.CreateForm(Tform2, frm_Options);
-  Application.CreateForm(Tform3, frm_Registration);
-  Application.CreateForm(Tform4, frm_Remote);
+  Application.CreateForm(TForm_Options, frm_Options);
+  Application.CreateForm(TForm_Registration, frm_Registration);
+  Application.CreateForm(TForm_Remote, frm_Remote);
   Application.CreateForm(TOKBottomDlg, OKBottomDlg);
-  Application.CreateForm(Tform5, frm_ChangeXPkey);
-  Application.CreateForm(Tform6, frm_UpdateApp);
+  Application.CreateForm(TForm_ChangeXPKey, frm_ChangeXPkey);
+  Application.CreateForm(TForm_UpdateApp, frm_UpdateApp);
   Application.Run;
 end.

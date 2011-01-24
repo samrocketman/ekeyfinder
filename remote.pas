@@ -27,7 +27,7 @@ uses
   Dialogs, StdCtrls, Registry;
 
 type
-  TForm4 = class(TForm)
+  TForm_Remote = class(TForm)
     Label2: TLabel;
     PaswrdLbl: TLabel;
     Label3: TLabel;
@@ -50,7 +50,7 @@ type
   end;
 
 var
-  frm_Remote: TForm4;
+  frm_Remote: TForm_Remote;
 
 implementation
 
@@ -59,18 +59,18 @@ uses
 
 {$R *.dfm}
 
-procedure TForm4.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TForm_Remote.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frm_MainWindow.Enabled := True;
 end;
 
-procedure TForm4.Button2Click(Sender: TObject);
+procedure TForm_Remote.Button2Click(Sender: TObject);
 begin
   Edit1.Text := '';
   Close;
 end;
 
-procedure TForm4.Button1Click(Sender: TObject);
+procedure TForm_Remote.Button1Click(Sender: TObject);
 var
   s1: string;
 begin

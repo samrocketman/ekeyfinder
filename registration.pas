@@ -29,7 +29,7 @@ uses
   Dialogs, StdCtrls, Registry;
 
 type
-  TForm3 = class(TForm)
+  TForm_Registration = class(TForm)
     Button1: TButton;
     Button2: TButton;
     Edit2: TEdit;
@@ -50,7 +50,7 @@ type
   end;
 
 var
-  frm_Registration: TForm3;
+  frm_Registration: TForm_Registration;
   keychange, ownerchange, organizationchange: boolean;
 
 implementation
@@ -60,7 +60,7 @@ uses
 
 {$R *.dfm}
 
-procedure TForm3.Button1Click(Sender: TObject);
+procedure TForm_Registration.Button1Click(Sender: TObject);
 var
   Registry: TRegistry;
 
@@ -124,37 +124,37 @@ begin
   frm_MainWindow.ListBox1Click(frm_MainWindow);
 end;
 
-procedure TForm3.Button2Click(Sender: TObject);
+procedure TForm_Registration.Button2Click(Sender: TObject);
 begin
   Button1.Enabled := False;
   Close;
 end;
 
-procedure TForm3.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TForm_Registration.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frm_MainWindow.Enabled := True;
 end;
 
-procedure TForm3.Edit2KeyPress(Sender: TObject; var Key: Char);
+procedure TForm_Registration.Edit2KeyPress(Sender: TObject; var Key: Char);
 begin
   ownerchange := true;
   Button1.Enabled := true;
 end;
 
-procedure TForm3.Edit3KeyPress(Sender: TObject; var Key: Char);
+procedure TForm_Registration.Edit3KeyPress(Sender: TObject; var Key: Char);
 begin
   organizationchange := true;
   Button1.Enabled := True;
 end;
 
-procedure TForm3.FormShow(Sender: TObject);
+procedure TForm_Registration.FormShow(Sender: TObject);
 begin
   keychange := False;
   ownerchange := false;
   organizationchange := false;
 end;
 
-procedure TForm3.Edit1KeyPress(Sender: TObject; var Key: Char);
+procedure TForm_Registration.Edit1KeyPress(Sender: TObject; var Key: Char);
 begin
   keychange := true;
   Button1.Enabled := True
