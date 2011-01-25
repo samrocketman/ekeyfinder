@@ -1,4 +1,4 @@
-object Form_Options: TForm_Options
+object Form2: TForm2
   Left = 465
   Top = 306
   BorderIcons = []

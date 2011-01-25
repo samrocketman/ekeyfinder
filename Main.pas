@@ -29,7 +29,7 @@ uses
   StrUtils, SysUtils, ValEdit, Variants, Windows, XPMan, ExtActns;
 
 type
-  TMainForm = class(TForm)
+  TForm1 = class(TForm)
     MainMenu1: TMainMenu;
     About1:  TMenuItem;
     ListBox1: TListBox;
@@ -58,11 +58,11 @@ type
     RemotePC1: TMenuItem;
     N2:      TMenuItem;
     ChangeRegistrationInfo1: TMenuItem;
-    lbl_IfYouPaid: TLabel;
+    Label8:  TLabel;
     AlwaysOnTop1: TMenuItem;
-    lbl_ForumsLink: TLabel;
-    lbl_SFLink: TLabel;
-    lbl_LicLink: TLabel;
+    Label6:  TLabel;
+    Label7:  TLabel;
+    Label9:  TLabel;
     Memo3:   TMemo;
     XPManifest: TXPManifest;
     N3:      TMenuItem;
@@ -72,27 +72,27 @@ type
     CommunityForums1: TMenuItem;
     BugandFeatureTracker1: TMenuItem;
     CommunityWiki1: TMenuItem;
-    lbl_CurrentDev: TLabel;
+    Label2: TLabel;
     ChangeWindowsKey1: TMenuItem;
-    lbl_LogoBy: TLabel;
-    lbl_SamLink: TLabel;
-    lbl_SagLink: TLabel;
+    Label3: TLabel;
+    Label5: TLabel;
+    Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
-    lbl_DavidLink: TLabel;
-    lbl_CourtLink: TLabel;
-    lbl_GimperLink: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
     Logo: TImage;
-    lbl_ContribLink: TLabel;
+    Label1: TLabel;
     Refresh1: TMenuItem;
     lblRefresh: TLabel;
     procedure Refresh1Click(Sender: TObject);
-    procedure lbl_DavidLinkClick(Sender: TObject);
-    procedure lbl_GimperLinkClick(Sender: TObject);
-    procedure lbl_SagLinkClick(Sender: TObject);
-    procedure lbl_SamLinkClick(Sender: TObject);
+    procedure Label13Click(Sender: TObject);
+    procedure Label15Click(Sender: TObject);
+    procedure Label10Click(Sender: TObject);
+    procedure Label5Click(Sender: TObject);
     procedure ChangeWindowsKey1Click(Sender: TObject);
-    procedure lbl_CurrentDevClick(Sender: TObject);
+    procedure Label2Click(Sender: TObject);
     procedure CommunityWiki1Click(Sender: TObject);
     procedure CommunityForums1Click(Sender: TObject);
     procedure BugandFeatureTracker1Click(Sender: TObject);
@@ -116,25 +116,25 @@ type
     procedure ParseConfig;
     procedure ConvertSaveFormat;
     procedure About2Click(Sender: TObject);
-    procedure lbl_ForumsLinkClick(Sender: TObject);
+    procedure Label6Click(Sender: TObject);
     procedure LogoClick(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
     procedure Label4Click(Sender: TObject);
     procedure lblLastUpdateClick(Sender: TObject);
     procedure lblVersionClick(Sender: TObject);
-    procedure lbl_ContribLinkClick(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
     procedure Options1Click(Sender: TObject);
     procedure SaveAs1Click(Sender: TObject);
     procedure PrintAll1Click(Sender: TObject);
     procedure ModifyConfig1Click(Sender: TObject);
     procedure LoadHive1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure lbl_SFLinkClick(Sender: TObject);
-    procedure lbl_IfYouPaidClick(Sender: TObject);
+    procedure Label7Click(Sender: TObject);
+    procedure Label8Click(Sender: TObject);
     procedure ChangeRegistrationInfo1Click(Sender: TObject);
     procedure RemotePC1Click(Sender: TObject);
     procedure AlwaysOnTop1Click(Sender: TObject);
-    procedure lbl_LicLinkClick(Sender: TObject);
+    procedure Label9Click(Sender: TObject);
     procedure MnuSourceforgeWebClick(Sender: TObject);
     procedure MnuItmWebUpdateClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -163,7 +163,7 @@ type
   end;
 
 var
-  frm_MainWindow:     TMainForm;
+  Form1:     TForm1;
   iSaveKeysToFile: integer;
   bToBePrinted: boolean;
   sAutoSaveDir: string;
@@ -445,12 +445,12 @@ begin
     (Win32MinorVersion = 0);
 end;
 
-procedure TMainForm.Exit1Click(Sender: TObject);
+procedure TForm1.Exit1Click(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TMainForm.ListBox1Click(Sender: TObject);
+procedure TForm1.ListBox1Click(Sender: TObject);
 var
   i: integer;
 begin
@@ -479,7 +479,7 @@ begin
   StatusBar1.Panels.Items[2].Text := 'Detected: ' + IntToStr(ListBox2.Items.Count);
 end;
 
-procedure TMainForm.ProgramInit;
+procedure TForm1.ProgramInit;
 begin
   ListBox1.Clear;
   Listbox2.Clear;
@@ -491,7 +491,7 @@ begin
   if ListBox1.Items.Count > 0 then
   begin
     ListBox1.Selected[0] := True;
-    frm_MainWindow.ListBox1Click(frm_MainWindow);
+    Form1.ListBox1Click(Form1);
   end;
 end;
 
@@ -534,7 +534,7 @@ begin
   end;
 end;
 
-procedure TMainForm.LoadSettings(Sender: TObject);
+procedure TForm1.LoadSettings(Sender: TObject);
 var
   myINI: TINIFile;
   fs:    TFormatSettings;
@@ -558,14 +558,14 @@ begin
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', True)
     else
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', False);
-    LoadFont(myINI, 'AppListFont', frm_MainWindow.ListBox1.Font);
-    LoadFont(myINI, 'KeyListFont', frm_MainWindow.Memo1.Font);
+    LoadFont(myINI, 'AppListFont', Form1.ListBox1.Font);
+    LoadFont(myINI, 'KeyListFont', Form1.Memo1.Font);
   finally
     myINI.Free;
   end;
 end;
 
-procedure TMainForm.SaveSettings(Sender: TObject);
+procedure TForm1.SaveSettings(Sender: TObject);
 var
   myINI: TINIFile;
 begin
@@ -584,8 +584,8 @@ begin
     myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
     myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
     myINI.WriteBool('Settings', 'UnstableUpdates', followUnstable);
-    SaveFont(myINI, 'AppListFont', frm_MainWindow.ListBox1.Font);
-    SaveFont(myINI, 'KeyListFont', frm_MainWindow.Memo1.Font);
+    SaveFont(myINI, 'AppListFont', Form1.ListBox1.Font);
+    SaveFont(myINI, 'KeyListFont', Form1.Memo1.Font);
     myINI.UpdateFile;
   finally
     myINI.Free;
@@ -652,7 +652,7 @@ begin
   end;
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TForm1.FormCreate(Sender: TObject);
 var
   i: integer;
   sCurParam: string;
@@ -674,8 +674,8 @@ begin
   if IsWinXP then
     ChangeWindowsKey1.Enabled := True;
   
-  frm_MainWindow.Memo1.Font.Style := [fsBold];
-  frm_MainWindow.LoadSettings(frm_MainWindow);
+  Form1.Memo1.Font.Style := [fsBold];
+  Form1.LoadSettings(Form1);
   //Form1.Memo1.Font.Style := [fsBold];
   sPCName := GetPCName;
   if sPCName = '' then
@@ -683,7 +683,7 @@ begin
   SaveDialog1.FileName := sPCName + '.txt';
   sAutoSaveDir    := ExtractFilePath(Application.ExeName);
   iSaveKeysToFile := -1;
-  frm_MainWindow.Text      := frm_MainWindow.Text + kfversion;
+  Form1.Text      := Form1.Text + kfversion;
   lblVersion.Caption  := lblVersion.Caption + kfversion;
   lblLastUpdate.Caption  := lblLastUpdate.Caption + kfdate;
 
@@ -743,22 +743,22 @@ begin
   ProgramInit;
 
   if bAutoSave then
-    SaveAs1Click(frm_MainWindow);
+    SaveAs1Click(Form1);
   if bAutoClose then  // Time to close the main application
     Application.Terminate;
 end;
 
-procedure TMainForm.Exit2Click(Sender: TObject);
+procedure TForm1.Exit2Click(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TMainForm.MnuSourceforgeWebClick(Sender: TObject);
+procedure TForm1.MnuSourceforgeWebClick(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/projects/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.FindWinVersion;
+procedure TForm1.FindWinVersion;
 var
   MyReg: TRegistry;
 begin
@@ -818,7 +818,7 @@ begin
   end;
 end; // FindWinVersion
 
-procedure TMainForm.GetVistaKey;
+procedure TForm1.GetVistaKey;
 var
   MyReg:     TRegistry;
   iBinarySize: integer;
@@ -895,12 +895,12 @@ begin
     begin
       iSaveKeysToFile := iSaveKeysToFile + 1;
       ListBox1.Selected[iSaveKeysToFile] := True;
-      frm_MainWindow.ListBox1Click(frm_MainWindow);
+      Form1.ListBox1Click(Form1);
     end;
   end;
 end;
 
-procedure TMainForm.GetXPKey;
+procedure TForm1.GetXPKey;
 var
   MyReg:     TRegistry;
   iBinarySize: integer;
@@ -1021,12 +1021,12 @@ begin
     begin
       iSaveKeysToFile := iSaveKeysToFile + 1;
       ListBox1.Selected[iSaveKeysToFile] := True;
-      frm_MainWindow.ListBox1Click(frm_MainWindow);
+      Form1.ListBox1Click(Form1);
     end;
   end;
 end;
 
-procedure TMainForm.Get9xKey;
+procedure TForm1.Get9xKey;
 var
   MyReg: TRegistry;
   sCSDVersion, sProductKey, sProductID, sRegOwn, sRegOrg: string;
@@ -1064,12 +1064,12 @@ begin
     begin
       iSaveKeysToFile := iSaveKeysToFile + 1;
       ListBox1.Selected[iSaveKeysToFile] := True;
-      frm_MainWindow.ListBox1Click(frm_MainWindow);
+      Form1.ListBox1Click(Form1);
     end;
   end;
 end;
 
-procedure TMainForm.GetNT4Key;
+procedure TForm1.GetNT4Key;
 var
   MyReg:    TRegistry;
   sOSEdition: string;
@@ -1141,12 +1141,12 @@ begin
     begin
       iSaveKeysToFile := iSaveKeysToFile + 1;
       ListBox1.Selected[iSaveKeysToFile] := True;
-      frm_MainWindow.ListBox1Click(frm_MainWindow);
+      Form1.ListBox1Click(Form1);
     end;
   end;
 end;
 
-procedure TMainForm.GetMSDPID3(const sHivePath, Key: string; var sProdID, sMSKey: string);
+procedure TForm1.GetMSDPID3(const sHivePath, Key: string; var sProdID, sMSKey: string);
 var
   MyReg:      TRegistry;
   iBinarySize: integer;
@@ -1224,7 +1224,7 @@ begin
   MyReg.Free;
 end;
 
-procedure TMainForm.GetOfficeKey;
+procedure TForm1.GetOfficeKey;
 var
   MyReg:  TRegistry;
   iBinarySize: integer;
@@ -1272,14 +1272,14 @@ begin
         begin
           iSaveKeysToFile := iSaveKeysToFile + 1;
           ListBox1.Selected[iSaveKeysToFile] := True;
-          frm_MainWindow.ListBox1Click(frm_MainWindow);
+          Form1.ListBox1Click(Form1);
         end;
       end;
     end;
   end;
 end;
 
-procedure TMainForm.ReadCfg;
+procedure TForm1.ReadCfg;
 var
   ConfigFile: TextFile;
   CurrentLine: string;
@@ -1314,7 +1314,7 @@ begin
                 ListBox2.Items.Add('Config-' + s);
                 ListBox1.Selected[ListBox1.Items.Count - 1] := True;
                 StatusBar1.Panels.Items[1].Text := 'Loaded ' + IntToStr(iEntriesRead) + ' key locations';
-                frm_MainWindow.ListBox1Click(frm_MainWindow);
+                Form1.ListBox1Click(Form1);
               end;
             end;  // if (CurrentLine[1] <> ';')
             if (CurrentLine[1] = ';') and not bCFGVerFound then
@@ -1341,7 +1341,7 @@ begin
   end;
 end;
 
-procedure TMainForm.Refresh1Click(Sender: TObject);
+procedure TForm1.Refresh1Click(Sender: TObject);
 begin
   //Refresh the program
   lblRefresh.Top := Round( Height/2 - lblRefresh.Height/2 );
@@ -1351,15 +1351,15 @@ begin
   RefreshPanel.Width := Width;
   ListBox1.Visible := False;
   Memo1.Visible := False;
-  frm_MainWindow.Enabled := False;
+  Form1.Enabled := False;
   ProgramInit;
-  frm_MainWindow.Enabled := True;
+  Form1.Enabled := True;
   RefreshPanel.Visible := False;
   ListBox1.Visible := True;
   Memo1.Visible := True;
 end;
 
-procedure TMainForm.ParseConfig;
+procedure TForm1.ParseConfig;
 function FindRegistryValue(RootKey: HKEY;           //Funtion Finds Wildcard Key Name and Path
                                RootPath: String; 
                                ValueWithWildCard: String): String; 
@@ -1554,7 +1554,7 @@ begin
         begin
           iSaveKeysToFile := iSaveKeysToFile + 1;
           ListBox1.Selected[iSaveKeysToFile] := True;
-          frm_MainWindow.ListBox1Click(frm_MainWindow);
+          Form1.ListBox1Click(Form1);
         end;
       end;
 
@@ -1576,7 +1576,7 @@ begin
   StatusBar1.Panels.Items[2].Text := 'Detected: ' + IntToStr(ListBox2.Items.Count);
 end;
 
-procedure TMainForm.OfficeList;
+procedure TForm1.OfficeList;
 var
   MyReg: TRegistry;
   blah:  TStringList;
@@ -1590,7 +1590,7 @@ begin
 
   if RemotePC1.Checked = True then
   begin
-    if MyReg.RegistryConnect(frm_Remote.Edit1.Text) = False then
+    if MyReg.RegistryConnect(Form4.Edit1.Text) = False then
     begin
       if bAutoClose then
         begin
@@ -1753,7 +1753,7 @@ begin
   MyReg.Free;
 end;
 
-function TMainForm.DecodeMSKey(const HexSrc: array of byte): string;
+function TForm1.DecodeMSKey(const HexSrc: array of byte): string;
 const
   StartOffset: integer = $34;      // Offset 34 = Array[52]
   EndOffset:   integer = $34 + 15; // Offset 34 + 15(Bytes) = Array[64]
@@ -1801,7 +1801,7 @@ begin
   Result := StrPas(Des);
 end;
 
-procedure TMainForm.About2Click(Sender: TObject);
+procedure TForm1.About2Click(Sender: TObject);
 begin
   if Panel1.Visible = False then
   begin
@@ -1815,74 +1815,74 @@ begin
   end;
 end;
 
-procedure TMainForm.lbl_ForumsLinkClick(Sender: TObject);
+procedure TForm1.Label6Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/phpbb/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.LogoClick(Sender: TObject);
+procedure TForm1.LogoClick(Sender: TObject);
 begin
-  About2Click(frm_MainWindow);
+  About2Click(Form1);
   //ShellExecute(Handle, nil, PChar('http://www.magicaljellybean.com'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.Panel1Click(Sender: TObject);
+procedure TForm1.Panel1Click(Sender: TObject);
 begin
-  About2Click(frm_MainWindow);
+  About2Click(Form1);
 end;
 
-procedure TMainForm.Label4Click(Sender: TObject);
+procedure TForm1.Label4Click(Sender: TObject);
 begin
-  About2Click(frm_MainWindow);
+  About2Click(Form1);
 end;
 
-procedure TMainForm.lbl_SamLinkClick(Sender: TObject);
+procedure TForm1.Label5Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://www.pages.drexel.edu/~sag47/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.lblLastUpdateClick(Sender: TObject);
+procedure TForm1.lblLastUpdateClick(Sender: TObject);
 begin
-  About2Click(frm_MainWindow);
+  About2Click(Form1);
 end;
 
-procedure TMainForm.lblVersionClick(Sender: TObject);
+procedure TForm1.lblVersionClick(Sender: TObject);
 begin
-  About2Click(frm_MainWindow);
+  About2Click(Form1);
 end;
 
-procedure TMainForm.lbl_SagLinkClick(Sender: TObject);
+procedure TForm1.Label10Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/users/sag47'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.lbl_DavidLinkClick(Sender: TObject);
+procedure TForm1.Label13Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://davidwoodfx.blogspot.com'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.lbl_GimperLinkClick(Sender: TObject);
+procedure TForm1.Label15Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://gimper.net/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.lbl_ContribLinkClick(Sender: TObject);
+procedure TForm1.Label1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('https://sourceforge.net/apps/phpbb/keyfinder/viewtopic.php?f=1&t=3'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.lbl_CurrentDevClick(Sender: TObject);
+procedure TForm1.Label2Click(Sender: TObject);
 begin
-  About2Click(frm_MainWindow);
+  About2Click(Form1);
 end;
 
-procedure TMainForm.Options1Click(Sender: TObject);
+procedure TForm1.Options1Click(Sender: TObject);
 begin
-  frm_Options.Visible := True;
-  frm_MainWindow.Enabled := False;
+  Form2.Visible := True;
+  Form1.Enabled := False;
 end;
 
-procedure TMainForm.SaveAs1Click(Sender: TObject);
+procedure TForm1.SaveAs1Click(Sender: TObject);
 begin
   iSaveKeysToFile := 0;
   Assert(Memo1 <> nil);
@@ -1890,10 +1890,10 @@ begin
   Assert(Memo2 <> nil);
   Memo2.Lines.Clear;
   ListBox1.Selected[iSaveKeysToFile] := True;
-  frm_MainWindow.ListBox1Click(frm_MainWindow);
+  Form1.ListBox1Click(Form1);
 end;
 
-procedure TMainForm.SaveDialogTypeChange(Sender: TObject);
+procedure TForm1.SaveDialogTypeChange(Sender: TObject);
 var
   buf: array [0..MAX_PATH] of char;
   S:   string;
@@ -1916,7 +1916,7 @@ begin
   SendMessage(H, CDM_SETCONTROLTEXT, edt1, integer(PChar(S)));
 end;
 
-procedure TMainForm.SaveFileDone;
+procedure TForm1.SaveFileDone;
 var
   Line:      integer;
   PrintText: TextFile;   // declares a file variable
@@ -1991,22 +1991,22 @@ begin
     iSaveKeysToFile := -1;
   end;
   ListBox1.Selected[0] := True;
-  frm_MainWindow.ListBox1Click(frm_MainWindow);
+  Form1.ListBox1Click(Form1);
 end;
 
-procedure TMainForm.PrintAll1Click(Sender: TObject);
+procedure TForm1.PrintAll1Click(Sender: TObject);
 begin
   bToBePrinted := True;
-  SaveAs1Click(frm_MainWindow);
+  SaveAs1Click(Form1);
 end;
 
-procedure TMainForm.ModifyConfig1Click(Sender: TObject);
+procedure TForm1.ModifyConfig1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('notepad.exe'),
     PChar(ExtractFilePath(Application.ExeName) + 'keyfinder.cfg'), nil, SW_NORMAL);
 end;
 
-procedure TMainForm.LoadHive1Click(Sender: TObject);
+procedure TForm1.LoadHive1Click(Sender: TObject);
 begin
   if LoadHive1.Caption = rsMnuItmLoadHive then
     LoadHive
@@ -2014,7 +2014,7 @@ begin
     UnLoadHive;
 end;
 
-procedure TMainForm.LoadHive;
+procedure TForm1.LoadHive;
 var
   MyReg:     TRegistry;
   bBrowsing: boolean;  // We have selected a path for SOFTWARE hive
@@ -2118,7 +2118,7 @@ begin
     StatusBar1.Panels.Items[0].Text := '';
 end;
 
-procedure TMainForm.UnLoadHive;
+procedure TForm1.UnLoadHive;
 var
   MyReg: TRegistry;
 begin
@@ -2201,7 +2201,7 @@ begin
   end;
 end;
 
-procedure TMainForm.MnuItmWebUpdateClick(Sender: TObject);
+procedure TForm1.MnuItmWebUpdateClick(Sender: TObject);
 var
   kfUpdate, cfgUpdate : Boolean;
   CFGVer, newCFG, kfStableURL, kfStableDownload, kfUnstableURL, kfUnstableDownload, StableVersion, UnstableVersion, cfgURL, Section : string;
@@ -2350,30 +2350,30 @@ begin
 
 end;
 
-procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if LoadHive1.Caption = 'Un&Load Hive...' then
     UnloadHive;
   if bSaveSettings then
-    frm_MainWindow.SaveSettings(frm_MainWindow);
+    Form1.SaveSettings(Form1);
 end;
 
-procedure TMainForm.lbl_SFLinkClick(Sender: TObject);
+procedure TForm1.Label7Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/projects/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.lbl_IfYouPaidClick(Sender: TObject);
+procedure TForm1.Label8Click(Sender: TObject);
 begin
-  About2Click(frm_MainWindow);
+  About2Click(Form1);
 end;
 
-procedure TMainForm.ChangeRegistrationInfo1Click(Sender: TObject);
+procedure TForm1.ChangeRegistrationInfo1Click(Sender: TObject);
 var
   MyReg: TRegistry;
 begin
   //reset form
-  frm_Registration.Button1.Enabled := False;
+  Form3.Button1.Enabled := False;
   if ListBox2.Items.Strings[0] = 'WinXP' then
   begin
     MyReg := TRegistry.Create;
@@ -2385,10 +2385,10 @@ begin
       MyReg.ValueExists('RegisteredOwner') and
       MyReg.ValueExists('RegisteredOrganization') then
     begin
-      frm_Registration.Edit2.Text     := MyReg.ReadString('RegisteredOwner');
-      frm_Registration.Edit2.ReadOnly := False;
-      frm_Registration.Edit3.Text     := MyReg.ReadString('RegisteredOrganization');
-      frm_Registration.Edit3.ReadOnly := False;
+      Form3.Edit2.Text     := MyReg.ReadString('RegisteredOwner');
+      Form3.Edit2.ReadOnly := False;
+      Form3.Edit3.Text     := MyReg.ReadString('RegisteredOrganization');
+      Form3.Edit3.ReadOnly := False;
     end;
     MyReg.CloseKey;
     MyReg.Free;
@@ -2405,31 +2405,31 @@ begin
       MyReg.ValueExists('RegisteredOwner') and
       MyReg.ValueExists('RegisteredOrganization') then
     begin
-      frm_Registration.Edit2.Text     := MyReg.ReadString('RegisteredOwner');
-      frm_Registration.Edit2.ReadOnly := False;
-      frm_Registration.Edit3.Text     := MyReg.ReadString('RegisteredOrganization');
-      frm_Registration.Edit3.ReadOnly := False;
+      Form3.Edit2.Text     := MyReg.ReadString('RegisteredOwner');
+      Form3.Edit2.ReadOnly := False;
+      Form3.Edit3.Text     := MyReg.ReadString('RegisteredOrganization');
+      Form3.Edit3.ReadOnly := False;
     end;
     MyReg.CloseKey;
     MyReg.Free;
   end;
 
-  frm_Registration.Visible := True;
-  frm_MainWindow.Enabled := False;
+  Form3.Visible := True;
+  Form1.Enabled := False;
 end;
 
-procedure TMainForm.ChangeWindowsKey1Click(Sender: TObject);
+procedure TForm1.ChangeWindowsKey1Click(Sender: TObject);
 begin
-  frm_ChangeXPkey.Visible := True;
-  frm_MainWindow.Enabled := False;
+  Form5.Visible := True;
+  Form1.Enabled := False;
 end;
 
-procedure TMainForm.RemotePC1Click(Sender: TObject);
+procedure TForm1.RemotePC1Click(Sender: TObject);
 begin
   if RemotePC1.Checked = False then
   begin
-    frm_Remote.Visible := True;
-    frm_MainWindow.Enabled := False;
+    Form4.Visible := True;
+    Form1.Enabled := False;
   end
   else
   begin
@@ -2438,52 +2438,52 @@ begin
   end;
 end;
 
-procedure TMainForm.AlwaysOnTop1Click(Sender: TObject);
+procedure TForm1.AlwaysOnTop1Click(Sender: TObject);
 begin
   if AlwaysOnTop1.Checked = False then
   begin
     AlwaysOnTop1.Checked := True;
-    frm_MainWindow.FormStyle      := fsStayOnTop;
-    frm_Options.FormStyle      := fsStayOnTop;
-    frm_Registration.FormStyle      := fsStayOnTop;
-    frm_Remote.FormStyle      := fsStayOnTop;
-    frm_ChangeXPkey.FormStyle      := fsStayOnTop;
+    Form1.FormStyle      := fsStayOnTop;
+    Form2.FormStyle      := fsStayOnTop;
+    Form3.FormStyle      := fsStayOnTop;
+    Form4.FormStyle      := fsStayOnTop;
+    Form5.FormStyle      := fsStayOnTop;
     //Form6.FormStyle      := fsStayOnTop;
   end
   else
   begin
     AlwaysOnTop1.Checked := False;
-    frm_MainWindow.FormStyle      := fsNormal;
-    frm_Options.FormStyle      := fsNormal;
-    frm_Registration.FormStyle      := fsNormal;
-    frm_Remote.FormStyle      := fsNormal;
-    frm_ChangeXPkey.FormStyle      := fsNormal;
+    Form1.FormStyle      := fsNormal;
+    Form2.FormStyle      := fsNormal;
+    Form3.FormStyle      := fsNormal;
+    Form4.FormStyle      := fsNormal;
+    Form5.FormStyle      := fsNormal; 
     //Form6.FormStyle      := fsNormal;
   end;
 end;
 
-procedure TMainForm.BugandFeatureTracker1Click(Sender: TObject);
+procedure TForm1.BugandFeatureTracker1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/tracker/?group_id=369948'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.lbl_LicLinkClick(Sender: TObject);
+procedure TForm1.Label9Click(Sender: TObject);
 begin
   OKBottomDlg.Visible := True;
-  frm_MainWindow.Enabled := False;
+  Form1.Enabled := False;
 end;
 
-procedure TMainForm.CommunityForums1Click(Sender: TObject);
+procedure TForm1.CommunityForums1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/phpbb/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.CommunityWiki1Click(Sender: TObject);
+procedure TForm1.CommunityWiki1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/mediawiki/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TMainForm.ConvertSaveFormat;
+procedure TForm1.ConvertSaveFormat;
 var
   i: integer;     // Memo2 current line count
   j: integer;     // Memo3 current line count
@@ -2527,18 +2527,18 @@ begin
   end;
 end;
 
-procedure TMainForm.FormResize(Sender: TObject);
+procedure TForm1.FormResize(Sender: TObject);
 var
   i: integer;
 begin
-  i := (frm_MainWindow.Width div 100) * 50;
+  i := (Form1.Width div 100) * 50;
   StatusBar1.Panels.Items[0].Width := i;
   i := (i div 100) * 50;
   StatusBar1.Panels.Items[1].Width := i;
   StatusBar1.Panels.Items[2].Width := i;
 end;
 
-function TMainForm.StripTags(const sText: string): string;
+function TForm1.StripTags(const sText: string): string;
   // We want to strip 'Product ID: ', 'CD Key: ' etc. from csv output
 var
   sSourceTest: string;
@@ -2555,7 +2555,7 @@ begin
   Result := sSourceTest;
 end;
 
-function TMainForm.DecodeAdobeKey(const sAdobeEncryptedKey: string): string;
+function TForm1.DecodeAdobeKey(const sAdobeEncryptedKey: string): string;
   // Decode Adobe Key Encryption. A simple substitution cipher.
   // Converted from Dave Hope's original C++ version  
   // Copyright (C) 2008 VersionBoy
@@ -2596,7 +2596,7 @@ begin
   Result := sAdobeDecryptedKey;
 end;
 
-procedure TMainForm.FormatAdobeKey(var sAdobeKey: string);
+procedure TForm1.FormatAdobeKey(var sAdobeKey: string);
 begin
   if Length(sAdobeKey) <> 24 then // key string too short or too long
     exit;

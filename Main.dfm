@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
@@ -165,7 +165,7 @@ object MainForm: TMainForm
       ParentFont = False
       OnClick = lblLastUpdateClick
     end
-    object lbl_IfYouPaid: TLabel
+    object Label8: TLabel
       Left = 30
       Top = 344
       Width = 266
@@ -177,9 +177,9 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      OnClick = lbl_IfYouPaidClick
+      OnClick = Label8Click
     end
-    object lbl_ForumsLink: TLabel
+    object Label6: TLabel
       Left = 114
       Top = 180
       Width = 157
@@ -192,9 +192,9 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = lbl_ForumsLinkClick
+      OnClick = Label6Click
     end
-    object lbl_SFLink: TLabel
+    object Label7: TLabel
       Left = 133
       Top = 202
       Width = 119
@@ -207,9 +207,9 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = lbl_SFLinkClick
+      OnClick = Label7Click
     end
-    object lbl_LicLink: TLabel
+    object Label9: TLabel
       Left = 135
       Top = 224
       Width = 115
@@ -222,24 +222,24 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = lbl_LicLinkClick
+      OnClick = Label9Click
     end
-    object lbl_CurrentDev: TLabel
+    object Label2: TLabel
       Left = 30
       Top = 281
       Width = 108
       Height = 13
       Caption = 'Current Developer:'
-      OnClick = lbl_CurrentDevClick
+      OnClick = Label2Click
     end
-    object lbl_LogoBy: TLabel
+    object Label3: TLabel
       Left = 30
       Top = 379
       Width = 46
       Height = 13
       Caption = 'Logo by'
     end
-    object lbl_SamLink: TLabel
+    object Label5: TLabel
       Left = 138
       Top = 281
       Width = 57
@@ -252,9 +252,9 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = lbl_SamLinkClick
+      OnClick = Label5Click
     end
-    object lbl_SagLink: TLabel
+    object Label10: TLabel
       Left = 212
       Top = 281
       Width = 29
@@ -267,7 +267,7 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = lbl_SagLinkClick
+      OnClick = Label10Click
     end
     object Label11: TLabel
       Left = 201
@@ -283,7 +283,7 @@ object MainForm: TMainForm
       Height = 13
       Caption = ')'
     end
-    object lbl_DavidLink: TLabel
+    object Label13: TLabel
       Left = 82
       Top = 379
       Width = 60
@@ -296,16 +296,16 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = lbl_DavidLinkClick
+      OnClick = Label13Click
     end
-    object lbl_CourtLink: TLabel
+    object Label14: TLabel
       Left = 148
       Top = 379
       Width = 64
       Height = 13
       Caption = 'courtesy of'
     end
-    object lbl_GimperLink: TLabel
+    object Label15: TLabel
       Left = 218
       Top = 379
       Width = 51
@@ -318,7 +318,7 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = lbl_GimperLinkClick
+      OnClick = Label15Click
     end
     object Logo: TImage
       Left = 55
@@ -1092,7 +1092,7 @@ object MainForm: TMainForm
         7FFFD9}
       OnClick = LogoClick
     end
-    object lbl_ContribLink: TLabel
+    object Label1: TLabel
       Left = 138
       Top = 246
       Width = 108
@@ -1105,7 +1105,7 @@ object MainForm: TMainForm
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = lbl_ContribLinkClick
+      OnClick = Label1Click
     end
     object Memo2: TMemo
       Left = 6

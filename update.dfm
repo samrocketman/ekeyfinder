@@ -1,4 +1,4 @@
-object Form_UpdateApp: TForm_UpdateApp
+object Form6: TForm6
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]

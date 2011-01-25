@@ -27,18 +27,32 @@ program keyfinder;
 {$define debug}   //debug setting - comment out for release version
 {$ASSERTIONS ON}  //debug setting - comment out for release version
 
-
+{%TogetherDiagram 'ModelSupport_keyfinder\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Unit1\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Unit2\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Unit3\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Unit4\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_keyfinder\registration\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\options\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\remote\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\WinXPKey\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_keyfinder\license\default.txaPackage'}
 
 uses
   Forms,
   SysUtils,
-  Main in 'Main.pas' {MainForm},
-  options in 'options.pas' {Form_Options},
-  registration in 'registration.pas' {Form_Registration},
-  remote in 'remote.pas' {Form_Remote},
+  Main in 'Main.pas' {Form1},
+  options in 'options.pas' {Form2},
+  registration in 'registration.pas' {Form3},
+  remote in 'remote.pas' {Form4},
   license in 'license.pas' {OKBottomDlg},
-  WinXPKey in 'WinXPKey.pas' {Form_ChangeXPKey},
-  update in 'update.pas' {Form_UpdateApp};
+  WinXPKey in 'WinXPKey.pas' {Form5},
+  update in 'update.pas' {Form6};
 
 {$R *.res}
 
@@ -60,12 +74,12 @@ begin
   end;
   Application.Initialize;
   Application.Title := 'Enchanted Keyfinder';
-  Application.CreateForm(Tmainform, frm_MainWindow);
-  Application.CreateForm(TForm_Options, frm_Options);
-  Application.CreateForm(TForm_Registration, frm_Registration);
-  Application.CreateForm(TForm_Remote, frm_Remote);
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TForm3, Form3);
+  Application.CreateForm(TForm4, Form4);
   Application.CreateForm(TOKBottomDlg, OKBottomDlg);
-  Application.CreateForm(TForm_ChangeXPKey, frm_ChangeXPkey);
-  Application.CreateForm(TForm_UpdateApp, frm_UpdateApp);
+  Application.CreateForm(TForm5, Form5);
+  Application.CreateForm(TForm6, Form6);
   Application.Run;
 end.

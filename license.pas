@@ -65,7 +65,7 @@ end;
 procedure TOKBottomDlg.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  frm_MainWindow.Enabled := True;
+  Form1.Enabled := True;
 end;
 
 end.
