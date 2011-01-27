@@ -17,7 +17,7 @@ Features
 --------
 Open Source - This means that it can be trusted. The Keyfinder does not contain trojans or "phone home" messages. No spam, spyware, viruses, 
 or trojans.
-Office 2007 & Windows 7 support!
+Office 2010, Office 2007, & Windows 7 support!
 An optional config file - this functionality lets you pull a key stored in the registry for any software. A sample config file is included 
 in the zip and can be seen here: keyfinder.cfg
 Command line options - /save <location> /savecsv <location> /close /hive <location> /file <filename>

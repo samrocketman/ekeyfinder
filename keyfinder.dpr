@@ -55,6 +55,7 @@ uses
   update in 'update.pas' {Form6};
 
 {$R *.res}
+//{$R 'Res\UAC.res' 'UAC.RC'}
 
 begin
   { Report memory leaks if run inside the Delphi 2006 debugger }
@@ -62,13 +63,13 @@ begin
 
   if (ParamCount = 1) and (AnsiLowerCase(ParamStr(1)) = '/?') or (AnsiLowerCase(ParamStr(1)) = '/help') then
   begin
-    Application.MessageBox('Command Line Options: /save <location> /savecsv <location> /close /hive <location> /file <filename>', 'Magical Jelly Bean Keyfinder');
+    Application.MessageBox('Command Line Options: /save <file.ext> /savecsv <filename> /close /hive <path> /file <filename> /delim <character>', 'Enchanted Keyfinder');
     Application.Terminate;
     Exit;
   end;
   if (ParamCount = 1) and (AnsiLowerCase(ParamStr(1)) = '/close') then
   begin
-    Application.MessageBox('You can''t have ''/close'' as the only parameter. This application will now exit.', 'Magical Jelly Bean Keyfinder');
+    Application.MessageBox('You can''t have ''/close'' as the only parameter. This application will now exit.', 'Enchanted Keyfinder');
     Application.Terminate;
     Exit;
   end;
