@@ -1235,6 +1235,9 @@ var
   sProductID: string;
   sProductKey: string;
   sTmp:   string;
+const
+  rel1='Release: ';
+  rel2='Release Type: ';
 begin
   for i := 0 to (ListBox1.Items.Count - 1) do
   begin
@@ -1260,7 +1263,29 @@ begin
            'http://support.microsoft.com/default.aspx?scid=kb;en-us;Q326904');
         end
         else
+        begin
           Memo1.Lines.Add('CD Key: ' + sProductKey);
+          //ShowMessage('sOfficeKey='+sOfficeKey+sLineBreak+ RightStr(LeftStr(sOfficeKey,2),1) + ' ' + RightStr(LeftStr(sOfficeKey,3),1));
+          //RightStr(LeftStr(sOfficeKey,2),1) + ' ' + RightStr(LeftStr(sOfficeKey,3),1)
+          //http://support.microsoft.com/kb/2186281
+          case StrToInt('0x'+RightStr(LeftStr(sOfficeKey,2),1)) of
+            0: Memo1.Lines.Add(rel1+'Pre Beta');
+            1: Memo1.Lines.Add(rel1+'Beta 1');
+            2: Memo1.Lines.Add(rel1+'Beta 2');
+            3: Memo1.Lines.Add(rel1+'Release Candidate 0'); 
+            4: Memo1.Lines.Add(rel1+'Release Candidate 1/OEM Preview release');
+            9: Memo1.Lines.Add(rel1+'RTM (initial release)');
+            10: Memo1.Lines.Add(rel1+'Service Pack 1');
+            11: Memo1.Lines.Add(rel1+'Service Pack 2');
+            12: Memo1.Lines.Add(rel1+'Service Pack 3'); 
+          end;
+          case StrToInt('0x'+RightStr(LeftStr(sOfficeKey,3),1)) of
+            0: Memo1.Lines.Add(rel2+'Volume license'); 
+            1: Memo1.Lines.Add(rel2+'Retail/OEM'); 
+            2: Memo1.Lines.Add(rel2+'Trial'); 
+            5: Memo1.Lines.Add(rel2+'Download'); 
+          end;
+        end;
       end;
       MyReg.Free;
       if iSaveKeysToFile > -1 then
@@ -2079,7 +2104,9 @@ begin
           StatusBar1.Panels.Items[0].Text := 'Trying to load backup hive...';
 
           //try different locations for repair
-          if FileExists(sHiveLoc2 + '\WINDOWS\repair\software') then
+          if FileExists(sHiveLoc2 + '\software') then
+            iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_REGBAK'), PChar(sHiveLoc2 + '\software'))
+          else if FileExists(sHiveLoc2 + '\WINDOWS\repair\software') then
             iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_REGBAK'), PChar(sHiveLoc2 + '\WINDOWS\repair\software'))
           else
             iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE_REGBAK'), PChar(sHiveLoc2 + '\repair\software'));
