@@ -24,6 +24,8 @@
 }
 program keyfinder;
 
+{$R 'UAC.res' 'UAC.rc'}
+
 {$define debug}   //debug setting - comment out for release version
 {$ASSERTIONS ON}  //debug setting - comment out for release version
 
@@ -52,10 +54,9 @@ uses
   remote in 'remote.pas' {Form4},
   license in 'license.pas' {OKBottomDlg},
   WinXPKey in 'WinXPKey.pas' {Form5},
-  update in 'update.pas' {Form6};
+  Update in 'Update.pas' {frmUpdate};
 
 {$R *.res}
-//{$R 'Res\UAC.res' 'UAC.RC'}
 
 begin
   { Report memory leaks if run inside the Delphi 2006 debugger }
@@ -81,6 +82,6 @@ begin
   Application.CreateForm(TForm4, Form4);
   Application.CreateForm(TOKBottomDlg, OKBottomDlg);
   Application.CreateForm(TForm5, Form5);
-  Application.CreateForm(TForm6, Form6);
+  Application.CreateForm(TfrmUpdate, frmUpdate);
   Application.Run;
 end.
