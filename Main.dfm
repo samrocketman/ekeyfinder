@@ -1661,8 +1661,4 @@ object Form1: TForm1
     Left = 16
     Top = 8
   end
-  object XPManifest: TXPManifest
-    Left = 168
-    Top = 8
-  end
 end

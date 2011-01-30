@@ -26,7 +26,7 @@ uses
   Classes, ComCtrls, Controls, Dialogs, ExtCtrls, Forms,
   Graphics, Grids,
   IniFiles, jpeg, Menus, Messages, Printers, Registry, ShellAPI, StdCtrls,
-  StrUtils, SysUtils, ValEdit, Variants, Windows, XPMan, ExtActns;
+  StrUtils, SysUtils, ValEdit, Variants, Windows, ExtActns;
 
 type
   TForm1 = class(TForm)
@@ -64,7 +64,6 @@ type
     Label7:  TLabel;
     Label9:  TLabel;
     Memo3:   TMemo;
-    XPManifest: TXPManifest;
     N3:      TMenuItem;
     MnuSourceforgeWeb: TMenuItem;
     MnuItmWebUpdate: TMenuItem;
