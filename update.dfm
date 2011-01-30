@@ -1,4 +1,4 @@
-object Form6: TForm6
+object frmUpdate: TfrmUpdate
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]

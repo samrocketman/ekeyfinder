@@ -1,4 +1,4 @@
-unit update;
+unit Update;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Dialogs, StdCtrls, ExtCtrls, ComCtrls, ExtActns;
 
 type
-  TForm6 = class(TForm)
+  TfrmUpdate = class(TForm)
     Stage1: TLabel;
     ProgressBar1: TProgressBar;
     Image1: TImage;
@@ -21,7 +21,7 @@ type
   end;
 
 var
-  Form6: TForm6;
+  frmUpdate: TfrmUpdate;
 
 implementation
 
@@ -29,10 +29,10 @@ uses Main;
 
 {$R *.dfm}
 
-procedure TForm6.URL_OnDownloadProgress(Sender: TDownLoadURL;Progress, ProgressMax: Cardinal;StatusCode: TURLDownloadStatus;StatusText: String; var Cancel: Boolean);
+procedure TfrmUpdate.URL_OnDownloadProgress(Sender: TDownLoadURL;Progress, ProgressMax: Cardinal;StatusCode: TURLDownloadStatus;StatusText: String; var Cancel: Boolean);
 begin
-   ProgressBar1.Max:= ProgressMax;
-   ProgressBar1.Position:= Progress;
+  ProgressBar1.Max:= ProgressMax;
+  ProgressBar1.Position:= Progress;
 end;
 
 function DoDownload(var URL: string;var Filename: string;var StageText: string): string;
@@ -40,10 +40,10 @@ var
   downloader: TDownloadURL;
 begin
   try
-  downloader.URL := URL;
-  downloader.Filename := Filename;
-  downloader.OnDownloadProgress := Form6.URL_OnDownloadProgress;
-  downloader.ExecuteTarget(nil);
+    downloader.URL := URL;
+    downloader.Filename := Filename;
+    downloader.OnDownloadProgress := frmUpdate.URL_OnDownloadProgress;
+    downloader.ExecuteTarget(nil);
   finally
     downloader.Free;
   end;
@@ -61,7 +61,7 @@ begin
    end;}
 end;
 
-procedure TForm6.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmUpdate.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Form1.Enabled := True;
 end;
