@@ -181,7 +181,7 @@ var
 
 const
   kfVersion   = '0.1 Beta 4';
-  kfStableVersion = '';
+  kfStableVersion = '0.0';
   kfUnstableVersion = kfVersion;
   kfDate      = 'January 20th, 2011';
   DefDelimCSV = ',';
@@ -2229,11 +2229,13 @@ end;
 
 procedure TForm1.MnuItmWebUpdateClick(Sender: TObject);
 var
-  kfUpdate, cfgUpdate : Boolean;
+  kfUpdate, cfgUpdate, isStable : Boolean;
   CFGVer, newCFG, kfStableURL, kfStableDownload, kfUnstableURL, kfUnstableDownload, StableVersion, UnstableVersion, cfgURL, Section : string;
   myINI: TINIFile;
 
 begin
+  if kfVersion=kfStableVersion then
+    isStable := True;
   //future update dialog
   //ShellExecute(Handle, nil, PChar('http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
   //Form6.Visible := True;
@@ -2282,9 +2284,17 @@ begin
     finally
       myINI.Free;
     end;
+    StableVersion:='0.4.1';
+    //ShowMessage(LeftStr(StableVersion,3));
+
+    //Check
+    if  not isStable and (StrToFloat(LeftStr(StableVersion,3)) > StrToFloat(kfStableVersion)) then
+      ShowMessage('True!')
+    else
+      ShowMessage('False :(');
     //ShowMessage(UnstableVersion + sLineBreak + kfUnstableVersion);
     //Enchanted Keyfinder update check
-    if ((not FileExists(ChangeFileExt(Application.ExeName, '.ini'))) and (kfVersion = kfUnstableVersion)) or followUnstable then
+    if ((not FileExists(ChangeFileExt(Application.ExeName, '.ini'))) and (not isStable)) or followUnstable then
     begin
       //if (there isn't an options file) and (the software is the unstable version) then automatically check for unstable updates
       //also do this if there is an options file and unstable updates is enabled
