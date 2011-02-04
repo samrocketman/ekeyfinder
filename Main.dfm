@@ -123,7 +123,7 @@ object Form1: TForm1
     Left = 232
     Top = 0
     Width = 400
-    Height = 695
+    Height = 703
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
@@ -1650,8 +1650,8 @@ object Form1: TForm1
     DefaultExt = 'txt'
     FileName = 'keyfinder'
     Filter = 
-      'Text (*.txt)|*.txt|CSV (Comma delimited) (*.csv)|*.csv|All Files' +
-      '|*.*'
+      'Text (*.txt)|*.txt|CSV (Comma delimited) (*.csv)|*.csv|INI (*.in' +
+      'i)|*.ini|Web Page (*.html)|*.html|All Files|*.*'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
     OnTypeChange = SaveDialogTypeChange
     Left = 53
