@@ -1,4 +1,4 @@
-object Form5: TForm5
+object frmWinXPKey: TfrmWinXPKey
   Left = 0
   Top = 0
   BorderIcons = []

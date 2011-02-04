@@ -7,7 +7,7 @@ uses
   Dialogs, StdCtrls, Registry, ShellAPI;
 
 type
-  TForm5 = class(TForm)
+  TfrmWinXPKey = class(TForm)
     Button1: TButton;
     Button2: TButton;
     GroupBox1: TGroupBox;
@@ -26,7 +26,7 @@ type
   end;
 
 var
-  Form5: TForm5;
+  frmWinXPKey: TfrmWinXPKey;
 
 implementation
 
@@ -61,7 +61,7 @@ begin
   end;
 end;
 
-procedure TForm5.Button1Click(Sender: TObject);
+procedure TfrmWinXPKey.Button1Click(Sender: TObject);
 var
   fileName: string;
   myFile: TextFile;
@@ -117,8 +117,8 @@ begin
     if ExitCode = 0 then
     begin
       Close;   
-      Form1.ListBox1.Selected[0] := True;
-      Form1.ListBox1Click(Form1);
+      frmMain.ListBox1.Selected[0] := True;
+      frmMain.ListBox1Click(frmMain);
     end;
   end;
 
@@ -128,19 +128,19 @@ begin
   //GetSystemRoot + '\system32\wscript.exe'
 end;
 
-procedure TForm5.Button2Click(Sender: TObject);
+procedure TfrmWinXPKey.Button2Click(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TForm5.Edit1Change(Sender: TObject);
+procedure TfrmWinXPKey.Edit1Change(Sender: TObject);
 begin
   if (Edit1.Text <> 'Format (XXXXX-XXXXX-XXXXX-XXXXX-XXXXX)') and (Edit1.Text <> '') then
     Button1.Enabled := True else
     Button1.Enabled := False;
 end;
 
-procedure TForm5.Edit1Click(Sender: TObject);
+procedure TfrmWinXPKey.Edit1Click(Sender: TObject);
 begin
   if Edit1.Text = 'Format (XXXXX-XXXXX-XXXXX-XXXXX-XXXXX)' then
   begin
@@ -149,7 +149,7 @@ begin
   end;
 end;
 
-procedure TForm5.Edit1Exit(Sender: TObject);
+procedure TfrmWinXPKey.Edit1Exit(Sender: TObject);
 begin
   if Edit1.Text = '' then
   begin
@@ -159,12 +159,12 @@ begin
   end;
 end;
 
-procedure TForm5.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmWinXPKey.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form1.Enabled := True;
+  frmMain.Enabled := True;
 end;
 
-procedure TForm5.FormCreate(Sender: TObject);
+procedure TfrmWinXPKey.FormCreate(Sender: TObject);
 begin
   //if Edit1.Text = 'Format (XXXX-XXXX-XXXX-XXXX-XXXX)' then
     //Edit1.Color := 12632256;
