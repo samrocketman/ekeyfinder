@@ -1,4 +1,4 @@
-object Form1: TForm1
+object frmMain: TfrmMain
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
@@ -123,7 +123,7 @@ object Form1: TForm1
     Left = 232
     Top = 0
     Width = 400
-    Height = 703
+    Height = 695
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
