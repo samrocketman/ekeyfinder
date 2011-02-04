@@ -1,7 +1,7 @@
 {
     The Enchanted Keyfinder is a free utility that retrieves your
     Product Key (cd key) used to install Windows from your registry.
-                                               
+
     Copyright (C) 2011 Enchanted Keyfinder Project
     Copyright (C) 1999-2008  Magical Jelly Bean Software
 
@@ -25,10 +25,6 @@
 program keyfinder;
 
 {$R 'UAC.res' 'UAC.rc'}
-
-{$define debug}   //debug setting - comment out for release version
-{$ASSERTIONS ON}  //debug setting - comment out for release version
-
 {%TogetherDiagram 'ModelSupport_keyfinder\default.txaPackage'}
 {%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txaPackage'}
 {%TogetherDiagram 'ModelSupport_keyfinder\Unit1\default.txaPackage'}
@@ -49,12 +45,13 @@ uses
   Forms,
   SysUtils,
   Main in 'Main.pas' {Form1},
-  options in 'options.pas' {Form2},
-  registration in 'registration.pas' {Form3},
-  remote in 'remote.pas' {Form4},
-  license in 'license.pas' {OKBottomDlg},
+  Options in 'Options.pas' {Form2},
+  Registration in 'Registration.pas' {Form3},
+  Remote in 'Remote.pas' {Form4},
+  License in 'License.pas' {OKBottomDlg},
   WinXPKey in 'WinXPKey.pas' {Form5},
-  Update in 'Update.pas' {frmUpdate};
+  Update in 'Update.pas' {frmUpdate},
+  WindowsUser in 'WindowsUser.pas';
 
 {$R *.res}
 
