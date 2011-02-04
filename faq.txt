@@ -123,7 +123,7 @@ Source:
 http://www.microsoft.com/licensing/resources/vol/ActivationFAQ/default.mspx
 
 Q: How does Keyfinder change the Windows Product Key?
-Using modified scripts originally written by Microsoft.
+A: Using modified scripts originally written by Microsoft.
 
 Source:
 http://support.microsoft.com/default.aspx?scid=kb;en-us;Q328874
