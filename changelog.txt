@@ -1,8 +1,10 @@
 Enchanted Keyfinder (EK) Changelog
 Build xxxxxx -- xxxxxxx
 ----------------------------------
-1.	Added MS Office product description derived from the GUID.  
+1.	Added MS Office product description derived from the GUID.
 	Affects Office 2000 through Office 2010.
+2.	Fixed Office 2010 CD Key misreporting.
+3.	Fixed browsing for a hive in WinPE environment.
 
 Build 0.1.0.260 Beta 4 -- January 21st, 2011
 ----------------------------------
