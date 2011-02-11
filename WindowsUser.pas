@@ -1,16 +1,4 @@
-(*------------------------------------------------------------------------------
-The IsWindowsAdmin function is checking if the exe running has an administrator security 
-token, it doesnt check if the logged in user is an admin - it checks the actual 
-process running and its security rights. Maybe renaming this custom function to 
-IsRunningAsAnAdmin would be more suitable.
-This is one of the misconceptions of Windows Vista/7 and XP that people have. 
-In XP you run the entire OS as an admin or not. 
-In Vista/7 you can specifically have exes run as an admin by elevating up, 
-while the rest of the system is running as a limited user. 
-When you elevate it up it doesnt change which account the entire OS is logged into, 
-it just gives the exe certain rights system wide.
-
-
+{
     The Enchanted Keyfinder is a free utility that retrieves your
     Product Key (cd key) used to install Windows from your registry.
 
@@ -32,11 +20,23 @@ it just gives the exe certain rights system wide.
     WindowsUser.pas, released January 2011.
     The initial developer of this code is VersionBoy.
     Portions created by VersionBoy are Copyright (C) 2011.
-    All Rights Reserved. 
+    All Rights Reserved.
 
     Contributor(s): VersionBoy.
 
     Compiles With: Turbo Delphi 2006, Delphi 2007
+}
+(*------------------------------------------------------------------------------
+The IsWindowsAdmin function is checking if the exe running has an administrator security 
+token, it doesnt check if the logged in user is an admin - it checks the actual 
+process running and its security rights. Maybe renaming this custom function to 
+IsRunningAsAnAdmin would be more suitable.
+This is one of the misconceptions of Windows Vista/7 and XP that people have. 
+In XP you run the entire OS as an admin or not. 
+In Vista/7 you can specifically have exes run as an admin by elevating up, 
+while the rest of the system is running as a limited user. 
+When you elevate it up it doesnt change which account the entire OS is logged into, 
+it just gives the exe certain rights system wide.
 ------------------------------------------------------------------------------*)
 unit WindowsUser;
 
