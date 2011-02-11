@@ -18,40 +18,43 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    Coded by: versionboy
-    Website : http://sourceforge.net/projects/keyfinder/
-    Compiles in: Turbo Delphi 2006
+    Contributor(s): VersionBoy.
+
+    Website: http://sourceforge.net/projects/keyfinder/
+    Compiles With: Turbo Delphi 2006, Delphi 2007
 }
-program keyfinder;
+program Keyfinder;
 
 {$R 'UAC.res' 'UAC.rc'}
-{%TogetherDiagram 'ModelSupport_keyfinder\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Unit1\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Unit2\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Unit3\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Unit4\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\default.txvpck'}
-{%TogetherDiagram 'ModelSupport_keyfinder\keyfinder\default.txvpck'}
-{%TogetherDiagram 'ModelSupport_keyfinder\Main\default.txvpck'}
-{%TogetherDiagram 'ModelSupport_keyfinder\registration\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\options\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\remote\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\WinXPKey\default.txaPackage'}
-{%TogetherDiagram 'ModelSupport_keyfinder\license\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\Keyfinder\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\Update\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\license\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\Main\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\Options\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\WinXPKey\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\Registration\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\Remote\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\VersionConsts\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\WindowsUser\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\Keyfinder\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\license\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\WindowsUser\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_Keyfinder\Main\default.txvpck'}
 
 uses
   Forms,
   SysUtils,
-  Main in 'Main.pas' {Form1},
-  Options in 'Options.pas' {Form2},
-  Registration in 'Registration.pas' {Form3},
-  Remote in 'Remote.pas' {Form4},
+  Main in 'Main.pas' {frmMain},
+  Options in 'Options.pas' {frmOptions},
+  Registration in 'Registration.pas' {frmRegistration},
+  Remote in 'Remote.pas' {frmRemote},
   License in 'License.pas' {OKBottomDlg},
-  WinXPKey in 'WinXPKey.pas' {Form5},
+  WinXPKey in 'WinXPKey.pas' {frmWinXPKey},
   Update in 'Update.pas' {frmUpdate},
-  WindowsUser in 'WindowsUser.pas';
+  WindowsUser in 'WindowsUser.pas',
+  VersionConsts in 'VersionConsts.pas';
 
 {$R *.res}
 
@@ -61,24 +64,25 @@ begin
 
   if (ParamCount = 1) and (AnsiLowerCase(ParamStr(1)) = '/?') or (AnsiLowerCase(ParamStr(1)) = '/help') then
   begin
-    Application.MessageBox('Command Line Options: /save <file.ext> /savecsv <filename> /close /hive <path> /file <filename> /delim <character>', 'Enchanted Keyfinder');
+    Application.MessageBox('Command Line Options: /save <location> /savecsv <location> /close /hive <location> /file <filename> /delim <character>', PROGRAM_NAME);
     Application.Terminate;
     Exit;
   end;
   if (ParamCount = 1) and (AnsiLowerCase(ParamStr(1)) = '/close') then
   begin
-    Application.MessageBox('You can''t have ''/close'' as the only parameter. This application will now exit.', 'Enchanted Keyfinder');
+    Application.MessageBox('You can''t have ''/close'' as the only parameter. This application will now exit.', PROGRAM_NAME);
     Application.Terminate;
     Exit;
   end;
   Application.Initialize;
-  Application.Title := 'Enchanted Keyfinder';
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TForm2, Form2);
-  Application.CreateForm(TForm3, Form3);
-  Application.CreateForm(TForm4, Form4);
+  Application.Title := PROGRAM_NAME;
+  //Application.HelpFile := 'keyfinder.chm';
+  Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TfrmOptions, frmOptions);
+  Application.CreateForm(TfrmRegistration, frmRegistration);
+  Application.CreateForm(TfrmRemote, frmRemote);
   Application.CreateForm(TOKBottomDlg, OKBottomDlg);
-  Application.CreateForm(TForm5, Form5);
+  Application.CreateForm(TfrmWinXPKey, frmWinXPKey);
   Application.CreateForm(TfrmUpdate, frmUpdate);
   Application.Run;
 end.
