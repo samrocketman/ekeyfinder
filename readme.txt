@@ -1,5 +1,5 @@
                         Enchanted Keyfinder v0.1 Beta
-README                                                      January 17th, 2011
+README                                                        February 2nd, 2011
 
                   http://sourceforge.net/projects/keyfinder/
 --------------------------------------------------------------------------------
@@ -15,17 +15,26 @@ It has options to save the keys to a text file, or print them out.
 
 Features
 --------
-Open Source - This means that it can be trusted. The Keyfinder does not contain trojans or "phone home" messages. No spam, spyware, viruses, 
-or trojans.
+Open Source - This means that it can be trusted. The Keyfinder does not contain
+trojans or "phone home" messages. No spam, spyware, viruses, or trojans.
 Office 2010, Office 2007, & Windows 7 support!
-An optional config file - this functionality lets you pull a key stored in the registry for any software. A sample config file is included 
-in the zip and can be seen here: keyfinder.cfg
-Command line options - /save <location> /savecsv <location> /close /hive <location> /file <filename>
-Load Hive option - allows you to load the registry hive of another Windows installation. To use, put the hard drive in a working machine 
-(must also be Windows 2000,XP, Vista or 7) or use Windows PE (not tested, should work) and click Load Hive. Then point it to the dead Windows 
-install. If you're using Windows Vista or Windows 7, Administrator rights are required for this feature. You may have to right click on the Keyfinder and 
-run as Administrator.
-Improved Save & Print! - save & print options will now include all keys. Save is also available in text or CSV.
+
+An optional config file - this functionality lets you pull a key stored in the
+registry for any software.  A sample config file is included in the zip and can
+be seen here: keyfinder.cfg
+
+Command line options - /save <location> /savecsv <location> /close /hive
+<location> /file <filename> /delim <character>
+
+Load Hive option - allows you to load the registry hive of another Windows
+installation. To use, put the hard drive in a working machine  (must also be
+Windows 2000,XP, Vista or 7) or use Windows PE (not tested, should work) and
+click Load Hive. Then point it to the dead Windows  install. If you're using
+Windows Vista or Windows 7, Administrator rights are required for this feature.
+
+You may have to right click on the Keyfinder and run as Administrator. 
+Improved Save & Print! - save & print options will now include all keys. 
+Save is also available in text or CSV.
 
 How To Extract
 --------------
@@ -42,9 +51,12 @@ Known Issues
    your Windows Certificate of Authenticity. This issue can happen with
    the branded PC's mostly (Dell, HP, IBM, Acer etc.). COA samples are
    at http://www.microsoft.com/resources/howtotell/windows/
- - If you have no physical XP media or only restore media, the retrieval software will have limited use. 
- - Do not pay for a key retrievable utility for any reason, reinstalled, upgraded or clean installed XP since purchasing or building the computer. 
-   No paid key retrieval tool will retrieve a valid key from a OEM installation that used a generic key. 
+ - If you have no physical XP media or only restore media, the retrieval 
+   software will have limited use. 
+ - Do not pay for a key retrievable utility for any reason, reinstalled, 
+   upgraded or clean installed XP since purchasing or building the computer.
+   No paid key retrieval tool will retrieve a valid key from a OEM 
+   installation that used a generic key. 
  - In older versions of Office (Office 2000 and below), the
    'Product Key' value is not available.
 
@@ -73,11 +85,14 @@ Parameters:
 You can also combine the above command-line options with the following
 save options in order to save product key information to a file:
 
-/delim <character>    Many countries use a “,” and not a “.” as decimal separator.
-                      This means they can't use “,” as field separator, and they
+/delim <character>    Many countries use a "," and not a "." as decimal separator.
+                      This means they can't use "," as field separator, and they
                       use another character instead.
 /savecsv <Filename>   Save the list of product keys into a comma-delimited
                       text file.
+/saveini <Filename>   Save the list of product keys into a ini text file.
+
+/savehtml <Filename>  Save the list of product keys into a web document.
 
 
 Examples
@@ -126,10 +141,10 @@ Each line is formatted as follows.
 
 ApplicationDisplayName|Description=FullyQualifiedRegistryLocation=KeyName|Description2=FullyQualifiedRegistryLocation2=KeyName2 
 
-You can have as many description fields as necessary. Just separate each with the pipe symbol. 
-Comment lines can be added by putting a semicolon ';' symbol at the begining of a line.
-The first line in the file holds the version of keyfinder it's compatable with and the date it was last updated.
-
+You can have as many description fields as necessary. Just separate each with
+the pipe symbol. Comment lines can be added by putting a semicolon ';' symbol at
+the begining of a line. The first line in the file holds the version of
+keyfinder it's compatable with and the date it was last updated.
 
 Reporting Bugs
 --------------
@@ -144,5 +159,5 @@ Please describe the problem in as much detail as possible.
 Include the following information:
 
   - Version of keyfinder (as shown in the About dialog)
-  - Operating system and version
+  - Operating System and version
 
