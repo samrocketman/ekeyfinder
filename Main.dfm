@@ -2,7 +2,7 @@ object frmMain: TfrmMain
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
-  ClientHeight = 714
+  ClientHeight = 509
   ClientWidth = 632
   Color = clWhite
   TransparentColorValue = clFuchsia
@@ -27,7 +27,7 @@ object frmMain: TfrmMain
     Left = 230
     Top = 0
     Width = 2
-    Height = 695
+    Height = 490
     ExplicitLeft = 241
     ExplicitHeight = 250
   end
@@ -35,7 +35,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 230
-    Height = 695
+    Height = 490
     Align = alLeft
     BiDiMode = bdLeftToRight
     Constraints.MinWidth = 100
@@ -59,7 +59,7 @@ object frmMain: TfrmMain
     Left = 232
     Top = 0
     Width = 400
-    Height = 695
+    Height = 490
     Align = alClient
     Constraints.MinHeight = 100
     Constraints.MinWidth = 100
@@ -74,7 +74,7 @@ object frmMain: TfrmMain
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 695
+    Top = 490
     Width = 632
     Height = 19
     Panels = <
@@ -92,7 +92,7 @@ object frmMain: TfrmMain
     Left = 232
     Top = 0
     Width = 400
-    Height = 695
+    Height = 490
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
@@ -123,7 +123,7 @@ object frmMain: TfrmMain
     Left = 232
     Top = 0
     Width = 400
-    Height = 695
+    Height = 490
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
@@ -1372,11 +1372,11 @@ object frmMain: TfrmMain
           CDD3D0CDD3D0CDD3D0CDD3D0CDD3D0CDD3D0CDD3D0CDD3D0CDD3D0CDD3D0CDD3
           D0CDD3D0CDD3D0858A88FF00FF858A88858A88858A88858A88858A88858A8885
           8A88858A88858A88858A88858A88858A88858A88858A88FF00FF}
-        Caption = 'Change Windows Key'
+        Caption = 'Change &Windows Key...'
         Enabled = False
         OnClick = ChangeWindowsKey1Click
       end
-      object LoadHive1: TMenuItem
+      object MnuItmLoadHive1: TMenuItem
         Bitmap.Data = {
           36050000424D3605000000000000360400002800000010000000100000000100
           08000000000000010000130B0000130B00000001000000010000000000004040
@@ -1421,7 +1421,7 @@ object frmMain: TfrmMain
           03040304030304FF0402020204FF0304FF0304FFFF03FFFF0402020202040304
           FFFFFFFFFFFFFFFF040202020202040404040404040404040202}
         Caption = '&Load Hive...'
-        OnClick = LoadHive1Click
+        OnClick = MnuItmLoadHive1Click
       end
       object RemotePC1: TMenuItem
         Caption = '&Remote PC'
@@ -1632,7 +1632,7 @@ object frmMain: TfrmMain
         Caption = '-'
       end
       object About2: TMenuItem
-        Caption = '&About'
+        Caption = '&About Enchanted Keyfinder'
         OnClick = About2Click
       end
     end
