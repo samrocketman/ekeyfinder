@@ -1,7 +1,7 @@
 {
     The Enchanted Keyfinder is a free utility that retrieves your
     Product Key (cd key) used to install Windows from your registry.
-                                               
+
     Copyright (C) 2011 Enchanted Keyfinder Project
     Copyright (C) 1999-2008  Magical Jelly Bean Software
 
@@ -17,19 +17,24 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Contributor(s): VersionBoy.
 }
 unit Main;
 
 interface
 
 uses
+  // Delphi
   Classes, ComCtrls, Controls, Dialogs, ExtCtrls, Forms,
   Graphics, Grids,
   IniFiles, jpeg, Menus, Messages, Printers, Registry, ShellAPI, StdCtrls,
-  StrUtils, SysUtils, ValEdit, Variants, Windows, ExtActns;
+  StrUtils, SysUtils, ValEdit, Variants, Windows, ExtActns, 
+  // Local
+  VersionConsts;
 
 type
-  TForm1 = class(TForm)
+  TfrmMain = class(TForm)
     MainMenu1: TMainMenu;
     About1:  TMenuItem;
     ListBox1: TListBox;
@@ -54,7 +59,7 @@ type
     Memo2:   TMemo;
     SaveDialog1: TSaveDialog;
     PrintDialog1: TPrintDialog;
-    LoadHive1: TMenuItem;
+    MnuItmLoadHive1: TMenuItem;
     RemotePC1: TMenuItem;
     N2:      TMenuItem;
     ChangeRegistrationInfo1: TMenuItem;
@@ -105,7 +110,6 @@ type
     procedure GetNT4Key;
     procedure Get9xKey;
     procedure GetOfficeKey;
-    procedure GetMSDPID3(const sHivePath, Key: string; var sProdID, sMSKey: string);
     procedure OfficeList;
     procedure SaveFileDone;
     procedure ReadCfg;
@@ -126,7 +130,7 @@ type
     procedure SaveAs1Click(Sender: TObject);
     procedure PrintAll1Click(Sender: TObject);
     procedure ModifyConfig1Click(Sender: TObject);
-    procedure LoadHive1Click(Sender: TObject);
+    procedure MnuItmLoadHive1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Label7Click(Sender: TObject);
     procedure Label8Click(Sender: TObject);
@@ -143,9 +147,10 @@ type
   private
     // Private declarations
     function DecodeAdobeKey(const sAdobeEncryptedKey: string): string;
-    function DecodeMSKey(const HexSrc: array of byte): string;
+    function DecodeMSKey(const HexSrc: array of byte; const ID: boolean): string;
     function StripTags(const sText: string): string;
     procedure FormatAdobeKey(var sAdobeKey: string);
+    procedure GetMSDPID3(const sHivePath: string; var sProdID, sMSKey: string);
   public
     // Public declarations
     sDelimCSV:    string;
@@ -162,7 +167,7 @@ type
   end;
 
 var
-  Form1:     TForm1;
+  frmMain:     TfrmMain;
   iSaveKeysToFile: integer;
   bToBePrinted: boolean;
   sAutoSaveDir: string;
@@ -177,20 +182,24 @@ var
   bSaveSettings: boolean;
   sUserHivePath,
   sSoftwareHivePath: string;
-  bWin2k, bWinXP, bVista, bWinNT4: boolean;
+  bWin2k, bWinXP,
+  bVista, bWinNT4: boolean;
 
 const
-  kfVersion   = '0.1 Beta 4';
-  kfStableVersion = '0.0';
+  kfVersion   = PROGRAM_VERSION;
+  kfStableVersion = PROGRAM_STABLE_VERSION;
   kfUnstableVersion = kfVersion;
-  kfDate      = 'January 20th, 2011';
+  kfDate      = PROGRAM_RELEASE_DATE;
   DefDelimCSV = ',';
   DefLogPath  = '.';
   KEY_WOW64_64KEY = $0100;
+  KEY_WOW64_32KEY = $0200;
 
   SE_PRIVILEGE_DISABLED = 0;
   SE_RESTORE_NAME = 'SeRestorePrivilege';
-  sLineBreak = {$IFDEF LINUX} AnsiChar(#10) {$ENDIF} {$IFDEF MSWINDOWS} AnsiString(#13#10) {$ENDIF};
+  sLineBreak = {$IFDEF LINUX} AnsiChar(#10) {$ENDIF}
+               {$IFDEF MSWINDOWS} AnsiString(#13#10) {$ENDIF}
+               {$IFDEF MACOSX} AnsiChar(#10) {$ENDIF};
 
 function IsWow64: boolean;
 function BrowseForFolder(var Foldr: string; const Title: string): boolean;
@@ -204,19 +213,23 @@ function IsWinNT4: boolean;
 procedure SaveFont(FStream: TIniFile; Section: string; smFont: TFont);
 procedure LoadFont(FStream: TIniFile; Section: string; smFont: TFont);
 function IsNumeric(Value: string; const AllowFloat: boolean): boolean;
+procedure convertIniFile(filename : string);
 
 implementation
 
 uses
-  CommDlg, Dlgs, ShlObj, license, options, registration, remote, WinXPKey, ActnList;
+  CommDlg, Dlgs, ShlObj, License, Options, Registration, Remote, WindowsUser,
+  WinXPKey, ActnList;
 
 resourcestring
   rsSetPrivUserNotHaveAccess = 'The current user does not have the required ' +
     'access to load a registry hive.';
   rsSetPrivIncompatOS = 'This program is incompatible with the operating sys' +
     'tem installed on this computer.';
-  rsMnuItmLoadHive    = '&Load Hive...';
-  rsMnuItmUnLoadHive  = 'Un&Load Hive...';
+  rsMnuItmLoadHive = '&Load Hive...';
+  rsMnuItmUnLoadHive = 'Un&Load Hive...';
+  rsNotFound = 'Not found';
+  rsLicenseKeyEmpty = 'The license key registry entry is empty!';
 
 {$R *.dfm}  // Include form definitions
 
@@ -237,9 +250,7 @@ begin
   if Assigned(IsWow64Process) then
   begin
     // Function is implemented: call it
-    if not IsWow64Process(
-      Windows.GetCurrentProcess, IsWow64Result
-    ) then
+    if not IsWow64Process(Windows.GetCurrentProcess, IsWow64Result) then
       raise SysUtils.Exception.Create('IsWow64: bad process handle');
     // Return result of function
     Result := IsWow64Result;
@@ -247,12 +258,12 @@ begin
   else
     // Function not implemented: can't be running on Wow64
     Result := False;
-end;
+end; // IsWow64
 
 function BrowseForFolder(var Foldr: string; const Title: string): boolean;
 var
-  BrowseInfo:  TBrowseInfo;
-  ItemIDList:  PItemIDList;
+  BrowseInfo: TBrowseInfo;
+  ItemIDList: PItemIDList;
   DisplayName: array[0..MAX_PATH] of char;
 begin
   Result := False;
@@ -261,7 +272,7 @@ begin
   with BrowseInfo do
   begin
     hwndOwner := Application.Handle;
-    // With this the browse dialog should appear on app main form
+    // With this the browse dialog should appear on the application's main form
     pszDisplayName := @DisplayName[0];
     lpszTitle := PChar(Title);
     ulFlags := BIF_RETURNONLYFSDIRS;
@@ -275,9 +286,14 @@ begin
       Result := True;
       GlobalFreePtr(ItemIDList);
     end;
-end;
+end; // BrowseForFolder
 
 function BrowseDialogCallBack(Wnd: HWND; uMsg: UINT; lParam, lpData: LPARAM): integer stdcall;
+// In later versions of Delphi you may find the two constants for BIF_NEWDIALOGSTYLE and BIF_NONEWFOLDERBUTTON  are defined in the unit  shlobj, but these were missing in Delphi 7
+const
+  BIF_NEWDIALOGSTYLE    = $40;
+  BIF_NONEWFOLDERBUTTON = $200;
+  
 var
   wa, rect: TRect;
   dialogPT: TPoint;
@@ -290,7 +306,8 @@ begin
     dialogPT.X := ((wa.Right - wa.Left) div 2) - ((rect.Right - rect.Left) div 2);
     dialogPT.Y := ((wa.Bottom - wa.Top) div 2) - ((rect.Bottom - rect.Top) div 2);
     MoveWindow(Wnd, dialogPT.X, dialogPT.Y, Rect.Right - Rect.Left, Rect.Bottom - Rect.Top, True);
-  end;
+    SendMessage(Wnd, BFFM_SETSELECTIONA, Longint(true), lpData);
+   end;
 
   Result := 0;
 end; // BrowseDialogCallBack
@@ -396,11 +413,11 @@ begin
     SetLength(sComputer, (i));
   except
     // ShowMessage('Can''t get local PC name!');
-    sComputer := 'Unknown';
+    sComputer := 'Unknown PC';
   end;
 
   if sComputer = '' then   // Test result for a string
-    sComputer := 'Unknown';
+    sComputer := 'Unknown PC';
   Result := sComputer;
 end;
 
@@ -431,6 +448,11 @@ begin
     (Win32MinorVersion = 1);
 end;
 
+function IsWinPE: boolean;
+begin
+  Result := FileExists(GetEnvironmentVariable('SystemRoot') + '\system32\winpeshl.exe');
+end;
+
 function IsWinNT4: boolean;
   // Returns true if the operating system is Windows NT
   // (excluding 2000 and XP) and false if not.
@@ -444,12 +466,12 @@ begin
     (Win32MinorVersion = 0);
 end;
 
-procedure TForm1.Exit1Click(Sender: TObject);
+procedure TfrmMain.Exit1Click(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TForm1.ListBox1Click(Sender: TObject);
+procedure TfrmMain.ListBox1Click(Sender: TObject);
 var
   i: integer;
 begin
@@ -478,7 +500,7 @@ begin
   StatusBar1.Panels.Items[2].Text := 'Detected: ' + IntToStr(ListBox2.Items.Count);
 end;
 
-procedure TForm1.ProgramInit;
+procedure TfrmMain.ProgramInit;
 begin
   ListBox1.Clear;
   Listbox2.Clear;
@@ -490,7 +512,7 @@ begin
   if ListBox1.Items.Count > 0 then
   begin
     ListBox1.Selected[0] := True;
-    Form1.ListBox1Click(Form1);
+    frmMain.ListBox1Click(frmMain);
   end;
 end;
 
@@ -533,7 +555,7 @@ begin
   end;
 end;
 
-procedure TForm1.LoadSettings(Sender: TObject);
+procedure TfrmMain.LoadSettings(Sender: TObject);
 var
   myINI: TINIFile;
   fs:    TFormatSettings;
@@ -557,19 +579,19 @@ begin
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', True)
     else
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', False);
-    LoadFont(myINI, 'AppListFont', Form1.ListBox1.Font);
-    LoadFont(myINI, 'KeyListFont', Form1.Memo1.Font);
+    LoadFont(myINI, 'AppListFont', frmMain.ListBox1.Font);
+    LoadFont(myINI, 'KeyListFont', frmMain.Memo1.Font);
   finally
     myINI.Free;
-  end;
+  end; // try..finally
 end;
 
-procedure TForm1.SaveSettings(Sender: TObject);
+procedure TfrmMain.SaveSettings(Sender: TObject);
 var
   myINI: TINIFile;
 begin
+  myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
   try
-    myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
     myINI.WriteString('Settings', 'LogFilePath', sLogFilePath);
     myINI.WriteBool('Settings', 'Logging', bLogging);
     myINI.WriteString('Settings', 'CSVDelim', sDelimCSV);
@@ -583,12 +605,12 @@ begin
     myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
     myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
     myINI.WriteBool('Settings', 'UnstableUpdates', followUnstable);
-    SaveFont(myINI, 'AppListFont', Form1.ListBox1.Font);
-    SaveFont(myINI, 'KeyListFont', Form1.Memo1.Font);
+    SaveFont(myINI, 'AppListFont', frmMain.ListBox1.Font);
+    SaveFont(myINI, 'KeyListFont', frmMain.Memo1.Font);
     myINI.UpdateFile;
   finally
     myINI.Free;
-  end;
+  end; // try..finally
 end;
 
 procedure SaveFont(FStream: TIniFile; Section: string; smFont: TFont);
@@ -651,38 +673,56 @@ begin
   end;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TfrmMain.FormCreate(Sender: TObject);
 var
   i: integer;
   sCurParam: string;
 begin
-  Height   := 480;
+  // Program startup default settings
   Width    := 640;
-
+  Height   := 480;
   //bLogging := False;
   //bAutoHive := False;
   //bAutoSave    := False;
   //bAppendTop  := False;
   //sLogFilePath := '.\';
-  //sDelimCSV    := DefDelimCSV;
+  sDelimCSV    := DefDelimCSV;
   sHiveLoc := 'Software';
   bWinNT4  := IsWinNT4;
   bWin2k   := IsWin2k;
   bWinXP   := IsWinXP;
   //bVista   := IsVista;
-  if IsWinXP then
+
+  frmMain.Memo1.Font.Style := [fsBold];
+  frmMain.LoadSettings(frmMain);
+  if bWinXP then
     ChangeWindowsKey1.Enabled := True;
-  
-  Form1.Memo1.Font.Style := [fsBold];
-  Form1.LoadSettings(Form1);
-  //Form1.Memo1.Font.Style := [fsBold];
+  if Win32Platform <> VER_PLATFORM_WIN32_NT then
+  begin
+	  ChangeWindowsKey1.Enabled := False;
+    MnuItmLoadHive1.Enabled := False;
+
+  end;
+  if IsWinPE then
+  begin
+    // Switch off I/O error checking
+    {$IOChecks off}
+    MkDir(GetEnvironmentVariable('SystemRoot') + '\system32\config\systemprofile\Desktop');
+    {$IOChecks on}
+    frmMain.Scaled := False;
+    ChangeRegistrationInfo1.Enabled := False;
+    PrintAll1.Enabled := False;
+	  ChangeWindowsKey1.Enabled := False;
+  end;
+
   sPCName := GetPCName;
   if sPCName = '' then
     sPCName := 'Unknown';
+  frmMain.SaveDialog1.DefaultExt := '.txt';
   SaveDialog1.FileName := sPCName + '.txt';
   sAutoSaveDir    := ExtractFilePath(Application.ExeName);
   iSaveKeysToFile := -1;
-  Form1.Text      := Form1.Text + kfversion;
+  frmMain.Text    := frmMain.Text + kfversion;
   lblVersion.Caption  := lblVersion.Caption + kfversion;
   lblLastUpdate.Caption  := lblLastUpdate.Caption + kfdate;
 
@@ -711,7 +751,10 @@ begin
       begin
         bAutoHive := True;
         sHiveLoc2 := ParamStr(i + 1);
-        LoadHive;
+        // Are we running with admin privledges??
+        if IsWindowsAdmin then
+          LoadHive
+        else ShowMessage('Not running with admin privledges, Can''t load hive.');
       end;
 
     if sCurParam = '/save' then
@@ -720,6 +763,7 @@ begin
       if LeftStr(ParamStr(i + 1), 1) <> '/' then
         sAutoSaveDir := ParamStr(i + 1);
       SaveDialog1.FilterIndex := 1;
+      frmMain.SaveDialog1.DefaultExt := '.txt';
       SaveDialog1.FileName := sPCName + '.txt';  // Use PC name as default save name
     end;
 
@@ -732,6 +776,24 @@ begin
       SaveDialog1.FileName := sPCName + '.csv';
     end;
 
+		if sCurParam = '/saveini' then
+		begin
+			bAutoSave := True;
+			if LeftStr(ParamStr(i + 1), 1) <> '/' then
+				sAutoSaveDir := ParamStr(i + 1);
+			SaveDialog1.FilterIndex := 3;
+			SaveDialog1.FileName := sPCName + '.ini';
+		end;
+
+		if sCurParam = '/savehtml' then
+		begin
+			bAutoSave := True;
+			if LeftStr(ParamStr(i + 1), 1) <> '/' then
+				sAutoSaveDir := ParamStr(i + 1);
+			SaveDialog1.FilterIndex := 4;
+			SaveDialog1.FileName := sPCName + '.html';
+		end;
+
     if sCurParam = '/appendtop' then
       bAppendTop := True;
     if sCurParam = '/appendbottom' then
@@ -742,22 +804,26 @@ begin
   ProgramInit;
 
   if bAutoSave then
-    SaveAs1Click(Form1);
+  begin
+    SaveAs1Click(frmMain);
+    if SaveDialog1.FilterIndex = 3 then 
+      convertIniFile(sAutoSaveDir + SaveDialog1.FileName);
+  end;
   if bAutoClose then  // Time to close the main application
     Application.Terminate;
 end;
 
-procedure TForm1.Exit2Click(Sender: TObject);
+procedure TfrmMain.Exit2Click(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TForm1.MnuSourceforgeWebClick(Sender: TObject);
+procedure TfrmMain.MnuSourceforgeWebClick(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://sourceforge.net/projects/keyfinder/'), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar(PROGRAM_SOURCEFORGE_HOME_PAGE), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.FindWinVersion;
+procedure TfrmMain.FindWinVersion;
 var
   MyReg: TRegistry;
 begin
@@ -779,8 +845,8 @@ begin
     end;
   end;
 }
+  MyReg := TRegistry.Create;
   try
-    MyReg := TRegistry.Create;
     MyReg.RootKey := HKEY_LOCAL_MACHINE;
     // This bit won't work for NT 4 as there is no ProductName value
     if MyReg.OpenKey(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', False) and
@@ -817,17 +883,13 @@ begin
   end;
 end; // FindWinVersion
 
-procedure TForm1.GetVistaKey;
+procedure TfrmMain.GetVistaKey;
 var
-  MyReg:     TRegistry;
-  iBinarySize: integer;
-  HexBuf:    array of byte;  //  => The old DigitalPidId struct prior to Vista
-  HexBufID4: array of byte;  //  => the new DigitalPidId4 struct in Vista (size = 0x4F8)
-  ProdSpec:  TIniFile;
-  sTmp, sUnattendCDKey, sOSEdition: string;
-  sCSDVersion, sProductKey, sProductID, sCompName, sRegOwn, sRegOrg: string;
-
-
+  ProdSpec: TIniFile;
+  sOSEdition: string;
+  sCSDVersion, sProductKey,
+  sProductID, sRegOwn,
+  sRegOrg: string;
 
 begin
   sCSDVersion := '';
@@ -850,23 +912,26 @@ begin
   end;
   if sOSEdition <> '' then
     Memo1.Lines[0] := ('Microsoft ' + sOSEdition); // Don't want sOSEdition on seperate line
-  GetMSDPID3(sHiveLoc, '\Microsoft\Windows NT\CurrentVersion', sProductID, sProductKey);
+  GetMSDPID3(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', sProductID, sProductKey);
 
   // Retrieve ID, User + Company name
-  MyReg := TRegistry.Create;
-  MyReg.RootKey := HKEY_LOCAL_MACHINE;
-  if Listbox1.Items[0] <> 'Microsoft Windows 2000' then
-    MyReg.Access := KEY_WOW64_64KEY or KEY_READ;
-  if (MyReg.OpenKey(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', False)) then
-  begin
-    sRegOwn := MyReg.ReadString('RegisteredOwner');
-    sRegOrg := MyReg.ReadString('RegisteredOrganization');
-    if sOSEdition = '' then
-      sOSEdition := MyReg.ReadString('EditionID');
-    // Get Service Pack level
-    sCSDVersion := MyReg.ReadString('CSDVersion');
-    MyReg.CloseKey;
-  end;
+  with TRegistry.Create() do
+  try
+    RootKey := HKEY_LOCAL_MACHINE;
+    Access := KEY_WOW64_64KEY or KEY_READ;
+    if (OpenKey(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', False)) then
+    begin
+      sRegOwn := ReadString('RegisteredOwner');
+      sRegOrg := ReadString('RegisteredOrganization');
+      if sOSEdition = '' then
+        sOSEdition := ReadString('EditionID');
+      // Get Service Pack level
+      sCSDVersion := ReadString('CSDVersion');
+      CloseKey;
+    end;
+  finally
+    Free;
+  end; // try..finally
   if sCSDVersion <> '' then
     Memo1.Lines[0] := Memo1.Lines[0] + ' ' + sCSDVersion;
   Memo1.Lines.Add('Product ID: ' + PChar(sProductID));
@@ -881,8 +946,6 @@ begin
   Memo1.Lines.Add(Trim('Computer Name: ' + GetPCName()));
   Memo1.Lines.Add(Trim('Registered Owner: ' + PChar(sRegOwn)));
   Memo1.Lines.Add(Trim('Registered Organization: ' + PChar(sRegOrg)));
-  MyReg.CloseKey;
-  MyReg.Free;
 
   if iSaveKeysToFile > -1 then
   begin
@@ -894,28 +957,19 @@ begin
     begin
       iSaveKeysToFile := iSaveKeysToFile + 1;
       ListBox1.Selected[iSaveKeysToFile] := True;
-      Form1.ListBox1Click(Form1);
+      frmMain.ListBox1Click(frmMain);
     end;
   end;
 end;
 
-procedure TForm1.GetXPKey;
+procedure TfrmMain.GetXPKey;
 var
-  MyReg:     TRegistry;
-  iBinarySize: integer;
-  HexBuf:    array of byte;  //  => The old DigitalPidId struct prior to Vista
-  HexBufID4: array of byte;
-  //  Pointer to a struct with 1272 bytes where the first 4bytes are 0xF8, 0x04, 0x00, 0x00
-  //  => the new DigitalPidId4 struct in Vista (size = 0x4F8)
-  ProdSpec:  TIniFile;
-  sTmp, 
-  sUnattendCDKey, 
+  ProdSpec: TIniFile;
   sOSEdition,
-  sCSDVersion, 
-  sProductKey, 
+  sCSDVersion,
+  sProductKey,
   sProductID,
-  sCompName,
-  sRegOwn, 
+  sRegOwn,
   sRegOrg: string;
 
   function IsTabletOS: boolean;
@@ -944,7 +998,7 @@ begin
   sCSDVersion := '';
   sOSEdition  := '';
 
-  if (sHiveLoc = 'Software') and
+  if (LowerCase(sHiveLoc) = 'software') and
     (FileExists(GetEnvironmentVariable('SystemRoot') + '\system32\prodspec.ini')) then
   begin
     ProdSpec   := TIniFile.Create(GetEnvironmentVariable('SystemRoot') + '\system32\prodspec.ini');
@@ -953,7 +1007,7 @@ begin
   end;
 
   // Check for other OS location
-  if (sHiveLoc <> 'Software') and (FileExists(sHiveLoc2 + '\System32\Prodspec.ini')) then
+  if (LowerCase(sHiveLoc) <> 'software') and (FileExists(sHiveLoc2 + '\System32\Prodspec.ini')) then
   begin
     ProdSpec   := TIniFile.Create(sHiveLoc2 + '\system32\prodspec.ini');
     sOSEdition := ProdSpec.ReadString('Product Specification', 'Product', '');
@@ -972,28 +1026,32 @@ begin
       Memo1.Lines[0] := ('Microsoft ' + sOSEdition); // Don't want sOSEdition on seperate line
   end;
 
-  GetMSDPID3(sHiveLoc, '\Microsoft\Windows NT\CurrentVersion', sProductID, sProductKey);
+  GetMSDPID3(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', sProductID, sProductKey);
 
   // Retrieve ID, User + Company name
-  MyReg := TRegistry.Create;
-  MyReg.RootKey := HKEY_LOCAL_MACHINE;
-  if Listbox1.Items[0] <> 'Microsoft Windows 2000' then
-    MyReg.Access := KEY_WOW64_64KEY or KEY_READ;
-  if (MyReg.OpenKey(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', False)) then
-  begin
-    sRegOwn := MyReg.ReadString('RegisteredOwner');
-    sRegOrg := MyReg.ReadString('RegisteredOrganization');
-    if sOSEdition = '' then
-      sOSEdition := MyReg.ReadString('EditionID');
-    // Get Service Pack level
-    sCSDVersion := MyReg.ReadString('CSDVersion');
-    MyReg.CloseKey;
-  end;
-  if (MyReg.OpenKey(sHiveLoc + '\Microsoft\Windows\CurrentVersion\Reliability', False)) then
-  begin
-    sCompName := MyReg.ReadString('LastComputerName');
-    MyReg.CloseKey;
-  end;
+  with TRegistry.Create() do
+  try
+    RootKey := HKEY_LOCAL_MACHINE;
+    Access := KEY_WOW64_64KEY or KEY_READ;
+    if (OpenKey(sHiveLoc + '\Microsoft\Windows NT\CurrentVersion', False)) then
+    begin
+      sRegOwn := ReadString('RegisteredOwner');
+      sRegOrg := ReadString('RegisteredOrganization');
+      if sOSEdition = '' then
+        sOSEdition := ReadString('EditionID');
+      // Get Service Pack level
+      sCSDVersion := ReadString('CSDVersion');
+      CloseKey;
+    end;
+  //if (OpenKey(sHiveLoc + '\Microsoft\Windows\CurrentVersion\Reliability', False)) then
+  //begin
+  //  sCompName := ReadString('LastComputerName');
+  //  CloseKey;
+  //end;	
+  finally
+    Free;
+  end; // try..finally
+
   if sCSDVersion <> '' then
     Memo1.Lines[0] := Memo1.Lines[0] + ' ' + sCSDVersion;
   Memo1.Lines.Add('Product ID: ' + PChar(sProductID));
@@ -1003,12 +1061,11 @@ begin
       'http://support.microsoft.com/default.aspx?scid=kb;en-us;Q326904');
   end
   else
-  Memo1.Lines.Add('CD Key: ' + sProductKey);
-  Memo1.Lines.Add(Trim('Computer Name: ' + GetPCName()));
-  Memo1.Lines.Add(Trim('Registered Owner: ' + PChar(sRegOwn)));
-  Memo1.Lines.Add(Trim('Registered Organization: ' + PChar(sRegOrg)));
+    Memo1.Lines.Add('CD Key: ' + sProductKey);
 
-  MyReg.Free;
+  Memo1.Lines.Add('Computer Name: ' + GetPCName());
+  Memo1.Lines.Add('Registered Owner: ' + PChar(sRegOwn));
+  Memo1.Lines.Add('Registered Organization: ' + PChar(sRegOrg));
 
   if iSaveKeysToFile > -1 then
   begin
@@ -1020,15 +1077,18 @@ begin
     begin
       iSaveKeysToFile := iSaveKeysToFile + 1;
       ListBox1.Selected[iSaveKeysToFile] := True;
-      Form1.ListBox1Click(Form1);
+      frmMain.ListBox1Click(frmMain);
     end;
   end;
 end;
 
-procedure TForm1.Get9xKey;
+procedure TfrmMain.Get9xKey;
 var
   MyReg: TRegistry;
-  sCSDVersion, sProductKey, sProductID, sRegOwn, sRegOrg: string;
+  sProductKey,
+  sProductID,
+  sRegOwn,
+  sRegOrg: string;
 begin
   MyReg := TRegistry.Create;
   MyReg.RootKey := HKEY_LOCAL_MACHINE;
@@ -1047,10 +1107,10 @@ begin
   if MyReg.ValueExists('RegisteredOwner') then
   begin
     sRegOwn := MyReg.ReadString('RegisteredOwner');
-    Memo1.Lines.Add(Trim('Registered Owner: ' + PChar(sRegOwn)));
+    Memo1.Lines.Add('Registered Owner: ' + PChar(sRegOwn));
   end;
   sRegOrg := MyReg.ReadString('RegisteredOrganization');
-  Memo1.Lines.Add(Trim('Registered Organization: ' + PChar(sRegOrg)));
+  Memo1.Lines.Add('Registered Organization: ' + PChar(sRegOrg));
 
   MyReg.Free;
   if iSaveKeysToFile > -1 then
@@ -1063,12 +1123,12 @@ begin
     begin
       iSaveKeysToFile := iSaveKeysToFile + 1;
       ListBox1.Selected[iSaveKeysToFile] := True;
-      Form1.ListBox1Click(Form1);
+      frmMain.ListBox1Click(frmMain);
     end;
   end;
-end;
+end; // Get9xKey
 
-procedure TForm1.GetNT4Key;
+procedure TfrmMain.GetNT4Key;
 var
   MyReg:    TRegistry;
   sOSEdition: string;
@@ -1125,8 +1185,6 @@ begin
   Memo1.Lines.Add(Trim('Registered Owner: ' + PChar(sRegOwn)));
   Memo1.Lines.Add(Trim('Registered Organization: ' + PChar(sRegOrg)));
 
-
-
   MyReg.CloseKey;
   MyReg.Free;
 
@@ -1140,45 +1198,43 @@ begin
     begin
       iSaveKeysToFile := iSaveKeysToFile + 1;
       ListBox1.Selected[iSaveKeysToFile] := True;
-      Form1.ListBox1Click(Form1);
+      frmMain.ListBox1Click(frmMain);
     end;
   end;
-end;
+end; // GetNT4Key
 
-procedure TForm1.GetMSDPID3(const sHivePath, Key: string; var sProdID, sMSKey: string);
+procedure TfrmMain.GetMSDPID3(const sHivePath: string; var sProdID, sMSKey: string);
 var
-  MyReg:      TRegistry;
+  MyReg: TRegistry;
   iBinarySize: integer;
-  HexBuf:     array of byte;
-  dwChannels, dwChannel: dword;
-  dwSize: dword;
+  HexBuf: array of byte;
+  dwChannel,
   wMajor: word;
   sText: string;
   i: integer;
+  cSAMDesired: cardinal;
+
 begin
-  sProdID := 'Not found';
-  sMSKey  := 'Not found';
+  cSAMDesired := KEY_READ;
+  if IsWow64 then
+    cSAMDesired := KEY_WOW64_64KEY or KEY_READ;
   MyReg   := TRegistry.Create;
   MyReg.RootKey := HKEY_LOCAL_MACHINE;
-  // Don't change MyReg.Access method if Win2k
-  if Listbox1.Items[0] <> 'Microsoft Windows 2000' then
-    MyReg.Access := KEY_WOW64_64KEY or KEY_READ;
-  if (MyReg.OpenKey(sHivePath + Key, False)) and MyReg.ValueExists('DigitalProductID') then
+    MyReg.Access := cSAMDesired;
+  if (MyReg.OpenKey(sHivePath, False)) and MyReg.ValueExists('DigitalProductID') then
   begin
-    if Listbox1.Items[0] <> 'Microsoft Windows 2000' then
-      MyReg.Access := KEY_WOW64_64KEY or KEY_READ;
+      MyReg.Access := cSAMDesired;
     iBinarySize := MyReg.GetDataSize('DigitalProductID');
     if iBinarySize >= 67 then  // Incomplete data  but still might be enough
     begin
       SetLength(HexBuf, iBinarySize);
 
-      if Listbox1.Items[0] <> 'Microsoft Windows 2000' then
-        MyReg.Access := KEY_WOW64_64KEY or KEY_READ;
+        MyReg.Access := cSAMDesired;
       MyReg.ReadBinaryData('DigitalProductID', HexBuf[0], iBinarySize);
 
       // Product ID
-      if Listbox1.Items[0] <> 'Microsoft Windows 2000' then
-        MyReg.Access := KEY_WOW64_64KEY or KEY_READ;
+        sProdID := rsNotFound;
+        MyReg.Access := cSAMDesired;
       sProdID := PChar(MyReg.ReadString('ProductID'));
 
       for i := 5 to 30 do
@@ -1209,10 +1265,10 @@ begin
           1: Memo1.Lines.Add('Installed from ''Compliance Checked Product'' media.');
           2: Memo1.Lines.Add('Installed from ''OEM'' media.');
           3: Memo1.Lines.Add('Installed from ''Volume'' media.');
-        end;
-      end;
-
-      sMSKey := DecodeMSKey(HexBuf);
+          end; // case dwChannel of
+        end; // if wMajor
+        sMSKey := rsNotFound;
+      sMSKey := DecodeMSKey(HexBuf, wMajor <> 3);
     end
     else if iBinarySize = 0 then
       sMSKey := 'The CD Key data is empty!'
@@ -1221,19 +1277,17 @@ begin
   end;
   MyReg.CloseKey;
   MyReg.Free;
-end;
+end; // GetMSDPID3
 
-procedure TForm1.GetOfficeKey;
+procedure TfrmMain.GetOfficeKey;
 var
-  MyReg:  TRegistry;
-  iBinarySize: integer;
-  HexBuf: array of byte;
-  i:      integer;
+  MyReg: TRegistry;
+  i: integer;
   sOfficeVer: string;
   sOfficeKey: string;
   sProductID: string;
   sProductKey: string;
-  sTmp:   string;
+  sOffRegPath: string;
 const
   rel1='Release: ';
   rel2='Release Type: ';
@@ -1247,19 +1301,17 @@ begin
       sOfficeVer := MidStr(ListBox2.Items.Strings[i], 7, 2);
       MyReg      := TRegistry.Create;
       MyReg.RootKey := HKEY_LOCAL_MACHINE;
-      if MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\' + sOfficeVer +
-        '.0\Registration\' + sOfficeKey) then
+      sOffRegPath := sHiveLoc + '\Microsoft\Office\' + sOfficeVer + '.0\Registration\' + sOfficeKey;
+      if MyReg.OpenKeyReadOnly(sOffRegPath) then
       begin
-        iBinarySize := MyReg.GetDataSize('DigitalProductID');
-        SetLength(HexBuf, iBinarySize);
-        MyReg.ReadBinaryData('DigitalProductID', HexBuf[0], ibinarySize);
         sProductID  := MyReg.ReadString('ProductID');
-        sProductKey := DecodeMSKey(HexBuf);
+        GetMSDPID3(sOffRegPath, sProductID, sProductKey);
+
         Memo1.Lines.Add('Product ID: ' + PChar(sProductID));
         if not IsValidWinProdID(sProductID) then
         begin
           Memo1.Lines.Add('Invalid Product ID detected as listed by Microsoft KB ' +
-           'http://support.microsoft.com/default.aspx?scid=kb;en-us;Q326904');
+          'http://support.microsoft.com/default.aspx?scid=kb;en-us;Q326904');
         end
         else
         begin
@@ -1267,19 +1319,19 @@ begin
           //ShowMessage('sOfficeKey='+sOfficeKey+sLineBreak+ RightStr(LeftStr(sOfficeKey,2),1) + ' ' + RightStr(LeftStr(sOfficeKey,3),1));
           //RightStr(LeftStr(sOfficeKey,2),1) + ' ' + RightStr(LeftStr(sOfficeKey,3),1)
           //http://support.microsoft.com/kb/2186281
-          case StrToInt('0x'+RightStr(LeftStr(sOfficeKey,2),1)) of
+          case StrToInt('0x' + RightStr(LeftStr(sOfficeKey, 2), 1)) of
             0: Memo1.Lines.Add(rel1+'Pre Beta');
             1: Memo1.Lines.Add(rel1+'Beta 1');
             2: Memo1.Lines.Add(rel1+'Beta 2');
             3: Memo1.Lines.Add(rel1+'Release Candidate 0'); 
-            4: Memo1.Lines.Add(rel1+'Release Candidate 1/OEM Preview release');
-            9: Memo1.Lines.Add(rel1+'RTM (initial release)');
+            4: Memo1.Lines.Add(rel1+'Release Candidate 1/OEM Preview Release');
+            9: Memo1.Lines.Add(rel1+'RTM');
             10: Memo1.Lines.Add(rel1+'Service Pack 1');
             11: Memo1.Lines.Add(rel1+'Service Pack 2');
             12: Memo1.Lines.Add(rel1+'Service Pack 3'); 
           end;
-          case StrToInt('0x'+RightStr(LeftStr(sOfficeKey,3),1)) of
-            0: Memo1.Lines.Add(rel2+'Volume license'); 
+          case StrToInt('0x' + RightStr(LeftStr(sOfficeKey, 3), 1)) of
+            0: Memo1.Lines.Add(rel2+'Volume License'); 
             1: Memo1.Lines.Add(rel2+'Retail/OEM'); 
             2: Memo1.Lines.Add(rel2+'Trial'); 
             5: Memo1.Lines.Add(rel2+'Download'); 
@@ -1296,14 +1348,14 @@ begin
         begin
           iSaveKeysToFile := iSaveKeysToFile + 1;
           ListBox1.Selected[iSaveKeysToFile] := True;
-          Form1.ListBox1Click(Form1);
+          frmMain.ListBox1Click(frmMain);
         end;
       end;
     end;
   end;
 end;
 
-procedure TForm1.ReadCfg;
+procedure TfrmMain.ReadCfg;
 var
   ConfigFile: TextFile;
   CurrentLine: string;
@@ -1313,7 +1365,7 @@ begin
   CurrentLine := '';
   s := '';
   iEntriesRead := 0;   // Number of entries read in for processing
-  bCFGVerFound := False;
+  bCFGVerFound := False;  // Version of cfg file
   // Input keyfinder.cfg file
   if (FileExists(ExtractFilePath(Application.ExeName) + 'keyfinder.cfg')) and
     (RemotePC1.Checked = False) then
@@ -1326,8 +1378,8 @@ begin
         begin
           ReadLn(ConfigFile, CurrentLine);
           if (CurrentLine <> '') then  // Don't process a blank line because the
-          begin                        // other if statements will range check
-            if (CurrentLine[1] <> ';') then // Don't process a comment line
+          begin                        // other 'if' statements will range check
+            if (CurrentLine[1] <> ';') then // Don't process a comment line here
             begin
               i := Pos('|', CurrentLine) - 1;
               s := TrimRight(RightStr(CurrentLine, Length(CurrentLine) - i));
@@ -1338,7 +1390,7 @@ begin
                 ListBox2.Items.Add('Config-' + s);
                 ListBox1.Selected[ListBox1.Items.Count - 1] := True;
                 StatusBar1.Panels.Items[1].Text := 'Loaded ' + IntToStr(iEntriesRead) + ' key locations';
-                Form1.ListBox1Click(Form1);
+                frmMain.ListBox1Click(frmMain);
               end;
             end;  // if (CurrentLine[1] <> ';')
             if (CurrentLine[1] = ';') and not bCFGVerFound then
@@ -1346,7 +1398,7 @@ begin
               i := Pos(' ', CurrentLine);
               s := TrimRight(RightStr(CurrentLine, Length(CurrentLine) - i));
               i := Pos(' ', s) + 1;
-              CurrentLine := TrimRight(LeftStr(s, +i));
+              CurrentLine := TrimRight(LeftStr(s, + i));
               if i > 3 then
               begin
                 sCFGVer      := 'CFG Version: ' + CurrentLine;
@@ -1361,11 +1413,11 @@ begin
       end;
     finally
       CloseFile(ConfigFile);
-    end;
+    end; // try..finally
   end;
 end;
 
-procedure TForm1.Refresh1Click(Sender: TObject);
+procedure TfrmMain.Refresh1Click(Sender: TObject);
 begin
   //Refresh the program
   lblRefresh.Top := Round( Height/2 - lblRefresh.Height/2 );
@@ -1375,15 +1427,14 @@ begin
   RefreshPanel.Width := Width;
   ListBox1.Visible := False;
   Memo1.Visible := False;
-  Form1.Enabled := False;
+  frmMain.Enabled := False;
   ProgramInit;
-  Form1.Enabled := True;
+  frmMain.Enabled := True;
   RefreshPanel.Visible := False;
   ListBox1.Visible := True;
   Memo1.Visible := True;
 end;
 
-procedure TForm1.ParseConfig;
 function FindRegistryValue(RootKey: HKEY;           //Funtion Finds Wildcard Key Name and Path
                                RootPath: String; 
                                ValueWithWildCard: String): String; 
@@ -1421,8 +1472,9 @@ begin
     Subkeys.Free; 
     MyReg.Free;
   end; 
-end; 
+end;
 
+procedure TfrmMain.ParseConfig;
 var
   MyReg: TRegistry;
   RegDataType: TRegDataType;
@@ -1445,10 +1497,6 @@ begin
       begin
         while Pos('|', s) > 0 do
         begin
-          // define variables:
-          // sRegRootKey = rootkey
-          // sRegOpenKey = openkeyreadonly
-          // sRegValue = value to read
           s  := RightStr(s, Length(s) - 1);
           j  := Pos('=', s);
           s2 := RightStr(s, Length(s) - Pos('\', s));
@@ -1458,8 +1506,8 @@ begin
             sRegValue := MidStr(s2, Pos('=', s2), Pos('|', s2) - Pos('=', s2))
           else
             sRegValue := RightStr(s2, Pos('=', ReverseString(s2)));
-            sRegValue := RightStr(sRegValue, Length(sRegValue) - 1);
-            sTmp := Uppercase(LeftStr(sRegOpenKey, 8));
+          sRegValue := RightStr(sRegValue, Length(sRegValue) - 1);
+          sTmp := Uppercase(LeftStr(sRegOpenKey, 8));
           if (sRegRootKey = 'HKEY_LOCAL_MACHINE') or (sRegRootKey = 'HKEY_CURRENT_USER') and (sTmp = 'SOFTWARE') then
             sRegOpenKey := sHiveLoc + RightStr(sRegOpenKey, Length(sRegOpenKey) - 8);
 
@@ -1468,7 +1516,7 @@ begin
           MyReg := TRegistry.Create;
           if sRegRootKey = 'HKEY_LOCAL_MACHINE' then
             MyReg.RootKey := HKEY_LOCAL_MACHINE
-          else if (sRegRootKey = 'HKEY_CURRENT_USER') and (sHiveLoc = 'Software') then
+          else if (sRegRootKey = 'HKEY_CURRENT_USER') and (Uppercase(sHiveLoc) = 'SOFTWARE') then
             MyReg.RootKey := HKEY_CURRENT_USER
           // this is done to avoid confusion - reading current registry instead of hive
           else
@@ -1482,7 +1530,7 @@ begin
           // Check for MS digital id entry in .cfg and decode if true
           sTmp := '';
           if LowerCase(sRegValue) = 'digitalproductid' then
-            GetMSDPID3(sHiveLoc, sRegOpenKey, sProdID, sTmp)
+            GetMSDPID3(sHiveLoc + sRegOpenKey, sProdID, sTmp)
           else // not an ms digital id
           begin
             if Listbox1.Items[0] <> 'Microsoft Windows 2000' then
@@ -1504,26 +1552,27 @@ begin
               finally
                 MyReg.CloseKey;
                 MyReg.Free;
-              end;
-            end;
+              end; // try .. finally
+            end; // if MyReg.OpenKey
           end;
 
           // start reading the registry
           // Can't use MyReg.ValueExists(sRegValue) or some programs won't show when they should
           if (MyReg.OpenKeyReadOnly(sRegOpenKey)) then
           begin
-          if FindRegistryValue(MyReg.Rootkey,sRegOpenKey,sRegValue) <> Null then
-          try
-            sTmp := MyReg.ReadString(FindRegistryValue(MyReg.Rootkey,sRegOpenKey,sRegValue));
-          except
-            on E : Exception do
-              sTmp := 'Error! Invalid data type.  Check key.';
+            if FindRegistryValue(MyReg.Rootkey,sRegOpenKey,sRegValue) <> Null then
+            try
+              sTmp := MyReg.ReadString(FindRegistryValue(MyReg.Rootkey,sRegOpenKey,sRegValue));
+            except
+              on E: Exception do
+                sTmp := 'Error! Invalid data type.  Check key.';
+            end;
           end;
 
             // Do a quick test for an Adobe entry in .cfg and decode if true
             if (pos('adobe ', LowerCase(ListBox1.Items.Strings[i])) <> 0) and
               (IsNumeric(sTmp, True)) then
-		        begin
+            begin
               if (pos('lightroom 1', LowerCase(ListBox1.Items.Strings[i])) = 0) and
                  (pos('photoshop 7', LowerCase(ListBox1.Items.Strings[i])) = 0) then
               begin  // The Lightroom 1 & Photoshop 7 serial is not encoded
@@ -1534,23 +1583,22 @@ begin
                   sTmp      := sRegValue;             // to do some string swapping
                 end;
               end
-              else
-                FormatAdobeKey(sTmp);
-            end;
+            end
+            else
+              FormatAdobeKey(sTmp);
+
             //fix bug for blank entry
             //MessageDlg('Lines:  ' + IntToStr(Memo1.Lines.Count) + '; Length: ' + IntToStr(Length(sTmp)), mtInformation , [mbOK], 0);
             //add entry to the list
             if j > 1 then
             begin
-              if Length(sTmp) > 0 then      
+              if Length(sTmp) > 0 then
                 Memo1.Lines.Add(LeftStr(s, j - 1) + ': ' + sTmp);
               //Memo1.Lines.Count;
             end
             else
               if Length(sTmp) > 0 then
-                Memo1.Lines.Add(sTmp);
-            end
-
+                Memo1.Lines.Add(sTmp)
           else
           begin
             ListBox1.Items.Delete(i);
@@ -1561,8 +1609,8 @@ begin
 
           MyReg.Free;
           s := RightStr(s, Length(s) - Pos('|', s) + 1);
-        end;
-      end
+        end; // while Pos('|', s) > 0 do
+      end // if j > 0 then
       else
       begin
         ListBox1.Items.Delete(i);
@@ -1578,7 +1626,7 @@ begin
         begin
           iSaveKeysToFile := iSaveKeysToFile + 1;
           ListBox1.Selected[iSaveKeysToFile] := True;
-          Form1.ListBox1Click(Form1);
+          frmMain.ListBox1Click(frmMain);
         end;
       end;
 
@@ -1589,7 +1637,7 @@ begin
       end;
 
 
-    end;
+    end; // if ListBox1.Selected[i] then
 
   //fix bug to remove empty keys
   {for i := 0 to (ListBox1.Items.Count - 1) do
@@ -1598,23 +1646,23 @@ begin
   end; }
 
   StatusBar1.Panels.Items[2].Text := 'Detected: ' + IntToStr(ListBox2.Items.Count);
-end;
+end; // TForm1.ParseConfig
 
-procedure TForm1.OfficeList;
+procedure TfrmMain.OfficeList;
 var
   MyReg: TRegistry;
-  blah:  TStringList;
-  I:     integer;
-  J:     integer;
-  K:     string;
+  slOfficeList: TStringList;
+  I: integer;
+  J: integer;
+  K: string;
 begin
   MyReg := TRegistry.Create;
-  blah  := TStringList.Create;
+  slOfficeList  := TStringList.Create;
   MyReg.RootKey := HKEY_LOCAL_MACHINE;
 
   if RemotePC1.Checked = True then
   begin
-    if MyReg.RegistryConnect(Form4.Edit1.Text) = False then
+    if MyReg.RegistryConnect(frmRemote.Edit1.Text) = False then
     begin
       if bAutoClose then
         begin
@@ -1637,17 +1685,17 @@ begin
       MyReg := TRegistry.Create;
       MyReg.RootKey := HKEY_LOCAL_MACHINE;
     end;
-  end;
+  end; // if RemotePC1.Checked
 
   // Office XP
   if MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\10.0\Registration') then
   begin
-    MyReg.GetKeyNames(blah);
+    MyReg.GetKeyNames(slOfficeList);
     MyReg.CloseKey;
-    for I := 1 to blah.Count do
+    for I := 1 to slOfficeList.Count do
     begin
       J := I - 1;
-      K := blah.Strings[J];
+      K := slOfficeList.Strings[J];
       if LeftStr(K, 1) = '{' then
       begin
         MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\10.0\Registration\' + K);
@@ -1677,12 +1725,12 @@ begin
   // Office 2003 with SP1 {91110409-6000-11D3-8CFE-0150048383C9}
   if MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\11.0\Registration') then
   begin
-    MyReg.GetKeyNames(blah);
+    MyReg.GetKeyNames(slOfficeList);
     MyReg.CloseKey;
-    for I := 1 to blah.Count do
+    for I := 1 to slOfficeList.Count do
     begin
       J := I - 1;
-      K := blah.Strings[J];
+      K := slOfficeList.Strings[J];
       if LeftStr(K, 1) = '{' then
       begin
         MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\11.0\Registration\' + K);
@@ -1710,12 +1758,12 @@ begin
   // Office 2007
   if MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\12.0\Registration') then
   begin
-    MyReg.GetKeyNames(blah);
+    MyReg.GetKeyNames(slOfficeList);
     MyReg.CloseKey;
-    for I := 1 to blah.Count do
+    for I := 1 to slOfficeList.Count do
     begin
       J := I - 1;
-      K := blah.Strings[J];
+      K := slOfficeList.Strings[J];
       if LeftStr(K, 1) = '{' then
       begin
         MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\12.0\Registration\' + K);
@@ -1743,12 +1791,12 @@ begin
   // Office 2010
   if MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\14.0\Registration') then
   begin
-    MyReg.GetKeyNames(blah);
+    MyReg.GetKeyNames(slOfficeList);
     MyReg.CloseKey;
-    for I := 1 to blah.Count do
+    for I := 1 to slOfficeList.Count do
     begin
       J := I - 1;
-      K := blah.Strings[J];
+      K := slOfficeList.Strings[J];
       if LeftStr(K, 1) = '{' then
       begin
         MyReg.OpenKeyReadOnly(sHiveLoc + '\Microsoft\Office\14.0\Registration\' + K);
@@ -1773,42 +1821,46 @@ begin
     end;
   end;
 
-  blah.Free;
+  slOfficeList.Free;
   MyReg.Free;
-end;
+end; // TfrmMain.OfficeList;
 
-function TForm1.DecodeMSKey(const HexSrc: array of byte): string;
+function TfrmMain.DecodeMSKey(const HexSrc: array of byte; const ID: boolean): string;
 const
-  StartOffset: integer = $34;      // Offset 34 = Array[52]
-  EndOffset:   integer = $34 + 15; // Offset 34 + 15(Bytes) = Array[64]
   Digits: array[0..23] of char =
     ('B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'M', 'P', 'Q', 'R', 'T',
     'V', 'W', 'X', 'Y', '2', '3', '4', '6', '7', '8', '9');
-  DecodedLen: integer = 29;       // Length of Decoded Product Key
-  EncodedLen: integer = 15;
+  iDecodedLen: integer = 29;       // Length of Decoded Product Key
+  iEncodedLen: integer = 15;
   // Length of Encoded Product Key in Bytes (An total of 30 in chars)
 var
   HexDigitalPID: array of cardinal;
-  Des:   array[0..30] of char; // Length of Decoded Product Key + 1
-  I:     integer;
-  N:     integer;
-  HN:    cardinal;
+  Des: array[0..30] of char; // Length of Decoded Product Key + 1
+  iStartOffset: integer;
+  iEndOffset: integer;
+  I: integer;
+  N: integer;
+  HN: cardinal;
   Value: cardinal;
 begin
+  if ID then
+    iStartOffset := $328
+  else
+    iStartOffset := $34;
+  iEndOffset := iStartOffset + 15;
+
   Result := '';
-  SetLength(HexDigitalPID, DecodedLen);
-  for I := StartOffset to EndOffset do
-    HexDigitalPID[I - StartOffSet] := HexSrc[I];
+  SetLength(HexDigitalPID, iDecodedLen);
+  for I := iStartOffset to iEndOffset do
+    HexDigitalPID[I - iStartOffSet] := HexSrc[I];
 
-  // SetLength(Des, DecodedLen + 1);
-
-  for I := DecodedLen - 1 downto 0 do
+  for I := iDecodedLen - 1 downto 0 do
     if (((I + 1) mod 6) = 0) then
       Des[I] := '-'
     else
     begin
       HN := 0;
-      for N := EncodedLen - 1 downto 0 do
+      for N := iEncodedLen - 1 downto 0 do
       begin
         Value := (HN shl 8) or HexDigitalPID[N];
         HexDigitalPID[N] := Value div 24;
@@ -1816,16 +1868,11 @@ begin
       end;
       Des[I] := Digits[HN];
     end;
-  Des[DecodedLen] := Chr(0);
-
-  //  For I := 0 To Length(Des) Do
-  //    begin
-  //     Result := Result + Des[I];
-  //    end;
+  Des[iDecodedLen] := Chr(0);
   Result := StrPas(Des);
-end;
+end; // TfrmMain.DecodeMSKey
 
-procedure TForm1.About2Click(Sender: TObject);
+procedure TfrmMain.About2Click(Sender: TObject);
 begin
   if Panel1.Visible = False then
   begin
@@ -1839,74 +1886,74 @@ begin
   end;
 end;
 
-procedure TForm1.Label6Click(Sender: TObject);
+procedure TfrmMain.Label6Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/phpbb/keyfinder/'), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar(PROGRAM_SOURCEFORGE_PHPBB_PAGE), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.LogoClick(Sender: TObject);
+procedure TfrmMain.LogoClick(Sender: TObject);
 begin
-  About2Click(Form1);
-  //ShellExecute(Handle, nil, PChar('http://www.magicaljellybean.com'), nil, nil, SW_NORMAL);
+  About2Click(frmMain);
+  //ShellExecute(Handle, nil, PChar('http://'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.Panel1Click(Sender: TObject);
+procedure TfrmMain.Panel1Click(Sender: TObject);
 begin
-  About2Click(Form1);
+  About2Click(frmMain);
 end;
 
-procedure TForm1.Label4Click(Sender: TObject);
+procedure TfrmMain.Label4Click(Sender: TObject);
 begin
-  About2Click(Form1);
+  About2Click(frmMain);
 end;
 
-procedure TForm1.Label5Click(Sender: TObject);
+procedure TfrmMain.Label5Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://www.pages.drexel.edu/~sag47/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.lblLastUpdateClick(Sender: TObject);
+procedure TfrmMain.lblLastUpdateClick(Sender: TObject);
 begin
-  About2Click(Form1);
+  About2Click(frmMain);
 end;
 
-procedure TForm1.lblVersionClick(Sender: TObject);
+procedure TfrmMain.lblVersionClick(Sender: TObject);
 begin
-  About2Click(Form1);
+  About2Click(frmMain);
 end;
 
-procedure TForm1.Label10Click(Sender: TObject);
+procedure TfrmMain.Label10Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/users/sag47'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.Label13Click(Sender: TObject);
+procedure TfrmMain.Label13Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://davidwoodfx.blogspot.com'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.Label15Click(Sender: TObject);
+procedure TfrmMain.Label15Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://gimper.net/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.Label1Click(Sender: TObject);
+procedure TfrmMain.Label1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('https://sourceforge.net/apps/phpbb/keyfinder/viewtopic.php?f=1&t=3'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.Label2Click(Sender: TObject);
+procedure TfrmMain.Label2Click(Sender: TObject);
 begin
-  About2Click(Form1);
+  About2Click(frmMain);
 end;
 
-procedure TForm1.Options1Click(Sender: TObject);
+procedure TfrmMain.Options1Click(Sender: TObject);
 begin
-  Form2.Visible := True;
-  Form1.Enabled := False;
+  frmOptions.Visible := True;
+  frmMain.Enabled := False;
 end;
 
-procedure TForm1.SaveAs1Click(Sender: TObject);
+procedure TfrmMain.SaveAs1Click(Sender: TObject);
 begin
   iSaveKeysToFile := 0;
   Assert(Memo1 <> nil);
@@ -1914,10 +1961,10 @@ begin
   Assert(Memo2 <> nil);
   Memo2.Lines.Clear;
   ListBox1.Selected[iSaveKeysToFile] := True;
-  Form1.ListBox1Click(Form1);
+  frmMain.ListBox1Click(frmMain);
 end;
 
-procedure TForm1.SaveDialogTypeChange(Sender: TObject);
+procedure TfrmMain.SaveDialogTypeChange(Sender: TObject);
 var
   buf: array [0..MAX_PATH] of char;
   S:   string;
@@ -1935,12 +1982,14 @@ begin
   case od.FilterIndex of
     1: S := ChangeFileExt(S, '.txt');
     2: S := ChangeFileExt(S, '.csv');
+    3: S := ChangeFileExt(S, '.ini');
+    4: S := ChangeFileExt(S, '.html');
   end;
   // Finally, change the currently selected filename in the dialog
   SendMessage(H, CDM_SETCONTROLTEXT, edt1, integer(PChar(S)));
-end;
+end; // TfrmMain.SaveDialogTypeChange
 
-procedure TForm1.SaveFileDone;
+procedure TfrmMain.SaveFileDone;
 var
   Line:      integer;
   PrintText: TextFile;   // declares a file variable
@@ -1969,7 +2018,7 @@ begin
         end;
       finally
         CloseFile(PrintText);
-      end;
+      end; // try..finally
     end;
     bToBePrinted    := False;
     iSaveKeysToFile := -1;
@@ -1986,7 +2035,7 @@ begin
         begin
           if bAutoClose then
           begin
-
+             // don't display error
           end
           else
             MessageDlg('Can''t save file. Error: ' + E.Message, mtError, [mbOK], 0);
@@ -2004,7 +2053,7 @@ begin
         begin
           if bAutoClose then
           begin
-
+            // don't display error
           end
           else
             MessageDlg('Can''t save file. Error!' + E.Message, mtError, [mbOK], 0);
@@ -2015,30 +2064,30 @@ begin
     iSaveKeysToFile := -1;
   end;
   ListBox1.Selected[0] := True;
-  Form1.ListBox1Click(Form1);
+  frmMain.ListBox1Click(frmMain);
 end;
 
-procedure TForm1.PrintAll1Click(Sender: TObject);
+procedure TfrmMain.PrintAll1Click(Sender: TObject);
 begin
   bToBePrinted := True;
-  SaveAs1Click(Form1);
+  SaveAs1Click(frmMain);
 end;
 
-procedure TForm1.ModifyConfig1Click(Sender: TObject);
+procedure TfrmMain.ModifyConfig1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('notepad.exe'),
     PChar(ExtractFilePath(Application.ExeName) + 'keyfinder.cfg'), nil, SW_NORMAL);
 end;
 
-procedure TForm1.LoadHive1Click(Sender: TObject);
+procedure TfrmMain.MnuItmLoadHive1Click(Sender: TObject);
 begin
-  if LoadHive1.Caption = rsMnuItmLoadHive then
+  if MnuItmLoadHive1.Caption = rsMnuItmLoadHive then
     LoadHive
   else
     UnLoadHive;
 end;
 
-procedure TForm1.LoadHive;
+procedure TfrmMain.LoadHive;
 var
   MyReg:     TRegistry;
   bBrowsing: boolean;  // We have selected a path for SOFTWARE hive
@@ -2051,11 +2100,10 @@ begin
 
   if bBrowsing or bAutoHive then
   begin
+     GrantPrivilege(SE_RESTORE_NAME);
+     MyReg := TRegistry.Create;
     try
-      GrantPrivilege(SE_RESTORE_NAME);
-      MyReg := TRegistry.Create;
       MyReg.RootKey := HKEY_LOCAL_MACHINE;
-
       //try different paths for the Backup hive
       if FileExists(sHiveLoc2 + '\software') then
         iRtnCode := RegLoadKey(MyReg.RootKey, PChar('KF_HIVE'), PChar(sHiveLoc2 + '\software'))
@@ -2067,7 +2115,7 @@ begin
       if iRtnCode = ERROR_SUCCESS then
       begin
         sHiveLoc := 'KF_HIVE';
-        LoadHive1.Caption := rsMnuItmUnLoadHive;
+        MnuItmLoadHive1.Caption := rsMnuItmUnLoadHive;
         ChangeRegistrationInfo1.Enabled := False;
         RemotePC1.Enabled := False;
         StatusBar1.Panels.Items[0].Text := 'Hive loaded';
@@ -2090,7 +2138,7 @@ begin
         if iRtnCode = ERROR_SUCCESS then
         begin
           sHiveLoc := 'KF_HIVE_SAV';
-          LoadHive1.Caption := rsMnuItmUnLoadHive;
+          MnuItmLoadHive1.Caption := rsMnuItmUnLoadHive;
           ChangeRegistrationInfo1.Enabled := False;
           RemotePC1.Enabled := False;
           StatusBar1.Panels.Items[0].Text := 'Backup hive loaded';
@@ -2113,7 +2161,7 @@ begin
           if iRtnCode = ERROR_SUCCESS then
           begin
             sHiveLoc := 'KF_HIVE_REGBAK';
-            LoadHive1.Caption := rsMnuItmUnLoadHive;
+            MnuItmLoadHive1.Caption := rsMnuItmUnLoadHive;
             ChangeRegistrationInfo1.Enabled := False;
             RemotePC1.Enabled := False;
             StatusBar1.Panels.Items[0].Text := 'Backup hive loaded';
@@ -2127,6 +2175,8 @@ begin
       begin
         if bAutoHive then
           ChangeRegistrationInfo1.Enabled := False;
+        SaveAs1.Enabled := False;
+        PrintAll1.Enabled := False;
         ShowMessage('Can''t load registry hive from: ' + sHiveLoc2 +
           '\system32\config\software' + #13#10#13#10 + SysUtils.SysErrorMessage(iRtnCode));
         // MessageBox(0, PChar(SysUtils.SysErrorMessage(iRtnCode)), nil, MB_OK);
@@ -2138,24 +2188,24 @@ begin
       MyReg.Free;
       RevokePrivilege(SE_RESTORE_NAME);
       bAutoHive := False;  // Turn off autohive for next time through.
-    end;
+    end; // try..finally
   end
   else
     StatusBar1.Panels.Items[0].Text := '';
-end;
+end;  // LoadHive
 
-procedure TForm1.UnLoadHive;
+procedure TfrmMain.UnLoadHive;
 var
   MyReg: TRegistry;
 begin
+  GrantPrivilege(SE_RESTORE_NAME);
+  MyReg := TRegistry.Create;
   try
-    GrantPrivilege(SE_RESTORE_NAME);
-    MyReg := TRegistry.Create;
     MyReg.RootKey := HKEY_LOCAL_MACHINE;
     if MyReg.UnLoadKey('KF_HIVE') then
     begin
       sHiveLoc := 'Software';
-      LoadHive1.Caption := rsMnuItmLoadHive;
+      MnuItmLoadHive1.Caption := rsMnuItmLoadHive;
       ChangeRegistrationInfo1.Enabled := True;
       //    RemotePC1.Enabled := True;
       StatusBar1.Panels.Items[0].Text := '';
@@ -2167,7 +2217,7 @@ begin
     if MyReg.UnLoadKey('KF_HIVE_SAV') then
     begin
       sHiveLoc := 'Software';
-      LoadHive1.Caption := rsMnuItmLoadHive;
+      MnuItmLoadHive1.Caption := rsMnuItmLoadHive;
       ChangeRegistrationInfo1.Enabled := True;
       //    RemotePC1.Enabled := True;    
       StatusBar1.Panels.Items[0].Text := '';
@@ -2178,7 +2228,7 @@ begin
     if MyReg.UnLoadKey('KF_HIVE_RPR') then
     begin
       sHiveLoc := 'Software';
-      LoadHive1.Caption := rsMnuItmLoadHive;
+      MnuItmLoadHive1.Caption := rsMnuItmLoadHive;
       ChangeRegistrationInfo1.Enabled := True;
       //    RemotePC1.Enabled := True;    
       StatusBar1.Panels.Items[0].Text := '';
@@ -2202,21 +2252,18 @@ begin
 end;
 
 {download a remote file to a local file}
-function DoDownload(const rFile: string;const lFile: string): Boolean;
+function DoDownload(const sRemoteFile, sLocalFile: string): boolean;
 begin
   Result := True;
-
   with TDownloadURL.Create(nil) do
   try
-    URL := rFile;
-    Filename := lFile;
-    //downloader.OnDownloadProgress := Form6.URL_OnDownloadProgress;
+    URL := sRemoteFile;
+    Filename := sLocalFile;
+    //OnDownloadProgress := frmUpdate.URL_OnDownloadProgress;
     try
       ExecuteTarget(nil);
-      //Execute
-      //ExecuteAction(Execute);
     except
-      on E : Exception do
+      on E: Exception do
       begin
         ShowMessage(E.Message);
         Result := False;
@@ -2227,19 +2274,22 @@ begin
   end;
 end;
 
-procedure TForm1.MnuItmWebUpdateClick(Sender: TObject);
+procedure TfrmMain.MnuItmWebUpdateClick(Sender: TObject);
 var
-  kfUpdate, cfgUpdate, isStable : Boolean;
-  CFGVer, newCFG, kfStableURL, kfStableDownload, kfUnstableURL, kfUnstableDownload, StableVersion, UnstableVersion, cfgURL, Section : string;
+  kfUpdate, cfgUpdate, isStable : boolean;
+  CFGVer, newCFG, kfStableURL,
+  kfStableDownload, kfUnstableURL,
+  kfUnstableDownload, StableVersion,
+  UnstableVersion, cfgURL, Section : string;
   myINI: TINIFile;
 
 begin
-  if kfVersion=kfStableVersion then
+  if kfVersion = kfStableVersion then
     isStable := True;
   //future update dialog
   //ShellExecute(Handle, nil, PChar('http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
-  //Form6.Visible := True;
-  //Form1.Enabled := False;
+  //frmUpdate.Visible := True;
+  //frmMain.Enabled := False;
   {EXE:=ParamStr(0);
   BAK:=ChangeFileExt(EXE,'.BAK');
   IF FileExists(BAK) THEN DeleteFile(BAK);
@@ -2267,9 +2317,9 @@ begin
     //download update.ini to parse version information
     if not DoDownload('http://keyfinder.sourceforge.net/update.ini',GetTempDirectory + 'update.ini') then
       Exit;
+    Section := 'Update Software';
+    myINI := TINIFile.Create(GetTempDirectory + 'update.ini');
     try
-      Section := 'Update Software';
-      myINI := TINIFile.Create(GetTempDirectory + 'update.ini');
       //newVersion := myINI.ReadString(Section,'CurrentVersion','');
       StableVersion := myINI.ReadString(Section,'StableVersion','');
       kfStableURL := myINI.ReadString(Section,'StableURL','');
@@ -2288,7 +2338,7 @@ begin
     //ShowMessage(LeftStr(StableVersion,3));
 
     //Check
-    if  not isStable and (StrToFloat(LeftStr(StableVersion,3)) > StrToFloat(kfStableVersion)) then
+    if (not isStable) and (StrToFloat(LeftStr(StableVersion,3)) > StrToFloat(kfStableVersion)) then
       ShowMessage('True!')
     else
       ShowMessage('False :(');
@@ -2386,31 +2436,31 @@ begin
 
 end;
 
-procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if LoadHive1.Caption = 'Un&Load Hive...' then
+  if MnuItmLoadHive1.Caption = 'Un&Load Hive...' then
     UnloadHive;
   if bSaveSettings then
-    Form1.SaveSettings(Form1);
+    frmMain.SaveSettings(frmMain);
 end;
 
-procedure TForm1.Label7Click(Sender: TObject);
+procedure TfrmMain.Label7Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://sourceforge.net/projects/keyfinder/'), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar(PROGRAM_SOURCEFORGE_HOME_PAGE), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.Label8Click(Sender: TObject);
+procedure TfrmMain.Label8Click(Sender: TObject);
 begin
-  About2Click(Form1);
+  About2Click(frmMain);
 end;
 
-procedure TForm1.ChangeRegistrationInfo1Click(Sender: TObject);
+procedure TfrmMain.ChangeRegistrationInfo1Click(Sender: TObject);
 var
   MyReg: TRegistry;
 begin
   //reset form
-  Form3.Button1.Enabled := False;
-  if ListBox2.Items.Strings[0] = 'WinXP' then
+  frmRegistration.Button1.Enabled := False;
+  if Win32Platform = VER_PLATFORM_WIN32_NT then
   begin
     MyReg := TRegistry.Create;
     MyReg.RootKey := HKEY_LOCAL_MACHINE;
@@ -2421,51 +2471,49 @@ begin
       MyReg.ValueExists('RegisteredOwner') and
       MyReg.ValueExists('RegisteredOrganization') then
     begin
-      Form3.Edit2.Text     := MyReg.ReadString('RegisteredOwner');
-      Form3.Edit2.ReadOnly := False;
-      Form3.Edit3.Text     := MyReg.ReadString('RegisteredOrganization');
-      Form3.Edit3.ReadOnly := False;
+      frmRegistration.Edit2.Text     := MyReg.ReadString('RegisteredOwner');
+      frmRegistration.Edit2.ReadOnly := False;
+      frmRegistration.Edit3.Text     := MyReg.ReadString('RegisteredOrganization');
+      frmRegistration.Edit3.ReadOnly := False;
     end;
     MyReg.CloseKey;
     MyReg.Free;
   end;
 
-  if ListBox2.Items.Strings[0] = 'Win9x' then
+  if Win32Platform <> VER_PLATFORM_WIN32_NT then
   begin
     MyReg := TRegistry.Create;
     MyReg.RootKey := HKEY_LOCAL_MACHINE;
-    // Don't change MyReg.Access method if Win2k
-    if Listbox1.Items[0] <> 'Microsoft Windows 2000' then
-      MyReg.Access := KEY_WOW64_64KEY or KEY_READ;
+    MyReg.Access := KEY_READ;
     if MyReg.OpenKey(sHiveLoc + '\Microsoft\Windows\CurrentVersion', False) and
       MyReg.ValueExists('RegisteredOwner') and
       MyReg.ValueExists('RegisteredOrganization') then
     begin
-      Form3.Edit2.Text     := MyReg.ReadString('RegisteredOwner');
-      Form3.Edit2.ReadOnly := False;
-      Form3.Edit3.Text     := MyReg.ReadString('RegisteredOrganization');
-      Form3.Edit3.ReadOnly := False;
+      frmRegistration.Edit2.Text     := MyReg.ReadString('RegisteredOwner');
+      frmRegistration.Edit2.ReadOnly := False;
+      frmRegistration.Edit3.Text     := MyReg.ReadString('RegisteredOrganization');
+      frmRegistration.Edit3.ReadOnly := False;
     end;
     MyReg.CloseKey;
     MyReg.Free;
   end;
 
-  Form3.Visible := True;
-  Form1.Enabled := False;
+  frmRegistration.Visible := True;
+  frmMain.Enabled := False;
 end;
 
-procedure TForm1.ChangeWindowsKey1Click(Sender: TObject);
+procedure TfrmMain.ChangeWindowsKey1Click(Sender: TObject);
 begin
-  Form5.Visible := True;
-  Form1.Enabled := False;
+  frmWinXPKey.Visible := True;
+  frmMain.Enabled := False;
 end;
 
-procedure TForm1.RemotePC1Click(Sender: TObject);
+procedure TfrmMain.RemotePC1Click(Sender: TObject);
 begin
   if RemotePC1.Checked = False then
   begin
-    Form4.Visible := True;
-    Form1.Enabled := False;
+    frmRemote.Visible := True;
+    frmMain.Enabled := False;
   end
   else
   begin
@@ -2474,52 +2522,79 @@ begin
   end;
 end;
 
-procedure TForm1.AlwaysOnTop1Click(Sender: TObject);
+procedure TfrmMain.AlwaysOnTop1Click(Sender: TObject);
 begin
   if AlwaysOnTop1.Checked = False then
   begin
     AlwaysOnTop1.Checked := True;
-    Form1.FormStyle      := fsStayOnTop;
-    Form2.FormStyle      := fsStayOnTop;
-    Form3.FormStyle      := fsStayOnTop;
-    Form4.FormStyle      := fsStayOnTop;
-    Form5.FormStyle      := fsStayOnTop;
-    //Form6.FormStyle      := fsStayOnTop;
+    frmMain.FormStyle      := fsStayOnTop;
+    frmOptions.FormStyle      := fsStayOnTop;
+    frmRegistration.FormStyle      := fsStayOnTop;
+    frmRemote.FormStyle      := fsStayOnTop;
+    frmWinXPKey.FormStyle      := fsStayOnTop;
+    //frmUpdate.FormStyle      := fsStayOnTop;
   end
   else
   begin
     AlwaysOnTop1.Checked := False;
-    Form1.FormStyle      := fsNormal;
-    Form2.FormStyle      := fsNormal;
-    Form3.FormStyle      := fsNormal;
-    Form4.FormStyle      := fsNormal;
-    Form5.FormStyle      := fsNormal; 
-    //Form6.FormStyle      := fsNormal;
+    frmMain.FormStyle     := fsNormal;
+    frmOptions.FormStyle  := fsNormal;
+    frmRegistration.FormStyle := fsNormal;
+    frmRemote.FormStyle      := fsNormal;
+    frmWinXPKey.FormStyle    := fsNormal;
+    //frmUpdate.FormStyle      := fsNormal;
   end;
 end;
 
-procedure TForm1.BugandFeatureTracker1Click(Sender: TObject);
+procedure TfrmMain.BugandFeatureTracker1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/tracker/?group_id=369948'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.Label9Click(Sender: TObject);
+procedure TfrmMain.Label9Click(Sender: TObject);
 begin
   OKBottomDlg.Visible := True;
-  Form1.Enabled := False;
+  frmMain.Enabled := False;
 end;
 
-procedure TForm1.CommunityForums1Click(Sender: TObject);
+procedure TfrmMain.CommunityForums1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/phpbb/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.CommunityWiki1Click(Sender: TObject);
+procedure TfrmMain.CommunityWiki1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/mediawiki/keyfinder/'), nil, nil, SW_NORMAL);
 end;
 
-procedure TForm1.ConvertSaveFormat;
+procedure convertIniFile(filename: string);
+var
+  myINI: TMemIniFile;
+  seclist, strlist: TStringlist;
+  i, k : integer;
+  newheader, aktsection: string;
+begin
+	seclist := TStringlist.Create;
+	strlist := TStringlist.Create;
+	myINI := TMemIniFile.Create(FileName);
+	myINI.readsections(seclist);
+	for i := 0 to seclist.count - 1 do
+	begin
+		aktsection := seclist[i];
+		myINI.ReadSectionValues(aktsection,strlist);
+		newheader := strlist.Values['Uninstall Product ID'];
+		if newheader <> '' then
+			for k := 0 to strlist.count-1 do
+				myINI.WriteString(newheader,strlist.Names[k],strlist.ValueFromIndex[k]);
+		myINI.EraseSection(seclist[i]);
+	end;
+	seclist.free;
+	strlist.free;
+	myINI.UpdateFile;
+	myINI.Free;
+end;
+
+procedure TfrmMain.ConvertSaveFormat;
 var
   i: integer;     // Memo2 current line count
   j: integer;     // Memo3 current line count
@@ -2529,9 +2604,12 @@ begin
   sCurrentUserName := GetCurrentUser;
   Assert(Memo3 <> nil);
   Memo3.Clear;
+
   { SaveDialog1.FilterIndex
     1 = TXT, No conversion necessary.
     2 = CSV
+    3 = INI
+    4 = HTML
   }
 
   if SaveDialog1.FilterIndex = 2 then  // CSV Save Format
@@ -2561,20 +2639,85 @@ begin
           sPCName + '"' + sDelimCSV + '"' + DateToStr(Now) + '"' + sDelimCSV +
           '"' + Memo3.Lines[j] + '"');
   end;
-end;
+  
+  if SaveDialog1.FilterIndex = 3 then  // INI Save Format
+  begin
+    for i := 0 to Memo2.Lines.Count-1 do
+	begin
+	  Memo2.Lines[i] := StringReplace(Memo2.Lines[i],':','=',[]);
+	  if 0 = pos('=',Memo2.Lines[i]) then
+	  Memo2.Lines[i] := '[' + Memo2.Lines[i] + ']';
+	end;
+  end;
+	
+  if SaveDialog1.FilterIndex = 4 then  // HTML Save Format
+  begin
+    Memo3.Lines.Add('<HTML>');
+    Memo3.Lines.Add('<HEAD>');
+    Memo3.Lines.Add('<META HTTP-EQUIV="Content-Type" CONTENT="text/html">');
+    Memo3.Lines.Add(' <TITLE>Magical Jelly Bean Keyfinder  v' + kfversion + '</TITLE>');
+    Memo3.Lines.Add('</HEAD>');
+    Memo3.Lines.Add('<BODY BACKCOLOR="#000000" TEXT="#000000">');
+    Memo3.Lines.Add('<TABLE WIDTH="100%" BORDER=1 CELLSPACING="0" ALIGN="CENTER" style = "border-collapse: collapse" >');
+    Memo3.Lines.Add(' <CAPTION ALIGN="TOP"><FONT style="font-size: 18pt; font-family: tahoma,courrier,arial,helvetica,sans-serif">Magical Jelly Bean Keyfinder  v' + kfversion + '</FONT></CAPTION>');
+    Memo3.Lines.Add('<TR  ALIGN="LEFT" style="font-family: tahoma,courrier,arial,helvetica,sans-serif">');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">User Name</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">PC Name</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Audit Date</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Product Name</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Product ID</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Key/Serial</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Other 1</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Other 2</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Other 3</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Other 4</FONT>');
+    Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">Other 5</FONT>');
 
-procedure TForm1.FormResize(Sender: TObject);
+    Memo3.Lines.Add('<TR  ALIGN="LEFT" style="font-family: tahoma,courrier,arial,helvetica,sans-serif">');
+    Memo3.Lines.Add(' <TD WIDTH="5%" BGCOLOR="#FFFFFF"><FONT SIZE="2" COLOR="#000000">' + sCurrentUserName + '</FONT>');
+    Memo3.Lines.Add(' <TD WIDTH="5%" BGCOLOR="#FFFFFF"><FONT SIZE="2" COLOR="#000000">' + sPCName + '</FONT>');
+    Memo3.Lines.Add(' <TD WIDTH="5%" BGCOLOR="#FFFFFF"><FONT SIZE="2" COLOR="#000000">' + DateToStr(Now) + '</FONT>');
+
+    for i := 0 to Memo2.Lines.Count - 2 do  // assume last 2 lines are blank so don't want them
+    begin
+      if Memo2.Lines[i] = '' then     // Look for line break &
+      begin
+        Memo3.Lines.Add(' <TD  BGCOLOR="#FFFFFF"><FONT SIZE="2" COLOR="#000000"></FONT>');
+        Memo3.Lines.Add('<TR  ALIGN="LEFT" style="font-family: tahoma,courrier,arial,helvetica,sans-serif">');
+        Memo3.Lines.Add(' <TD WIDTH="5%" BGCOLOR="#E7E7E7"><FONT SIZE="2" COLOR="#000000">' + sCurrentUserName + '</FONT>');
+        Memo3.Lines.Add(' <TD WIDTH="5%" BGCOLOR="#E7E7E7"><FONT SIZE="2" COLOR="#000000">' + sPCName + '</FONT>');
+        Memo3.Lines.Add(' <TD WIDTH="5%" BGCOLOR="#E7E7E7"><FONT SIZE="2" COLOR="#000000">' + DateToStr(Now) + '</FONT>');
+      end;
+      Memo3.Lines.Add(' <TD WIDTH="10%" BGCOLOR="#FFFFFF"><FONT SIZE="2" COLOR="#000000">' + StripTags(Memo2.Lines[i]) + '</FONT>');
+    end;
+    Memo3.Lines.Add('</TABLE>');
+    Memo3.Lines.Add('</BODY>');
+    Memo3.Lines.Add('</HTML>');
+
+    Memo2.Clear;
+    Memo3.SelectAll;
+    Memo3.CopyToClipboard;
+    Memo3.Clear;
+    Memo2.PasteFromClipboard;
+
+    //for j := 0 to Memo3.Lines.Count do
+    //  if Memo3.Lines[j] <> '' then
+    //    Memo2.Lines.Add(Memo3.Lines[j]);
+  end;
+end; // TfrmMain.ConvertSaveFormat
+
+procedure TfrmMain.FormResize(Sender: TObject);
 var
   i: integer;
 begin
-  i := (Form1.Width div 100) * 50;
+  i := (frmMain.Width div 100) * 50;
   StatusBar1.Panels.Items[0].Width := i;
   i := (i div 100) * 50;
   StatusBar1.Panels.Items[1].Width := i;
   StatusBar1.Panels.Items[2].Width := i;
 end;
 
-function TForm1.StripTags(const sText: string): string;
+function TfrmMain.StripTags(const sText: string): string;
   // We want to strip 'Product ID: ', 'CD Key: ' etc. from csv output
 var
   sSourceTest: string;
@@ -2584,6 +2727,8 @@ begin
     Delete(sSourceTest, 1, 12)
   else if LeftStr(sSourceTest, 8) = 'CD Key: ' then
     Delete(sSourceTest, 1, 8)
+  else if LeftStr(sSourceTest, 13) = 'License Key: ' then
+    Delete(sSourceTest, 1, 13)
   else if LeftStr(sSourceTest, 18) = 'Registered Owner: ' then
     Delete(sSourceTest, 1, 18)
   else if LeftStr(sSourceTest, 25) = 'Registered Organization: ' then
@@ -2591,7 +2736,7 @@ begin
   Result := sSourceTest;
 end;
 
-function TForm1.DecodeAdobeKey(const sAdobeEncryptedKey: string): string;
+function TfrmMain.DecodeAdobeKey(const sAdobeEncryptedKey: string): string;
   // Decode Adobe Key Encryption. A simple substitution cipher.
   // Converted from Dave Hope's original C++ version  
   // Copyright (C) 2008 VersionBoy
@@ -2632,7 +2777,7 @@ begin
   Result := sAdobeDecryptedKey;
 end;
 
-procedure TForm1.FormatAdobeKey(var sAdobeKey: string);
+procedure TfrmMain.FormatAdobeKey(var sAdobeKey: string);
 begin
   if Length(sAdobeKey) <> 24 then // key string too short or too long
     exit;
