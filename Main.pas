@@ -182,11 +182,10 @@ var
   sLogFilePath: string;
   bLogging:  boolean;
   followUnstable: boolean;
+  showBlankSerials: boolean;
   bSaveSettings: boolean;
-  sUserHivePath,
-  sSoftwareHivePath: string;
-  bWin2k, bWinXP,
-  bVista, bWinNT4: boolean;
+  sUserHivePath, sSoftwareHivePath: string;
+  bWin2k, bWinXP, bVista, bWinNT4: boolean;
 
 {$INCLUDE VersionConsts.inc}
 
@@ -581,6 +580,7 @@ begin
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', True)
     else
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', False);
+    showBlankSerials := myINI.ReadBool('Settings', 'ShowBlankSerials', False);
     LoadFont(myINI, 'AppListFont', frmMain.ListBox1.Font);
     LoadFont(myINI, 'KeyListFont', frmMain.Memo1.Font);
   finally
@@ -607,6 +607,7 @@ begin
     myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
     myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
     myINI.WriteBool('Settings', 'UnstableUpdates', followUnstable);
+    myINI.WriteBool('Settings', 'ShowBlankSerials', showBlankSerials);
     SaveFont(myINI, 'AppListFont', frmMain.ListBox1.Font);
     SaveFont(myINI, 'KeyListFont', frmMain.Memo1.Font);
     myINI.UpdateFile;
@@ -1572,43 +1573,7 @@ begin
               on E: Exception do
                 sTmp := 'Error! Invalid data type.  Check key.';
             end;
-          end;
-
-            // Do a quick test for an Adobe entry in .cfg and decode if true
-            if (pos('adobe ', LowerCase(ListBox1.Items.Strings[i])) <> 0) and
-              (IsNumeric(sTmp, True)) then
-            begin
-              if (pos('lightroom 1', LowerCase(ListBox1.Items.Strings[i])) = 0) and
-                 (pos('photoshop 7', LowerCase(ListBox1.Items.Strings[i])) = 0) then
-              begin  // The Lightroom 1 & Photoshop 7 serial is not encoded
-                if (LowerCase(sRegValue) = 'epic_serial') or (LowerCase(sRegValue) = 'serial') or
-                  (LowerCase(sRegValue) = 'serial_number') then
-                begin  // Only try decode serial keys
-                  sRegValue := DecodeAdobeKey(sTmp);  // Just stealing use of sRegValue
-                  sTmp      := sRegValue;             // to do some string swapping
-                end;
-              end
-            end
-            else
-              FormatAdobeKey(sTmp);
-
-            //fix bug for blank entry
-            //MessageDlg('Lines:  ' + IntToStr(Memo1.Lines.Count) + '; Length: ' + IntToStr(Length(sTmp)), mtInformation , [mbOK], 0);
-            //add entry to the list
-            if j > 1 then
-            begin
-              if Length(sTmp) > 0 then
-              begin
-                Memo1.Lines.Add(LeftStr(s, j - 1) + ': ' + sTmp);
-                if whileIndex = 0 then
-                  foundSerial := True;
-              end;
-            end
-            else
-              if Length(sTmp) > 0 then
-              begin
-                Memo1.Lines.Add(sTmp);
-              end
+          end
           else
           begin
             ListBox1.Items.Delete(i);
@@ -1617,7 +1582,39 @@ begin
             Exit;
           end;
 
-          
+          // Do a quick test for an Adobe entry in .cfg and decode if true
+          if (pos('adobe ', LowerCase(ListBox1.Items.Strings[i])) <> 0) and (IsNumeric(sTmp, True)) then
+          begin
+            if (pos('lightroom 1', LowerCase(ListBox1.Items.Strings[i])) = 0) and (pos('photoshop 7', LowerCase(ListBox1.Items.Strings[i])) = 0) then
+            begin  // The Lightroom 1 & Photoshop 7 serial is not encoded
+              if (LowerCase(sRegValue) = 'epic_serial') or (LowerCase(sRegValue) = 'serial') or (LowerCase(sRegValue) = 'serial_number') then
+              begin  // Only try decode serial keys
+                sRegValue := DecodeAdobeKey(sTmp);  // Just stealing use of sRegValue
+                sTmp      := sRegValue;             // to do some string swapping
+              end;
+            end
+          end
+          else
+            FormatAdobeKey(sTmp);
+
+          //fix bug for blank entry
+          //MessageDlg('Lines:  ' + IntToStr(Memo1.Lines.Count) + '; Length: ' + IntToStr(Length(sTmp)), mtInformation , [mbOK], 0);
+          //add entry to the list
+          if j > 1 then
+          begin
+            if (Length(sTmp) > 0) or showBlankSerials then
+            begin
+              Memo1.Lines.Add(LeftStr(s, j - 1) + ': ' + sTmp);
+              if whileIndex = 0 then
+                foundSerial := True;
+            end;
+          end
+          else if Length(sTmp) > 0 then
+          begin
+            Memo1.Lines.Add(sTmp);
+          end;
+
+
           //ShowMessage(LeftStr(s, j - 1) + sLineBreak + inttostr(whileIndex))
           if (whileIndex > 0) and not foundSerial then
           begin
