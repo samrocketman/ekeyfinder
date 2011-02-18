@@ -23,10 +23,6 @@
 
     Contributor(s): VersionBoy.
 }
-unit VersionConsts;
-
-interface
-
 const
   PROGRAM_NAME = 'Enchanted Keyfinder';
   kfVersion = '0.1 Beta 5';
@@ -40,6 +36,3 @@ const
   PROGRAM_FEATURE_TRACKER = 'http://sourceforge.net/tracker/?group_id=369948';
   PROGRAM_SVN_TRUNK = 'http://ekeyfinder.svn.sourceforge.net/svnroot/ekeyfinder/trunk/keyfinder/';
   UPDATE_URL = 'http://ekeyfinder.sourceforge.net/update.ini';
-implementation
-
-end.

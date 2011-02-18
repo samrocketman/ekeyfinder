@@ -53,15 +53,16 @@ uses
   License in 'License.pas' {OKBottomDlg},
   WinXPKey in 'WinXPKey.pas' {frmWinXPKey},
   Update in 'Update.pas' {frmUpdate},
-  WindowsUser in 'WindowsUser.pas',
-  VersionConsts in 'VersionConsts.pas';
+  WindowsUser in 'WindowsUser.pas';
 
 {$R *.res}
+{$INCLUDE VersionConsts.inc}
 
 begin
   { Report memory leaks if run inside the Delphi 2006 debugger }
-  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
+  //ReportMemoryLeaksOnShutdown := DebugHook <> 0;
 
+  Application.Initialize;
   if (ParamCount = 1) and (AnsiLowerCase(ParamStr(1)) = '/?') or (AnsiLowerCase(ParamStr(1)) = '/help') then
   begin
     Application.MessageBox('Command Line Options: /save <location> /savecsv <location> /close /hive <location> /file <filename> /delim <character>', PROGRAM_NAME);
@@ -74,7 +75,6 @@ begin
     Application.Terminate;
     Exit;
   end;
-  Application.Initialize;
   Application.Title := PROGRAM_NAME;
   //Application.HelpFile := 'keyfinder.chm';
   Application.CreateForm(TfrmMain, frmMain);

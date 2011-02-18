@@ -29,9 +29,7 @@ uses
   Classes, ComCtrls, Controls, Dialogs, ExtCtrls, Forms,
   Graphics, Grids,
   IniFiles, jpeg, Menus, Messages, Printers, Registry, ShellAPI, StdCtrls,
-  StrUtils, SysUtils, ValEdit, Variants, Windows, ExtActns, 
-  // Local
-  VersionConsts;
+  StrUtils, SysUtils, ValEdit, Variants, Windows, ExtActns;
 
 type
   TfrmMain = class(TForm)
@@ -184,6 +182,8 @@ var
   sSoftwareHivePath: string;
   bWin2k, bWinXP,
   bVista, bWinNT4: boolean;
+
+{$INCLUDE VersionConsts.inc}
 
 const
   kfDate      = PROGRAM_RELEASE_DATE;
@@ -1205,7 +1205,7 @@ var
   MyReg: TRegistry;
   iBinarySize: integer;
   HexBuf: array of byte;
-  dwChannel,
+  dwChannel : DWord;
   wMajor: word;
   sText: string;
   i: integer;
@@ -1255,8 +1255,7 @@ begin
       wMajor := (HexBuf[5] shl 8) or (HexBuf[4]);
       if wMajor = 3 then
       begin
-        dwChannel := (HexBuf[83] shl 24) or (HexBuf[82] shl 16) or (HexBuf[81] shl 8) or
-          (HexBuf[80]);
+        dwChannel := (HexBuf[83] shl 24) or (HexBuf[82] shl 16) or (HexBuf[81] shl 8) or HexBuf[80];
         case dwChannel of
           0: Memo1.Lines.Add('Installed from ''Full Packaged Product'' media.');
           1: Memo1.Lines.Add('Installed from ''Compliance Checked Product'' media.');
