@@ -4,8 +4,8 @@ object frmOptions: TfrmOptions
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 256
-  ClientWidth = 284
+  ClientHeight = 233
+  ClientWidth = 281
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -55,7 +55,7 @@ object frmOptions: TfrmOptions
   end
   object Button3: TButton
     Left = 198
-    Top = 223
+    Top = 205
     Width = 75
     Height = 25
     Caption = '&Close'
@@ -147,29 +147,6 @@ object frmOptions: TfrmOptions
       OnClick = Button1Click
     end
   end
-  object ButOptRestDef: TButton
-    Left = 94
-    Top = 223
-    Width = 90
-    Height = 25
-    Caption = '&Restore Defaults'
-    Enabled = False
-    TabOrder = 4
-    Visible = False
-    OnClick = ButOptRestDefClick
-  end
-  object OptChkBxSave: TCheckBox
-    Left = 8
-    Top = 200
-    Width = 97
-    Height = 17
-    Caption = '&Save Settings'
-    Checked = True
-    State = cbChecked
-    TabOrder = 7
-    Visible = False
-    OnClick = OptChkBxSaveClick
-  end
   object Button5: TButton
     Left = 198
     Top = 110
@@ -177,7 +154,7 @@ object frmOptions: TfrmOptions
     Height = 25
     Caption = '&Browse...'
     Enabled = False
-    TabOrder = 5
+    TabOrder = 4
     OnClick = Button5Click
   end
   object EdtLogPath: TEdit
@@ -186,7 +163,16 @@ object frmOptions: TfrmOptions
     Width = 266
     Height = 21
     Enabled = False
-    TabOrder = 6
+    TabOrder = 5
     Text = 'EdtLogPath'
+  end
+  object OptUnstableUpdates: TCheckBox
+    Left = 132
+    Top = 171
+    Width = 141
+    Height = 17
+    Caption = 'Allow Unstable Updates'
+    TabOrder = 6
+    OnClick = OptUnstableUpdatesClick
   end
 end
