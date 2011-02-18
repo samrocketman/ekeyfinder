@@ -1488,6 +1488,8 @@ var
   sRegValue: string;
   sTmp: string;
   sProdID: string;
+  foundSerial: boolean;
+  whileIndex: integer;
 begin
   for i := 0 to (ListBox1.Items.Count - 1) do
     if ListBox1.Selected[i] then
@@ -1496,6 +1498,8 @@ begin
       j := Pos('=', s);
       if j > 0 then      // if an = is found, go on.. otherwise, delete the items
       begin
+        foundSerial := False;
+        whileIndex := 0;
         while Pos('|', s) > 0 do
         begin
           s  := RightStr(s, Length(s) - 1);
@@ -1594,12 +1598,17 @@ begin
             if j > 1 then
             begin
               if Length(sTmp) > 0 then
+              begin
                 Memo1.Lines.Add(LeftStr(s, j - 1) + ': ' + sTmp);
-              //Memo1.Lines.Count;
+                if whileIndex = 0 then
+                  foundSerial := True;
+              end;
             end
             else
               if Length(sTmp) > 0 then
-                Memo1.Lines.Add(sTmp)
+              begin
+                Memo1.Lines.Add(sTmp);
+              end
           else
           begin
             ListBox1.Items.Delete(i);
@@ -1608,8 +1617,20 @@ begin
             Exit;
           end;
 
+          
+          //ShowMessage(LeftStr(s, j - 1) + sLineBreak + inttostr(whileIndex))
+          if (whileIndex > 0) and not foundSerial then
+          begin
+          //ShowMessage(LeftStr(s, j - 1) + sLineBreak + inttostr(whileIndex));
+            ListBox1.Items.Delete(i);
+            ListBox2.Items.Delete(i);
+            MyReg.Free;
+            Exit;
+          end;
+
           MyReg.Free;
           s := RightStr(s, Length(s) - Pos('|', s) + 1);
+          whileIndex := whileIndex + 1;
         end; // while Pos('|', s) > 0 do
       end // if j > 0 then
       else
