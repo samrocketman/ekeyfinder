@@ -24,7 +24,7 @@
 
     Contributor(s): VersionBoy.
 
-    Compiles With: Turbo Delphi 2006, Delphi 2007
+    Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
 }
 (*------------------------------------------------------------------------------
 The IsWindowsAdmin function is checking if the exe running has an administrator security 

@@ -1,3 +1,32 @@
+{
+    The Enchanted Keyfinder is a free utility that retrieves your
+    Product Key (cd key) used to install Windows from your registry.
+
+    Copyright (C) 2011 Enchanted Keyfinder Project
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    WindowsUser.pas, released January 2011.
+    The initial developer of this code is VersionBoy.
+    Portions created by VersionBoy are Copyright (C) 2011.
+    All Rights Reserved.
+
+    Contributor(s): 
+                    Sam Gleske (sag47)
+
+    Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
+}
 unit WinXPKey;
 
 interface

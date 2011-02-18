@@ -18,10 +18,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    Contributor(s): VersionBoy.
+    Contributor(s): 
+                    Oliver Schneider (assarbad)
+                    Sam Gleske (sag47)
+                    VersionBoy (versionboy)
 
     Website: http://sourceforge.net/projects/ekeyfinder/
-    Compiles With: Turbo Delphi 2006, Delphi 2007
+    Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
 }
 program Keyfinder;
 
@@ -42,6 +45,7 @@ program Keyfinder;
 {%TogetherDiagram 'ModelSupport_Keyfinder\license\default.txvpck'}
 {%TogetherDiagram 'ModelSupport_Keyfinder\WindowsUser\default.txvpck'}
 {%TogetherDiagram 'ModelSupport_Keyfinder\Main\default.txvpck'}
+{%File 'VersionConsts.inc'}
 
 uses
   Forms,

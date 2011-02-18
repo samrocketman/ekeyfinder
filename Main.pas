@@ -18,7 +18,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    Contributor(s): VersionBoy.
+    Contributor(s):
+                    Oliver Schneider (assarbad)
+                    Sam Gleske (sag47)
+                    VersionBoy (versionboy)
+
+    Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
 }
 unit Main;
 
@@ -2651,11 +2656,11 @@ begin
     Memo3.Lines.Add('<HTML>');
     Memo3.Lines.Add('<HEAD>');
     Memo3.Lines.Add('<META HTTP-EQUIV="Content-Type" CONTENT="text/html">');
-    Memo3.Lines.Add(' <TITLE>Magical Jelly Bean Keyfinder  v' + kfversion + '</TITLE>');
+    Memo3.Lines.Add(' <TITLE>' + PROGRAM_NAME + '  v' + kfVersion + '</TITLE>');
     Memo3.Lines.Add('</HEAD>');
     Memo3.Lines.Add('<BODY BACKCOLOR="#000000" TEXT="#000000">');
     Memo3.Lines.Add('<TABLE WIDTH="100%" BORDER=1 CELLSPACING="0" ALIGN="CENTER" style = "border-collapse: collapse" >');
-    Memo3.Lines.Add(' <CAPTION ALIGN="TOP"><FONT style="font-size: 18pt; font-family: tahoma,courrier,arial,helvetica,sans-serif">Magical Jelly Bean Keyfinder  v' + kfversion + '</FONT></CAPTION>');
+    Memo3.Lines.Add(' <CAPTION ALIGN="TOP"><FONT style="font-size: 18pt; font-family: tahoma,courrier,arial,helvetica,sans-serif">' + PROGRAM_NAME + '  v' + kfversion + '</FONT></CAPTION>');
     Memo3.Lines.Add('<TR  ALIGN="LEFT" style="font-family: tahoma,courrier,arial,helvetica,sans-serif">');
     Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">User Name</FONT>');
     Memo3.Lines.Add(' <TH  BGCOLOR="#7799CC"><FONT SIZE="3" COLOR="#FFFFFF">PC Name</FONT>');

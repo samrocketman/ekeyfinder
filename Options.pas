@@ -3,7 +3,6 @@
     Product Key (cd key) used to install Windows from your registry.
 
     Copyright (C) 2011 Enchanted Keyfinder Project
-    Copyright (C) 1999-2008  Magical Jelly Bean Software
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,6 +16,16 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    WindowsUser.pas, released January 2011.
+    The initial developer of this code is VersionBoy.
+    Portions created by VersionBoy are Copyright (C) 2011.
+    All Rights Reserved.
+
+    Contributor(s): 
+                    Sam Gleske (sag47)
+
+    Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
 }
 
 
