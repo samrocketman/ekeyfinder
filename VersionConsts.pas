@@ -29,14 +29,17 @@ interface
 
 const
   PROGRAM_NAME = 'Enchanted Keyfinder';
-  PROGRAM_VERSION = '0.1 Beta 4';
-  PROGRAM_STABLE_VERSION = '0.0';
-  PROGRAM_RELEASE_DATE = 'January 20th, 2011';
-  PROGRAM_HOME_PAGE = 'http://';
-  PROGRAM_SOURCEFORGE_HOME_PAGE = 'http://sourceforge.net/projects/keyfinder/';
-  PROGRAM_SOURCEFORGE_PHPBB_PAGE = 'http://sourceforge.net/apps/phpbb/keyfinder/';
-  PROGRAM_SVN_TRUNK = 'http://keyfinder.svn.sourceforge.net/svnroot/keyfinder/trunk/keyfinder/';
-
+  kfVersion = '0.1 Beta 5';
+  kfStableVersion = '0.0';
+  kfUnstableVersion = kfVersion;
+  PROGRAM_RELEASE_DATE = 'February 17th, 2011';
+  PROGRAM_HOME_PAGE = 'http://ekeyfinder.sourceforge.net/';
+  PROGRAM_SOURCEFORGE_HOME_PAGE = 'http://sourceforge.net/projects/ekeyfinder/';
+  PROGRAM_SOURCEFORGE_PHPBB_PAGE = 'http://sourceforge.net/apps/phpbb/ekeyfinder/';
+  PROGRAM_SOURCEFORGE_WIKI_PAGE = 'http://sourceforge.net/apps/mediawiki/ekeyfinder/';
+  PROGRAM_FEATURE_TRACKER = 'http://sourceforge.net/tracker/?group_id=369948';
+  PROGRAM_SVN_TRUNK = 'http://ekeyfinder.svn.sourceforge.net/svnroot/ekeyfinder/trunk/keyfinder/';
+  UPDATE_URL = 'http://ekeyfinder.sourceforge.net/update.ini';
 implementation
 
 end.

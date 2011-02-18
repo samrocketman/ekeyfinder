@@ -186,9 +186,6 @@ var
   bVista, bWinNT4: boolean;
 
 const
-  kfVersion   = PROGRAM_VERSION;
-  kfStableVersion = PROGRAM_STABLE_VERSION;
-  kfUnstableVersion = kfVersion;
   kfDate      = PROGRAM_RELEASE_DATE;
   DefDelimCSV = ',';
   DefLogPath  = '.';
@@ -2315,7 +2312,7 @@ begin
     cfgUpdate := False;
 
     //download update.ini to parse version information
-    if not DoDownload('http://keyfinder.sourceforge.net/update.ini',GetTempDirectory + 'update.ini') then
+    if not DoDownload(UPDATE_URL,GetTempDirectory + 'update.ini') then
       Exit;
     Section := 'Update Software';
     myINI := TINIFile.Create(GetTempDirectory + 'update.ini');
@@ -2548,7 +2545,7 @@ end;
 
 procedure TfrmMain.BugandFeatureTracker1Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://sourceforge.net/tracker/?group_id=369948'), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar(PROGRAM_FEATURE_TRACKER), nil, nil, SW_NORMAL);
 end;
 
 procedure TfrmMain.Label9Click(Sender: TObject);
@@ -2559,12 +2556,12 @@ end;
 
 procedure TfrmMain.CommunityForums1Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/phpbb/keyfinder/'), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar(PROGRAM_SOURCEFORGE_PHPBB_PAGE), nil, nil, SW_NORMAL);
 end;
 
 procedure TfrmMain.CommunityWiki1Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('http://sourceforge.net/apps/mediawiki/keyfinder/'), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar(PROGRAM_SOURCEFORGE_WIKI_PAGE), nil, nil, SW_NORMAL);
 end;
 
 procedure convertIniFile(filename: string);

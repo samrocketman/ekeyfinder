@@ -2,7 +2,7 @@ object frmMain: TfrmMain
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
-  ClientHeight = 509
+  ClientHeight = 529
   ClientWidth = 632
   Color = clWhite
   TransparentColorValue = clFuchsia
@@ -27,7 +27,7 @@ object frmMain: TfrmMain
     Left = 230
     Top = 0
     Width = 2
-    Height = 490
+    Height = 510
     ExplicitLeft = 241
     ExplicitHeight = 250
   end
@@ -35,7 +35,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 230
-    Height = 490
+    Height = 510
     Align = alLeft
     BiDiMode = bdLeftToRight
     Constraints.MinWidth = 100
@@ -54,12 +54,13 @@ object frmMain: TfrmMain
     ShowHint = False
     TabOrder = 0
     OnClick = ListBox1Click
+    ExplicitHeight = 490
   end
   object Memo1: TMemo
     Left = 232
     Top = 0
     Width = 400
-    Height = 490
+    Height = 510
     Align = alClient
     Constraints.MinHeight = 100
     Constraints.MinWidth = 100
@@ -71,10 +72,11 @@ object frmMain: TfrmMain
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
+    ExplicitHeight = 490
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 490
+    Top = 510
     Width = 632
     Height = 19
     Panels = <
@@ -87,12 +89,13 @@ object frmMain: TfrmMain
       item
         Width = 50
       end>
+    ExplicitTop = 490
   end
   object RefreshPanel: TPanel
     Left = 232
     Top = 0
     Width = 400
-    Height = 490
+    Height = 510
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
@@ -105,6 +108,7 @@ object frmMain: TfrmMain
     ParentFont = False
     TabOrder = 5
     Visible = False
+    ExplicitHeight = 490
     object lblRefresh: TLabel
       Left = 88
       Top = 50
@@ -123,7 +127,7 @@ object frmMain: TfrmMain
     Left = 232
     Top = 0
     Width = 400
-    Height = 490
+    Height = 510
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
@@ -137,6 +141,7 @@ object frmMain: TfrmMain
     TabOrder = 4
     Visible = False
     OnClick = Panel1Click
+    ExplicitHeight = 490
     object lblVersion: TLabel
       Left = 30
       Top = 300
