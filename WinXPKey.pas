@@ -22,9 +22,10 @@
     Portions created by VersionBoy are Copyright (C) 2011.
     All Rights Reserved.
 
-    Contributor(s): 
+    Contributor(s):
                     Sam Gleske (sag47)
 
+    Website: http://sourceforge.net/projects/ekeyfinder/
     Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
 }
 unit WinXPKey;

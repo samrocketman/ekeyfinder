@@ -17,6 +17,11 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Contributor(s):
+    
+    Website: http://sourceforge.net/projects/ekeyfinder/
+    Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
 }
 unit remote;
 

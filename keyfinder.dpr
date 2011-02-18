@@ -18,7 +18,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    Contributor(s): 
+    Contributor(s):
                     Oliver Schneider (assarbad)
                     Sam Gleske (sag47)
                     VersionBoy (versionboy)
@@ -56,7 +56,6 @@ uses
   Remote in 'Remote.pas' {frmRemote},
   License in 'License.pas' {OKBottomDlg},
   WinXPKey in 'WinXPKey.pas' {frmWinXPKey},
-  Update in 'Update.pas' {frmUpdate},
   WindowsUser in 'WindowsUser.pas';
 
 {$R *.res}
@@ -87,6 +86,5 @@ begin
   Application.CreateForm(TfrmRemote, frmRemote);
   Application.CreateForm(TOKBottomDlg, OKBottomDlg);
   Application.CreateForm(TfrmWinXPKey, frmWinXPKey);
-  Application.CreateForm(TfrmUpdate, frmUpdate);
   Application.Run;
 end.

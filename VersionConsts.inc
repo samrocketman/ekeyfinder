@@ -21,13 +21,18 @@
     Portions created by VersionBoy are Copyright (C) 2011.
     All Rights Reserved.
 
-    Contributor(s): VersionBoy.
+    Contributor(s):
+                    Oliver Schneider (assarbad)
+                    Sam Gleske (sag47)
+                    VersionBoy (versionboy)
+
+    Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
 }
 const
   PROGRAM_NAME = 'Enchanted Keyfinder';
-  kfVersion = '0.1 Beta 5';
-  kfStableVersion = '0.0';
-  kfUnstableVersion = kfVersion;
+  kfVersion = '0.1 Beta 6';
+  kfStableVersion = '0.0.0';
+  kfUnstableVersion = '0.1 Beta 6';
   PROGRAM_RELEASE_DATE = 'February 17th, 2011';
   PROGRAM_HOME_PAGE = 'http://ekeyfinder.sourceforge.net/';
   PROGRAM_SOURCEFORGE_HOME_PAGE = 'http://sourceforge.net/projects/ekeyfinder/';

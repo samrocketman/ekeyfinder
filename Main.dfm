@@ -2,7 +2,7 @@ object frmMain: TfrmMain
   Left = 0
   Top = 0
   Caption = 'Enchanted Keyfinder v'
-  ClientHeight = 569
+  ClientHeight = 589
   ClientWidth = 632
   Color = clWhite
   TransparentColorValue = clFuchsia
@@ -27,7 +27,7 @@ object frmMain: TfrmMain
     Left = 230
     Top = 0
     Width = 2
-    Height = 550
+    Height = 570
     ExplicitLeft = 241
     ExplicitHeight = 250
   end
@@ -35,7 +35,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 230
-    Height = 550
+    Height = 570
     Align = alLeft
     BiDiMode = bdLeftToRight
     Constraints.MinWidth = 100
@@ -59,7 +59,7 @@ object frmMain: TfrmMain
     Left = 232
     Top = 0
     Width = 400
-    Height = 550
+    Height = 570
     Align = alClient
     Constraints.MinHeight = 100
     Constraints.MinWidth = 100
@@ -74,7 +74,7 @@ object frmMain: TfrmMain
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 550
+    Top = 570
     Width = 632
     Height = 19
     Panels = <
@@ -92,7 +92,7 @@ object frmMain: TfrmMain
     Left = 232
     Top = 0
     Width = 400
-    Height = 550
+    Height = 570
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET
@@ -123,7 +123,7 @@ object frmMain: TfrmMain
     Left = 232
     Top = 0
     Width = 400
-    Height = 550
+    Height = 570
     Align = alClient
     Ctl3D = True
     Font.Charset = DEFAULT_CHARSET

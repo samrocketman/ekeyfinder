@@ -2277,51 +2277,54 @@ end;
 
 procedure TfrmMain.MnuItmWebUpdateClick(Sender: TObject);
 var
-  kfUpdate, cfgUpdate, isStable : boolean;
-  CFGVer, newCFG, kfStableURL,
-  kfStableDownload, kfUnstableURL,
-  kfUnstableDownload, StableVersion,
-  UnstableVersion, cfgURL, Section : string;
-  myINI: TINIFile;
+  kfUpdate, cfgUpdate : boolean;
+  CFGVer, newCFG, kfStableURL, kfStableDownload, kfUnstableURL, kfUnstableDownload, StableVersion, UnstableVersion, cfgURL, Section : string;
+  myINI : TINIFile;
+  unstablever, curunstable, stablever, curstable : extended;
+
 
 begin
-  if kfVersion = kfStableVersion then
-    isStable := True;
-  //future update dialog
-  //ShellExecute(Handle, nil, PChar('http://sourceforge.net/project/platformdownload.php?group_id=222327'), nil, nil, SW_NORMAL);
-  //frmUpdate.Visible := True;
-  //frmMain.Enabled := False;
-  {EXE:=ParamStr(0);
-  BAK:=ChangeFileExt(EXE,'.BAK');
-  IF FileExists(BAK) THEN DeleteFile(BAK);
-  <If Update Available and ready for download>
-    RenameFile(EXE,BAK);
-    <Save downloaded file as EXE>
-    <Execute EXE>
-    ExitProcess(0)
-  <End>
-  Comment by Keld R. Hansen [http://www.heartware.dk] on May 29, 11:52 }
+{ Ask sag47 any questions about this.
+  Here is the update process explained.
 
-  //This works in renaming the current executable!
-  //RenameFile(Application.ExeName, ChangeFileExt(Application.ExeName, '.bak'))
-  //This does not work in deleting the current running executable
-  //DeleteFile( PChar( Application.ExeName ) );
+  Definitions
+  unstable updates is a setting in keyfinder.ini
+  the following are in update.ini
+    unstablever
+    stablever
+  the following are constants in the program
+    curstable
+    curunstable
 
+  Process
+  Using only major versions (e.g. 0.1 0.2 and so on)
+  If unstable updates = on then
+    if unstablever > stablever then
+      if unstablever != curunstable then
+        update to unstablever
+      else
+        nothing to do
+    else if stablever != curstable then
+      update to stablever
+    else
+      nothing to do
+  else
+    if stablever != curstable then
+      update to stablever
+    else
+      nothing to do
+}
 
-  //Temporary update dialog
-  //yes=6 and no=7
   if MessageDlg('This will connect to the internet to check for any Keyfinder or cfg updates.  Do you want to continue?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
   begin
     kfUpdate := False;
     cfgUpdate := False;
-
     //download update.ini to parse version information
     if not DoDownload(UPDATE_URL,GetTempDirectory + 'update.ini') then
       Exit;
     Section := 'Update Software';
     myINI := TINIFile.Create(GetTempDirectory + 'update.ini');
     try
-      //newVersion := myINI.ReadString(Section,'CurrentVersion','');
       StableVersion := myINI.ReadString(Section,'StableVersion','');
       kfStableURL := myINI.ReadString(Section,'StableURL','');
       kfStableDownload := myINI.ReadString(Section,'StableDownload','');
@@ -2335,54 +2338,71 @@ begin
     finally
       myINI.Free;
     end;
-    StableVersion:='0.4.1';
-    //ShowMessage(LeftStr(StableVersion,3));
 
-    //Check
-    //if (not isStable) and (StrToFloat(LeftStr(StableVersion,3)) > StrToFloat(kfStableVersion)) then
-    //  ShowMessage('True!')
-    //else
-    //  ShowMessage('False :(');
-    //ShowMessage(UnstableVersion + sLineBreak + kfUnstableVersion);
-    //Enchanted Keyfinder update check
-    if ((not FileExists(ChangeFileExt(Application.ExeName, '.ini'))) and (not isStable)) or followUnstable then
+    //get unstablever, curunstable, stablever, and curstable major versions
+    unstablever := StrToFloat(LeftStr(UnstableVersion,3));
+    curunstable := StrToFloat(LeftStr(kfUnstableVersion,3));
+    stablever := StrToFloat(LeftStr(StableVersion,3));
+    curstable := StrToFloat(LeftStr(kfStableVersion,3));
+
+    //keyfinder update process
+    if followUnstable then
     begin
-      //if (there isn't an options file) and (the software is the unstable version) then automatically check for unstable updates
-      //also do this if there is an options file and unstable updates is enabled
-      if not (UnstableVersion = kfUnstableVersion) then
+      if unstablever > stablever then
+      begin
+        if not (unstablever = curunstable) then
+        begin
+          kfUpdate := True;
+          //yes=6 and no=7
+          if MessageDlg('There is a new version of Keyfinder: v' + UnstableVersion + sLineBreak + 'Download replacement update?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+          begin
+            if FileExists(ChangeFileExt(Application.ExeName, '.bak')) then
+              DeleteFile(PChar(ChangeFileExt(Application.ExeName, '.bak')));
+            RenameFile(Application.ExeName, ChangeFileExt(Application.ExeName, '.bak'));
+            DoDownload(kfUnstableDownload,ChangeFileExt(Application.ExeName, '.exe'));
+            if FileExists(ChangeFileExt(Application.ExeName, '.exe')) then
+            begin
+              ShellExecute(Handle, nil, PChar(ChangeFileExt(Application.ExeName, '.exe')), nil, nil, SW_NORMAL);
+              Close;
+            end;
+          end;
+        end;
+      end
+      else if not (stablever = curstable) then
       begin
         kfUpdate := True;
-        if MessageDlg('There is a new version of Keyfinder: v' + UnstableVersion + sLineBreak + 'Download replacement update?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+        //yes=6 and no=7
+        if MessageDlg('There is a new version of Keyfinder: v' + StableVersion + sLineBreak + 'Download replacement update?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
         begin
           if FileExists(ChangeFileExt(Application.ExeName, '.bak')) then
             DeleteFile(PChar(ChangeFileExt(Application.ExeName, '.bak')));
           RenameFile(Application.ExeName, ChangeFileExt(Application.ExeName, '.bak'));
-          DoDownload(kfUnstableDownload,ChangeFileExt(Application.ExeName, '.exe'));
+          DoDownload(kfStableDownload,ChangeFileExt(Application.ExeName, '.exe'));
           if FileExists(ChangeFileExt(Application.ExeName, '.exe')) then
           begin
             ShellExecute(Handle, nil, PChar(ChangeFileExt(Application.ExeName, '.exe')), nil, nil, SW_NORMAL);
             Close;
-          end
-          else
-          begin
-            RenameFile(ChangeFileExt(Application.ExeName, '.bak'), ChangeFileExt(Application.ExeName, '.exe'));
-            if MessageDlg('The update seems to have failed.  Do you want to visit the download page?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
-              ShellExecute(Handle, nil, PChar(kfUnstableURL), nil, nil, SW_NORMAL);
-
           end;
         end;
       end;
-      
-    end;
-
-    //old update method
-    {if not (newVersion = kfVersion) then
+    end
+    else if not (stablever = curstable) then
     begin
-      if MessageDlg('There is a new version of Keyfinder: v' + newVersion + sLineBreak + 'Do you want to visit the download page?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
-        ShellExecute(Handle, nil, PChar(kfURL), nil, nil, SW_NORMAL);
       kfUpdate := True;
-
-    end;}
+      //yes=6 and no=7
+      if MessageDlg('There is a new version of Keyfinder: v' + StableVersion + sLineBreak + 'Download replacement update?', mtConfirmation , [mbYes,mbNo], 0) = 6 then
+      begin
+        if FileExists(ChangeFileExt(Application.ExeName, '.bak')) then
+          DeleteFile(PChar(ChangeFileExt(Application.ExeName, '.bak')));
+        RenameFile(Application.ExeName, ChangeFileExt(Application.ExeName, '.bak'));
+        DoDownload(kfStableDownload,ChangeFileExt(Application.ExeName, '.exe'));
+        if FileExists(ChangeFileExt(Application.ExeName, '.exe')) then
+        begin
+          ShellExecute(Handle, nil, PChar(ChangeFileExt(Application.ExeName, '.exe')), nil, nil, SW_NORMAL);
+          Close;
+        end;
+      end;
+    end;
 
 
     //keyfinder.cfg update check
