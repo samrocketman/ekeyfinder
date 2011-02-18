@@ -1,10 +1,16 @@
 Enchanted Keyfinder (EK) Changelog
-Build xxxxxx -- xxxxxxx
+Build 0.1.0.290 Beta 5 -- February 17th, 2011
 ----------------------------------
 1.	Added MS Office product description derived from the GUID.
 	Affects Office 2000 through Office 2010.
 2.	Fixed Office 2010 CD Key misreporting.
 3.	Fixed browsing for a hive in WinPE environment.
+4.	Updated all the links for the new project page.
+5.	Updated command line switch documentation.
+6.	Checks if running as administrator token.
+7.	Added Save as HTML and Save as ini.  Command line switches /saveini
+	and /savehtml also added.
+8.	Compiles in Delphi 7 now.
 
 Build 0.1.0.260 Beta 4 -- January 21st, 2011
 ----------------------------------
@@ -65,5 +71,4 @@ Build 0.1.0.82 Beta -- January 17th, 2011
 
 
 Enchanted Keyfinder base was built upon 
-Magical Jelly Bean Keyfinder 2.0.8 --- Old changelog from 
-http://sourceforge.net/projects/ekeyfinder/files/Old%20Releases/
+Magical Jelly Bean Keyfinder 2.0.8 GNU GPLv3

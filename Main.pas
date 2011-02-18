@@ -2334,10 +2334,10 @@ begin
     //ShowMessage(LeftStr(StableVersion,3));
 
     //Check
-    if (not isStable) and (StrToFloat(LeftStr(StableVersion,3)) > StrToFloat(kfStableVersion)) then
-      ShowMessage('True!')
-    else
-      ShowMessage('False :(');
+    //if (not isStable) and (StrToFloat(LeftStr(StableVersion,3)) > StrToFloat(kfStableVersion)) then
+    //  ShowMessage('True!')
+    //else
+    //  ShowMessage('False :(');
     //ShowMessage(UnstableVersion + sLineBreak + kfUnstableVersion);
     //Enchanted Keyfinder update check
     if ((not FileExists(ChangeFileExt(Application.ExeName, '.ini'))) and (not isStable)) or followUnstable then
