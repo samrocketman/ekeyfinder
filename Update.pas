@@ -63,7 +63,7 @@ end;
 
 procedure TfrmUpdate.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form1.Enabled := True;
+  frmMain.Enabled := True;
 end;
 
 end.

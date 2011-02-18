@@ -830,7 +830,7 @@ begin
 
 {  if RemotePC1.Checked then
   begin
-    if MyReg.RegistryConnect(Form4.Edit1.Text) = False then
+    if MyReg.RegistryConnect(frmRemote.Edit1.Text) = False then
     begin
       ShowMessage('Unable to connect to remote mchine.');
       RemotePC1.Checked := False;
@@ -1646,7 +1646,7 @@ begin
   end; }
 
   StatusBar1.Panels.Items[2].Text := 'Detected: ' + IntToStr(ListBox2.Items.Count);
-end; // TForm1.ParseConfig
+end; // TfrmMain.ParseConfig
 
 procedure TfrmMain.OfficeList;
 var

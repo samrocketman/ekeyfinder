@@ -29,7 +29,7 @@ uses
   Dialogs, StdCtrls, Registry;
 
 type
-  TForm3 = class(TForm)
+  TfrmRegistration = class(TForm)
     Button1: TButton;
     Button2: TButton;
     Edit2: TEdit;
@@ -50,7 +50,7 @@ type
   end;
 
 var
-  Form3: TForm3;
+  frmRegistration: TfrmRegistration;
   keychange, ownerchange, organizationchange: boolean;
 
 implementation
@@ -60,14 +60,14 @@ uses
 
 {$R *.dfm}
 
-procedure TForm3.Button1Click(Sender: TObject);
+procedure TfrmRegistration.Button1Click(Sender: TObject);
 var
   Registry: TRegistry;
 
 begin
   if ownerchange = true then
   begin
-    if Form1.ListBox2.Items.Strings[0] = 'WinXP' then
+    if frmMain.ListBox2.Items.Strings[0] = 'WinXP' then
     begin
       Registry:=TRegistry.Create;
       Registry.RootKey:=HKEY_LOCAL_MACHINE;
@@ -79,7 +79,7 @@ begin
       Registry.Free;
     end;
 
-    if Form1.ListBox2.Items.Strings[0] = 'Win9x' then
+    if frmMain.ListBox2.Items.Strings[0] = 'Win9x' then
     begin
       Registry:=TRegistry.Create;
       Registry.RootKey:=HKEY_LOCAL_MACHINE;
@@ -94,7 +94,7 @@ begin
 
   if organizationchange = true then
   begin
-    if Form1.ListBox2.Items.Strings[0] = 'WinXP' then
+    if frmMain.ListBox2.Items.Strings[0] = 'WinXP' then
     begin
       Registry:=TRegistry.Create;
       Registry.RootKey:=HKEY_LOCAL_MACHINE;
@@ -106,7 +106,7 @@ begin
       Registry.Free;
     end;
 
-    if Form1.ListBox2.Items.Strings[0] = 'Win9x' then
+    if frmMain.ListBox2.Items.Strings[0] = 'Win9x' then
     begin
       Registry:=TRegistry.Create;
       Registry.RootKey:=HKEY_LOCAL_MACHINE;
@@ -120,41 +120,41 @@ begin
   end;
   
   Close;
-  Form1.ListBox1.Selected[0] := True;
-  Form1.ListBox1Click(Form1);
+  frmMain.ListBox1.Selected[0] := True;
+  frmMain.ListBox1Click(frmMain);
 end;
 
-procedure TForm3.Button2Click(Sender: TObject);
+procedure TfrmRegistration.Button2Click(Sender: TObject);
 begin
   Button1.Enabled := False;
   Close;
 end;
 
-procedure TForm3.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmRegistration.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form1.Enabled := True;
+  frmMain.Enabled := True;
 end;
 
-procedure TForm3.Edit2KeyPress(Sender: TObject; var Key: Char);
+procedure TfrmRegistration.Edit2KeyPress(Sender: TObject; var Key: Char);
 begin
   ownerchange := true;
   Button1.Enabled := true;
 end;
 
-procedure TForm3.Edit3KeyPress(Sender: TObject; var Key: Char);
+procedure TfrmRegistration.Edit3KeyPress(Sender: TObject; var Key: Char);
 begin
   organizationchange := true;
   Button1.Enabled := True;
 end;
 
-procedure TForm3.FormShow(Sender: TObject);
+procedure TfrmRegistration.FormShow(Sender: TObject);
 begin
   keychange := False;
   ownerchange := false;
   organizationchange := false;
 end;
 
-procedure TForm3.Edit1KeyPress(Sender: TObject; var Key: Char);
+procedure TfrmRegistration.Edit1KeyPress(Sender: TObject; var Key: Char);
 begin
   keychange := true;
   Button1.Enabled := True

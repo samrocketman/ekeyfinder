@@ -1,4 +1,4 @@
-object Form3: TForm3
+object frmRegistration: TfrmRegistration
   Left = 279
   Top = 314
   BorderIcons = []

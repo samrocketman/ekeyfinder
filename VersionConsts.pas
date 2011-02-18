@@ -39,4 +39,8 @@ const
 
 implementation
 
+uses Main;
+
+{$R *.dfm}
+
 end.

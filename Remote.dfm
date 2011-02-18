@@ -1,4 +1,4 @@
-object Form4: TForm4
+object frmRemote: TfrmRemote
   Left = 347
   Top = 424
   BorderIcons = [biSystemMenu]
