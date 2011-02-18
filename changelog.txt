@@ -1,11 +1,11 @@
 Enchanted Keyfinder (EK) Changelog
-Build 0.1.0.327 Beta 6 -- February 18th, 2011
+Build 0.1.0.333 Beta 6 -- February 18th, 2011
 ----------------------------------
 1.	Fully implemented software updates!  Now it takes into account
 	both stable and unstable updates.
 2.	Added setting to show blank keys when they are detected.  The 
 	setting is ShowBlankSerials.  By default is false.
-2.	Fixed correction where Save As HTML output the program would show
+3.	Fixed correction where Save As HTML output the program would show
 	Magical Jelly Bean Keyfinder instead of Enchanted Keyfinder. bleh
 
 Build 0.1.0.290 Beta 5 -- February 17th, 2011
