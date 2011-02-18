@@ -2280,7 +2280,7 @@ var
   kfUpdate, cfgUpdate : boolean;
   CFGVer, newCFG, kfStableURL, kfStableDownload, kfUnstableURL, kfUnstableDownload, StableVersion, UnstableVersion, cfgURL, Section : string;
   myINI : TINIFile;
-  unstablever, curunstable, stablever, curstable : extended;
+  unstablever, stablever : extended;
 
 
 begin
@@ -2339,18 +2339,16 @@ begin
       myINI.Free;
     end;
 
-    //get unstablever, curunstable, stablever, and curstable major versions
+    //get unstablever, curunstable, stablever, and curstable major versions (curunstable and curstable not used)
     unstablever := StrToFloat(LeftStr(UnstableVersion,3));
-    curunstable := StrToFloat(LeftStr(kfUnstableVersion,3));
     stablever := StrToFloat(LeftStr(StableVersion,3));
-    curstable := StrToFloat(LeftStr(kfStableVersion,3));
 
     //keyfinder update process
     if followUnstable then
     begin
       if unstablever > stablever then
       begin
-        if not (unstablever = curunstable) then
+        if not (UnstableVersion = kfUnstableVersion) then
         begin
           kfUpdate := True;
           //yes=6 and no=7
@@ -2368,7 +2366,7 @@ begin
           end;
         end;
       end
-      else if not (stablever = curstable) then
+      else if not (StableVersion = kfStableVersion) then
       begin
         kfUpdate := True;
         //yes=6 and no=7
@@ -2386,7 +2384,7 @@ begin
         end;
       end;
     end
-    else if not (stablever = curstable) then
+    else if not (StableVersion = kfStableVersion) then
     begin
       kfUpdate := True;
       //yes=6 and no=7
