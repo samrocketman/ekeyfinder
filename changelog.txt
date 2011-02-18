@@ -66,4 +66,4 @@ Build 0.1.0.82 Beta -- January 17th, 2011
 
 Enchanted Keyfinder base was built upon 
 Magical Jelly Bean Keyfinder 2.0.8 --- Old changelog from 
-http://sourceforge.net/projects/keyfinder/files/Old%20Releases/
+http://sourceforge.net/projects/ekeyfinder/files/Old%20Releases/

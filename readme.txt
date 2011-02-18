@@ -1,7 +1,7 @@
                         Enchanted Keyfinder v0.1 Beta
 README                                                        February 2nd, 2011
 
-                  http://sourceforge.net/projects/keyfinder/
+                  http://sourceforge.net/projects/ekeyfinder/
 --------------------------------------------------------------------------------
 
 Product Overview

@@ -2000,7 +2000,7 @@ begin
         try
           Printer.Canvas.Font := Memo2.Font;
           Writeln(PrintText, 'Enchanted Keyfinder  v' + kfversion);
-          Writeln(PrintText, 'http://sourceforge.net/projects/keyfinder');
+          Writeln(PrintText, 'http://sourceforge.net/projects/ekeyfinder');
           Writeln(PrintText, '');
           for Line := 0 to Memo2.Lines.Count - 1 do
             Writeln(PrintText, Memo2.Lines[Line]);

@@ -20,7 +20,7 @@
 
     Contributor(s): VersionBoy.
 
-    Website: http://sourceforge.net/projects/keyfinder/
+    Website: http://sourceforge.net/projects/ekeyfinder/
     Compiles With: Turbo Delphi 2006, Delphi 2007
 }
 program Keyfinder;

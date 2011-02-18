@@ -2,7 +2,7 @@
 
 Frequently Asked Questions                                  January 17th, 2011
 
-                  http://sourceforge.net/projects/keyfinder/
+                  http://sourceforge.net/projects/ekeyfinder/
 --------------------------------------------------------------------------------
 
 Q: Can I retrieve the product key from the Windows CD?
