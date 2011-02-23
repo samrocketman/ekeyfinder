@@ -572,7 +572,9 @@ begin
     bAutoHive     := myINI.ReadBool('Settings', 'LoadHive', False);
     bLogOverwrite := myINI.ReadBool('Settings', 'LogOverwrite', False);
     bToBePrinted  := myINI.ReadBool('Settings', 'PrintKeys', False);
-    sAutoSaveDir  := myINI.ReadString('Settings', 'SavePath', '');
+    sAutoSaveDir  := myINI.ReadString('Settings', 'SavePath', ExtractFilePath(Application.ExeName));
+    if not (RightStr(sAutoSaveDir,1) = '\') then
+      sAutoSaveDir := sAutoSaveDir + '\';//make sure there's a trailing slash
     sReportsPath  := myINI.ReadString('Settings', 'ReportsPath', '');
     sUserHivePath := myINI.ReadString('Settings', 'UserHivePath', '');
     sSoftwareHivePath := myINI.ReadString('Settings', 'SoftwareHivePath', '');
@@ -723,7 +725,7 @@ begin
     sPCName := 'Unknown';
   frmMain.SaveDialog1.DefaultExt := '.txt';
   SaveDialog1.FileName := sPCName + '.txt';
-  sAutoSaveDir    := ExtractFilePath(Application.ExeName);
+  //sAutoSaveDir    := ExtractFilePath(Application.ExeName);
   iSaveKeysToFile := -1;
   frmMain.Text    := frmMain.Text + kfversion;
   lblVersion.Caption  := lblVersion.Caption + kfversion;
