@@ -159,6 +159,7 @@ type
     sDelimCSV:    string;
     sPCName:      string;
     sLogPath:     string;
+    sUserCFG:     string;
     bLogOverwrite: boolean;
     bAutoSave:    boolean;
     bAutoClose:   boolean;
@@ -563,6 +564,7 @@ var
 begin
   myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
   try
+    sUserCFG := myINI.ReadString('Settings', 'UserConfig','');
     sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
     bLogging     := myINI.ReadBool('Settings', 'Logging', False);
     GetLocaleFormatSettings(LOCALE_SYSTEM_DEFAULT, FS);
@@ -1371,8 +1373,7 @@ begin
   iEntriesRead := 0;   // Number of entries read in for processing
   bCFGVerFound := False;  // Version of cfg file
   // Input keyfinder.cfg file
-  if (FileExists(ExtractFilePath(Application.ExeName) + 'keyfinder.cfg')) and
-    (RemotePC1.Checked = False) then
+  if (FileExists(ExtractFilePath(Application.ExeName) + 'keyfinder.cfg')) and (RemotePC1.Checked = False) then
   begin
     AssignFile(ConfigFile, ExtractFilePath(Application.ExeName) + 'keyfinder.cfg');
     try
@@ -1381,8 +1382,8 @@ begin
         while not EOF(ConfigFile) do
         begin
           ReadLn(ConfigFile, CurrentLine);
-          if (CurrentLine <> '') then  // Don't process a blank line because the
-          begin                        // other 'if' statements will range check
+          if (CurrentLine <> '') then  // Don't process a blank line because the other 'if' statements will range check
+          begin
             if (CurrentLine[1] <> ';') then // Don't process a comment line here
             begin
               i := Pos('|', CurrentLine) - 1;
@@ -1419,6 +1420,44 @@ begin
       CloseFile(ConfigFile);
     end; // try..finally
   end;
+
+  //input user config file
+  if FileExists( sUserCFG ) then
+  begin
+    try
+      AssignFile(ConfigFile, sUserCFG);
+      try
+        Reset(ConfigFile);
+        while not EOF(ConfigFile) do
+        begin
+          ReadLn(ConfigFile, CurrentLine);
+          if (CurrentLine <> '') then  // Don't process a blank line because the other 'if' statements will range check
+          begin
+            if (CurrentLine[1] <> ';') then // Don't process a comment line here
+            begin
+              i := Pos('|', CurrentLine) - 1;
+              s := TrimRight(RightStr(CurrentLine, Length(CurrentLine) - i));
+              if i > 0 then
+              begin
+                iEntriesRead := iEntriesRead + 1;
+                ListBox1.Items.Add(Trim(LeftStr(CurrentLine, i)));
+                ListBox2.Items.Add('Config-' + s);
+                ListBox1.Selected[ListBox1.Items.Count - 1] := True;
+                StatusBar1.Panels.Items[1].Text := 'Loaded ' + IntToStr(iEntriesRead) + ' key locations';
+                frmMain.ListBox1Click(frmMain);
+              end;
+            end;  // if (CurrentLine[1] <> ';')
+          end;
+        end;
+      except
+        on E: EInOutError do
+          MessageDlg('Can''t read ' + sUserCFG + '. Error: ' + E.Message, mtError, [mbOK], 0);
+      end;
+    finally
+      CloseFile(ConfigFile)
+    end;
+  end;
+  
 end;
 
 procedure TfrmMain.Refresh1Click(Sender: TObject);
