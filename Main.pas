@@ -564,8 +564,9 @@ var
 begin
   myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
   try
-    sUserCFG := myINI.ReadString('Settings', 'UserConfig','');
     sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
+    if not (RightStr(sLogFilePath,1) = '\') then
+      sLogFilePath := sLogFilePath + '\';//make sure there's a trailing slash
     bLogging     := myINI.ReadBool('Settings', 'Logging', False);
     GetLocaleFormatSettings(LOCALE_SYSTEM_DEFAULT, FS);
     sDelimCSV     := myINI.ReadString('Settings', 'CSVDelim', fs.ListSeparator);
@@ -574,7 +575,7 @@ begin
     bAutoHive     := myINI.ReadBool('Settings', 'LoadHive', False);
     bLogOverwrite := myINI.ReadBool('Settings', 'LogOverwrite', False);
     bToBePrinted  := myINI.ReadBool('Settings', 'PrintKeys', False);
-    sAutoSaveDir  := myINI.ReadString('Settings', 'SavePath', ExtractFilePath(Application.ExeName));
+    sAutoSaveDir  := myINI.ReadString('Settings', 'SavePath', '.\');
     if not (RightStr(sAutoSaveDir,1) = '\') then
       sAutoSaveDir := sAutoSaveDir + '\';//make sure there's a trailing slash
     sReportsPath  := myINI.ReadString('Settings', 'ReportsPath', '');
@@ -584,6 +585,7 @@ begin
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', True)
     else
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', False);
+    sUserCFG := myINI.ReadString('Settings', 'UserConfig','.\user.cfg');
     showBlankSerials := myINI.ReadBool('Settings', 'ShowBlankSerials', False);
     LoadFont(myINI, 'AppListFont', frmMain.ListBox1.Font);
     LoadFont(myINI, 'KeyListFont', frmMain.Memo1.Font);
@@ -611,7 +613,8 @@ begin
     myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
     myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
     myINI.WriteBool('Settings', 'UnstableUpdates', followUnstable);
-    myINI.WriteBool('Settings', 'ShowBlankSerials', showBlankSerials);
+    myINI.WriteBool('Settings', 'ShowBlankSerials', showBlankSerials);  
+    myINI.WriteString('Settings', 'UserConfig', sUserCFG);
     SaveFont(myINI, 'AppListFont', frmMain.ListBox1.Font);
     SaveFont(myINI, 'KeyListFont', frmMain.Memo1.Font);
     myINI.UpdateFile;
