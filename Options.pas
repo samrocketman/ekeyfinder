@@ -98,6 +98,7 @@ end;
 
 procedure TfrmOptions.FormCreate(Sender: TObject);
 begin
+  frmMain.UnformatSettingsPath;
   Label2.Font := frmMain.ListBox1.Font;
   LblAppList.Font := frmMain.ListBox1.Font;
   Label3.Font := frmMain.Memo1.Font;
@@ -135,7 +136,9 @@ begin
     frmMain.sDelimCSV := EdtCSV1.Text;
   if EdtLogPath.Text <> '' then
     frmMain.sLogPath := EdtLogPath.Text;
-  frmMain.SaveSettings(frmMain);
+  frmMain.FormatSettingsPath;//the user is finished modifying settings
+  frmMain.SaveSettings(frmMain);//UnformatSettingsPath gets called in this function so we must format it again
+  frmMain.FormatSettingsPath;
   Close;
 end;
 

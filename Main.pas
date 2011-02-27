@@ -147,6 +147,8 @@ type
     procedure SaveDialogTypeChange(Sender: TObject);
     procedure LoadSettings(Sender: TObject);
     procedure SaveSettings(Sender: TObject);
+    procedure FormatSettingsPath;
+    procedure UnformatSettingsPath;
   private
     // Private declarations
     function DecodeAdobeKey(const sAdobeEncryptedKey: string): string;
@@ -160,6 +162,7 @@ type
     sPCName:      string;
     sLogPath:     string;
     sUserCFG:     string;
+    sSettingsFile: string;
     //bLogOverwrite: boolean;
     bAutoSave:    boolean;
     bAutoClose:   boolean;
@@ -562,25 +565,29 @@ var
   myINI: TINIFile;
   fs:    TFormatSettings;
 begin
+
+  //read for an alternate path to the settings
   myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
   try
-    //sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
-    //if not (RightStr(sLogFilePath,1) = '\') then
-    //  sLogFilePath := sLogFilePath + '\';//make sure there's a trailing slash
-    //bLogging     := myINI.ReadBool('Settings', 'Logging', False);
+    sSettingsFile := myINI.ReadString('keyfinder', 'Settings', '');
+  finally
+    myINI.Free;
+  end;
+  if (sSettingsFile <> '') and FileExists(sSettingsFile) then
+    myINI := TINIFile.Create(sSettingsFile)
+  else
+    myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
+
+  //begin parsing the settings
+  try
     GetLocaleFormatSettings(LOCALE_SYSTEM_DEFAULT, FS);
-    sDelimCSV     := myINI.ReadString('Settings', 'CSVDelim', fs.ListSeparator);
-    //bAppendTop    := myINI.ReadBool('Settings', 'AppendTop', False);
-    bAutoSave     := myINI.ReadBool('Settings', 'AutoSave', False);
-    bAutoHive     := myINI.ReadBool('Settings', 'LoadHive', False);
-    //bLogOverwrite := myINI.ReadBool('Settings', 'LogOverwrite', False);
-    bToBePrinted  := myINI.ReadBool('Settings', 'PrintKeys', False);
-    sAutoSaveDir  := myINI.ReadString('Settings', 'SavePath', '.\');
+    sDelimCSV := myINI.ReadString('Settings', 'CSVDelim', fs.ListSeparator);
+    bAutoSave := myINI.ReadBool('Settings', 'AutoSave', False);
+    bAutoHive := myINI.ReadBool('Settings', 'LoadHive', False);
+    bToBePrinted := myINI.ReadBool('Settings', 'PrintKeys', False);
+    sAutoSaveDir := myINI.ReadString('Settings', 'SavePath', '.\');
     if not (RightStr(sAutoSaveDir,1) = '\') then
       sAutoSaveDir := sAutoSaveDir + '\';//make sure there's a trailing slash
-    //sReportsPath  := myINI.ReadString('Settings', 'ReportsPath', '');
-    //sUserHivePath := myINI.ReadString('Settings', 'UserHivePath', '');
-    //sSoftwareHivePath := myINI.ReadString('Settings', 'SoftwareHivePath', '');
     sHiveLoc2 := myINI.ReadString('Settings', 'SoftwareHivePath', '');
     if kfVersion = kfUnstableVersion then
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', True)
@@ -589,18 +596,65 @@ begin
     sUserCFG := myINI.ReadString('Settings', 'UserConfig','.\user.cfg');
     showBlankSerials := myINI.ReadBool('Settings', 'ShowBlankSerials', False);
     LoadFont(myINI, 'AppListFont', frmMain.ListBox1.Font);
-    LoadFont(myINI, 'KeyListFont', frmMain.Memo1.Font);
+    LoadFont(myINI, 'KeyListFont', frmMain.Memo1.Font);  
+
+    //set relative paths to be interpreted from the settings file location
+    FormatSettingsPath;
+
+    //These are all settings which have been discarded.
+    //sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
+    //if not (RightStr(sLogFilePath,1) = '\') then
+    //  sLogFilePath := sLogFilePath + '\';//make sure there's a trailing slash
+    //bLogging     := myINI.ReadBool('Settings', 'Logging', False);
+    //bAppendTop    := myINI.ReadBool('Settings', 'AppendTop', False);
+    //bLogOverwrite := myINI.ReadBool('Settings', 'LogOverwrite', False);
+    //sReportsPath  := myINI.ReadString('Settings', 'ReportsPath', '');
+    //sUserHivePath := myINI.ReadString('Settings', 'UserHivePath', '');
+    //sSoftwareHivePath := myINI.ReadString('Settings', 'SoftwareHivePath', '');
   finally
     myINI.Free;
   end; // try..finally
+end;
+
+procedure TfrmMain.FormatSettingsPath;
+begin
+  if sSettingsFile <> '' then
+  begin
+    //set relative paths to be interpreted from the settings file location
+    if LeftStr(sAutoSaveDir,1) = '.' then
+      sAutoSaveDir := ExtractFilePath(sSettingsFile) + sAutoSaveDir;
+    if LeftStr(sHiveLoc2,1) = '.' then
+      sHiveLoc2 := ExtractFilePath(sSettingsFile) + sHiveLoc2;
+    if LeftStr(sUserCFG,1) = '.' then
+      sUserCFG := ExtractFilePath(sSettingsFile) + sUserCFG;
+  end;
+end;
+
+procedure TfrmMain.UnformatSettingsPath;
+begin
+  if sSettingsFile <> '' then
+  begin
+    //restore paths to their original form.
+    sAutoSaveDir := RightStr(sAutoSaveDir,Length(sAutoSaveDir)-Length(ExtractFilePath(sSettingsFile)));
+    sHiveLoc2 := RightStr(sHiveLoc2,Length(sHiveLoc2)-Length(ExtractFilePath(sSettingsFile)));
+    sUserCFG := RightStr(sUserCFG,Length(sUserCFG)-Length(ExtractFilePath(sSettingsFile)));
+  end;
 end;
 
 procedure TfrmMain.SaveSettings(Sender: TObject);
 var
   myINI: TINIFile;
 begin
-  myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
+  //ShowMessage(RightStr(sAutoSaveDir,Length(sAutoSaveDir)-Length(ExtractFilePath(sSettingsFile))));
+  if sSettingsFile <> '' then
+    myINI := TINIFile.Create(sSettingsFile)
+  else
+    myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
+
   try
+
+    UnformatSettingsPath;
+    
     myINI.WriteBool('Settings', 'AutoSave', bAutoSave);
     myINI.WriteString('Settings', 'CSVDelim', sDelimCSV);
     myINI.WriteBool('Settings', 'LoadHive', bAutoHive);
