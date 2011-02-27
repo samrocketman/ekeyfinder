@@ -27,8 +27,8 @@
     Compiles With: Delphi 7, Boreland Dev Studio 2006, DS Turbo Delphi 2006, Delphi 2007
 }
 program Keyfinder;
-
-{$R 'UAC.res' 'UAC.rc'}
+//uncomment the following line to force keyfinder to be run as administrator.
+//{$R 'UAC.res' 'UAC.rc'}
 {%TogetherDiagram 'ModelSupport_Keyfinder\default.txaPackage'}
 {%TogetherDiagram 'ModelSupport_Keyfinder\Keyfinder\default.txaPackage'}
 {%TogetherDiagram 'ModelSupport_Keyfinder\Update\default.txaPackage'}

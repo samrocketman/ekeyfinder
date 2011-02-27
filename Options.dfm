@@ -76,6 +76,7 @@ object frmOptions: TfrmOptions
     Width = 91
     Height = 17
     Caption = '&Error Logging'
+    Enabled = False
     TabOrder = 2
     OnClick = OptChkBxErrLogClick
   end

@@ -160,11 +160,11 @@ type
     sPCName:      string;
     sLogPath:     string;
     sUserCFG:     string;
-    bLogOverwrite: boolean;
+    //bLogOverwrite: boolean;
     bAutoSave:    boolean;
     bAutoClose:   boolean;
-    bAppendTop:   boolean;
-    bAppendBottom: boolean;
+    //bAppendTop:   boolean;
+    //bAppendBottom: boolean;
     bCFGVerFound: boolean;
     sCFGVer:      string;
     iEntriesRead: integer;
@@ -179,13 +179,13 @@ var
   bHiveLoaded: boolean;  // True when a registry hive is loaded.
   sHiveLoc:  string;
   sHiveLoc2: string;
-  sReportsPath: string;
-  sLogFilePath: string;
-  bLogging:  boolean;
+  //sReportsPath: string;
+  //sLogFilePath: string;
+  //bLogging:  boolean;
   followUnstable: boolean;
   showBlankSerials: boolean;
   bSaveSettings: boolean;
-  sUserHivePath, sSoftwareHivePath: string;
+  //sUserHivePath, sSoftwareHivePath: string;
   bWin2k, bWinXP, bVista, bWinNT4: boolean;
 
 {$INCLUDE VersionConsts.inc}
@@ -564,23 +564,24 @@ var
 begin
   myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
   try
-    sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
-    if not (RightStr(sLogFilePath,1) = '\') then
-      sLogFilePath := sLogFilePath + '\';//make sure there's a trailing slash
-    bLogging     := myINI.ReadBool('Settings', 'Logging', False);
+    //sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
+    //if not (RightStr(sLogFilePath,1) = '\') then
+    //  sLogFilePath := sLogFilePath + '\';//make sure there's a trailing slash
+    //bLogging     := myINI.ReadBool('Settings', 'Logging', False);
     GetLocaleFormatSettings(LOCALE_SYSTEM_DEFAULT, FS);
     sDelimCSV     := myINI.ReadString('Settings', 'CSVDelim', fs.ListSeparator);
-    bAppendTop    := myINI.ReadBool('Settings', 'AppendTop', False);
+    //bAppendTop    := myINI.ReadBool('Settings', 'AppendTop', False);
     bAutoSave     := myINI.ReadBool('Settings', 'AutoSave', False);
     bAutoHive     := myINI.ReadBool('Settings', 'LoadHive', False);
-    bLogOverwrite := myINI.ReadBool('Settings', 'LogOverwrite', False);
+    //bLogOverwrite := myINI.ReadBool('Settings', 'LogOverwrite', False);
     bToBePrinted  := myINI.ReadBool('Settings', 'PrintKeys', False);
     sAutoSaveDir  := myINI.ReadString('Settings', 'SavePath', '.\');
     if not (RightStr(sAutoSaveDir,1) = '\') then
       sAutoSaveDir := sAutoSaveDir + '\';//make sure there's a trailing slash
-    sReportsPath  := myINI.ReadString('Settings', 'ReportsPath', '');
-    sUserHivePath := myINI.ReadString('Settings', 'UserHivePath', '');
-    sSoftwareHivePath := myINI.ReadString('Settings', 'SoftwareHivePath', '');
+    //sReportsPath  := myINI.ReadString('Settings', 'ReportsPath', '');
+    //sUserHivePath := myINI.ReadString('Settings', 'UserHivePath', '');
+    //sSoftwareHivePath := myINI.ReadString('Settings', 'SoftwareHivePath', '');
+    sHiveLoc2 := myINI.ReadString('Settings', 'SoftwareHivePath', '');
     if kfVersion = kfUnstableVersion then
       followUnstable := myINI.ReadBool('Settings', 'UnstableUpdates', True)
     else
@@ -600,23 +601,24 @@ var
 begin
   myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
   try
-    myINI.WriteString('Settings', 'LogFilePath', sLogFilePath);
-    myINI.WriteBool('Settings', 'Logging', bLogging);
-    myINI.WriteString('Settings', 'CSVDelim', sDelimCSV);
-    myINI.WriteBool('Settings', 'AppendTop', bAppendTop);
     myINI.WriteBool('Settings', 'AutoSave', bAutoSave);
+    myINI.WriteString('Settings', 'CSVDelim', sDelimCSV);
     myINI.WriteBool('Settings', 'LoadHive', bAutoHive);
-    myINI.WriteBool('Settings', 'LogOverwrite', bLogOverwrite);
     myINI.WriteBool('Settings', 'PrintKeys', bToBePrinted);
     myINI.WriteString('Settings', 'SavePath', sAutoSaveDir);
-    myINI.WriteString('Settings', 'ReportsPath', sReportsPath);
-    myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
-    myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
+    myINI.WriteBool('Settings', 'ShowBlankSerials', showBlankSerials);
+    myINI.WriteString('Settings', 'SoftwareHivePath', sHiveLoc2);
     myINI.WriteBool('Settings', 'UnstableUpdates', followUnstable);
-    myINI.WriteBool('Settings', 'ShowBlankSerials', showBlankSerials);  
     myINI.WriteString('Settings', 'UserConfig', sUserCFG);
     SaveFont(myINI, 'AppListFont', frmMain.ListBox1.Font);
     SaveFont(myINI, 'KeyListFont', frmMain.Memo1.Font);
+    //myINI.WriteString('Settings', 'LogFilePath', sLogFilePath);
+    //myINI.WriteBool('Settings', 'Logging', bLogging);
+    //myINI.WriteBool('Settings', 'AppendTop', bAppendTop);
+    //myINI.WriteBool('Settings', 'LogOverwrite', bLogOverwrite);
+    //myINI.WriteString('Settings', 'ReportsPath', sReportsPath);
+    //myINI.WriteString('Settings', 'UserHivePath', sUserHivePath);
+    //myINI.WriteString('Settings', 'SoftwareHivePath', sSoftwareHivePath);
     myINI.UpdateFile;
   finally
     myINI.Free;
@@ -736,6 +738,15 @@ begin
   lblVersion.Caption  := lblVersion.Caption + kfversion;
   lblLastUpdate.Caption  := lblLastUpdate.Caption + kfdate;
 
+  //autoload hive from settings
+  if bAutoHive then
+  begin
+    if IsWindowsAdmin then
+      LoadHive
+    else
+      ShowMessage('Not running with admin privledges, Can''t load hive.');
+  end;
+
   // Parse the command line switches
   i := 1;
   while i <= ParamCount do
@@ -804,10 +815,10 @@ begin
 			SaveDialog1.FileName := sPCName + '.html';
 		end;
 
-    if sCurParam = '/appendtop' then
-      bAppendTop := True;
-    if sCurParam = '/appendbottom' then
-      bAppendBottom := True;
+    //if sCurParam = '/appendtop' then
+    //  bAppendTop := True;
+    //if sCurParam = '/appendbottom' then
+    //  bAppendBottom := True;
     i := i + 1;
   end;
 
@@ -830,7 +841,7 @@ end;
 
 procedure TfrmMain.MnuSourceforgeWebClick(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar(PROGRAM_SOURCEFORGE_HOME_PAGE), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar(PROGRAM_HOME_PAGE), nil, nil, SW_NORMAL);
 end;
 
 procedure TfrmMain.FindWinVersion;
@@ -2002,7 +2013,7 @@ end;
 
 procedure TfrmMain.Label1Click(Sender: TObject);
 begin
-  ShellExecute(Handle, nil, PChar('https://sourceforge.net/apps/phpbb/keyfinder/viewtopic.php?f=1&t=3'), nil, nil, SW_NORMAL);
+  ShellExecute(Handle, nil, PChar(PROGRAM_SOURCEFORGE_PHPBB_PAGE + 'viewtopic.php?f=1&t=3'), nil, nil, SW_NORMAL);
 end;
 
 procedure TfrmMain.Label2Click(Sender: TObject);
@@ -2066,8 +2077,8 @@ begin
       try
         try
           Printer.Canvas.Font := Memo2.Font;
-          Writeln(PrintText, 'Enchanted Keyfinder  v' + kfversion);
-          Writeln(PrintText, 'http://sourceforge.net/projects/ekeyfinder');
+          Writeln(PrintText, PROGRAM_NAME + '  v' + kfVersion);
+          Writeln(PrintText, PROGRAM_HOME_PAGE);
           Writeln(PrintText, '');
           for Line := 0 to Memo2.Lines.Count - 1 do
             Writeln(PrintText, Memo2.Lines[Line]);
@@ -2241,7 +2252,8 @@ begin
         SaveAs1.Enabled := False;
         PrintAll1.Enabled := False;
         ShowMessage('Can''t load registry hive from: ' + sHiveLoc2 +
-          '\system32\config\software' + #13#10#13#10 + SysUtils.SysErrorMessage(iRtnCode));
+          '\system32\config\software' + sLineBreak + sLineBreak + SysUtils.SysErrorMessage(iRtnCode) +
+          sLineBreak + sLineBreak + 'Run ' + PROGRAM_NAME + ' as an Administrator.');
         // MessageBox(0, PChar(SysUtils.SysErrorMessage(iRtnCode)), nil, MB_OK);
         StatusBar1.Panels.Items[0].Text := 'Loading the Software hive has failed.';
         sHiveLoc := '';

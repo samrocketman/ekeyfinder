@@ -98,15 +98,16 @@ end;
 
 procedure TfrmOptions.FormCreate(Sender: TObject);
 begin
-  Label2.Font     := frmMain.ListBox1.Font;
+  Label2.Font := frmMain.ListBox1.Font;
   LblAppList.Font := frmMain.ListBox1.Font;
-  Label3.Font     := frmMain.Memo1.Font;
+  Label3.Font := frmMain.Memo1.Font;
   LblKeyDisp.Font := frmMain.Memo1.Font;
   LblAppList.Font := frmMain.ListBox1.Font;
   LblKeyDisp.Font := frmMain.Memo1.Font;
-  EdtCSV1.Text     := frmMain.sDelimCSV;
-  EdtLogPath.Text := sLogFilePath;
-  OptChkBxErrLog.Checked := bLogging;
+  EdtCSV1.Text := frmMain.sDelimCSV;
+  EdtLogPath.Text := '';
+  //EdtLogPath.Text := sLogFilePath;
+  //OptChkBxErrLog.Checked := bLogging;
   Button5.Enabled := OptChkBxErrLog.Checked;
   EdtLogPath.Enabled := OptChkBxErrLog.Checked;
   OptUnstableUpdates.Checked := followUnstable;
@@ -145,14 +146,14 @@ begin
   //bBrowse := BrowseForFolder(frmMain.sLogPath, 'Select The Log Directory...');
   BrowseForFolder(frmMain.sLogPath, 'Select The Log Directory...');
   EdtLogPath.Text := frmMain.sLogPath;
-  sLogFilePath := frmMain.sLogPath;
+  //sLogFilePath := frmMain.sLogPath;
 end;
 
 procedure TfrmOptions.OptChkBxErrLogClick(Sender: TObject);
 begin
   Button5.Enabled := OptChkBxErrLog.Checked;
   EdtLogPath.Enabled := OptChkBxErrLog.Checked;
-  bLogging := OptChkBxErrLog.Checked;
+  //bLogging := OptChkBxErrLog.Checked;
 end;
 
 procedure TfrmOptions.OptUnstableUpdatesClick(Sender: TObject);
