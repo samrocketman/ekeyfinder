@@ -29,15 +29,15 @@
     <title>Enchanted Keyfinder Documentation</title>
     <id>40</id>
     <revision>
-      <id>290</id>
-      <timestamp>2011-02-28T19:28:59Z</timestamp>
+      <id>292</id>
+      <timestamp>2011-02-28T20:19:44Z</timestamp>
       <contributor>
         <username>Sag47</username>
         <id>7</id>
       </contributor>
-      <text xml:space="preserve">[[File:EKeyfinder_docs_logo.png‎]]
+      <text xml:space="preserve">&lt;center&gt;[[File:EKeyfinder_docs_logo.png‎]]&lt;/center&gt;
 
-You could also check out the keyfinder [http://ekeyfinder.sf.net/ website] and [http://sourceforge.net/apps/phpbb/ekeyfinder/ forum].
+&lt;center&gt;You could also check out the keyfinder [http://ekeyfinder.sf.net/ website] and [http://sourceforge.net/apps/phpbb/ekeyfinder/ forum].&lt;/center&gt;
 
 = Enchanted Keyfinder Documentation =
 Please take the time to read about our [[version philosophy]].  Before asking any questions in the forums or filing a bug please review the [[F.A.Q.]].
@@ -775,21 +775,27 @@ This opens keyfinder.cfg with the built in text editor Notepad.exe.  That's it.
     <title>Load Hive</title>
     <id>56</id>
     <revision>
-      <id>261</id>
-      <timestamp>2011-02-28T16:14:33Z</timestamp>
+      <id>293</id>
+      <timestamp>2011-02-28T20:27:08Z</timestamp>
       <contributor>
         <username>Sag47</username>
         <id>7</id>
       </contributor>
+      <comment>/* About Load Hive */</comment>
       <text xml:space="preserve">= About Load Hive =
 Many people do not understand this option however it is very simple.  The Windows Registry has to be stored somewhere.  It is collectively store in a file called a Registry Hive.  The default location for the Windows registry hives are located in:
 
  %SystemDrive%\WINDOWS\system32\config\
 
-The registry hive which is of concern to Enchanted Keyfinder (EK) is the Software registry hive.  It is where your Windows Product Key is located and also where your the majority of your installed software keys should be located.  The Software registry hive is a file called ''software'' located at:
+The registry hive which is of concern to Enchanted Keyfinder (EK) is the Software registry hive.  It is where your Windows Product Key is located and also where the majority of your installed software keys should be located.  The Software registry hive is a file called ''software'' located at:
 
  %SystemDrive%\WINDOWS\system32\config\software
 
+= How to use it =
+== Security permissions ==
+In order to use this feature you must be running as an administrator.  In Windows Vista and Windows 7 you can simply right click on [[keyfinder.exe]] and select ''Run as administrator''.
+
+== Opening a hive ==
 When you click on Load Hive and select a folder it will look for a file called software in one of four locations relative to the folder path you select:
 * .\WINDOWS\system32\config\software
 * .\system32\config\software
@@ -797,6 +803,8 @@ When you click on Load Hive and select a folder it will look for a file called s
 * .\software
 
 This way it is very difficult for a user to incorrectly select the correct path to the software registry hive.
+
+Simply select the path of your software hive backup or the drive of a dead Windows installation.  If the hive is not corrupted then Enchanted Keyfinder will be able to open it.
 
 = How to open the software registry hive =
 # Click on ''Tools &gt; Load Hive'' and select the root of the drive where your dead Windows is located.  You could also point it to a backup of the software registry hive.
