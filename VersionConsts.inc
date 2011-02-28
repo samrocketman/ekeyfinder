@@ -30,10 +30,10 @@
 }
 const
   PROGRAM_NAME = 'Enchanted Keyfinder';
-  kfVersion = '0.1 Beta 6';
+  kfVersion = '0.1 Beta 7';
   kfStableVersion = '0.0.0';
-  kfUnstableVersion = '0.1 Beta 6';
-  PROGRAM_RELEASE_DATE = 'February 17th, 2011';
+  kfUnstableVersion = '0.1 Beta 7';
+  PROGRAM_RELEASE_DATE = 'February 27th, 2011';
   PROGRAM_HOME_PAGE = 'http://ekeyfinder.sourceforge.net/';
   PROGRAM_SOURCEFORGE_HOME_PAGE = 'http://sourceforge.net/projects/ekeyfinder/';
   PROGRAM_SOURCEFORGE_PHPBB_PAGE = 'http://sourceforge.net/apps/phpbb/ekeyfinder/';

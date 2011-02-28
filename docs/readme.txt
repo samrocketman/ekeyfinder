@@ -7,7 +7,7 @@ README                                                       February 23rd, 2011
 Product Overview
 ----------------
 The Enchanted Keyfinder is a free and open source utility that retrieves
-your Product Key used to install windows from your registry or from an
+your Product Key used to install Windows from your registry or from an
 unbootable Windows installation.
 
 It works on Windows 95, 98, ME, NT, 2000, XP, Vista and Windows 7.
@@ -35,6 +35,11 @@ trojans.
 
 For a full up to date list of features please refer to the website.
 http://ekeyfinder.sourceforge.net/index.php?lang=en&page=features
+
+Frequently Asked Questions
+------------
+See the wiki for an up to date F.A.Q.
+http://sourceforge.net/apps/mediawiki/ekeyfinder/index.php?title=F.A.Q.
 
 Known Issues
 ------------

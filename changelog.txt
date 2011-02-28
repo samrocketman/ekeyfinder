@@ -1,4 +1,28 @@
 Enchanted Keyfinder (EK) Changelog
+Build 0.1.0.377 Beta 7 -- February 27th, 2011
+----------------------------------
+1.	Fixed bug where SavePath is not read correctly from settings.
+2.	Implemented a new feature, User defined config file.
+3.	Changed default setting for autosave path to a relative value.
+4.	Disabled forcing UAC prompt.
+5.	Modified the LoadHive error for privileges so that user knows to 
+	run program as Administrator.
+6.	Fixed LoadHive setting and SoftwareHivePath setting.
+7.	Finished fixing the web links for the new project.
+8.	Reorganized the saving of settings into alphabetical order A-Z, 
+	loading doesn't matter.
+9.	Disabled log options in the options dialog.  It's currently not
+	being used anyways.
+10.	Removed the following settings which currently are not in use:
+		LogFilePath
+		Logging
+		AppendTop
+		LogOverwrite
+		ReportsPath
+		UserHivePath
+11.	Updated keyfinder.cfg.
+12.	Implemented a path to settings file setting.
+
 Build 0.1.0.333 Beta 6 -- February 18th, 2011
 ----------------------------------
 1.	Fully implemented software updates!  Now it takes into account
