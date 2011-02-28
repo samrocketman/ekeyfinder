@@ -171,6 +171,7 @@ type
     bCFGVerFound: boolean;
     sCFGVer:      string;
     iEntriesRead: integer;
+    bFormattedSettings: boolean;
   end;
 
 var
@@ -565,7 +566,6 @@ var
   myINI: TINIFile;
   fs:    TFormatSettings;
 begin
-
   //read for an alternate path to the settings
   myINI := TINIFile.Create(ChangeFileExt(Application.ExeName, '.ini'));
   try
@@ -599,7 +599,8 @@ begin
     LoadFont(myINI, 'KeyListFont', frmMain.Memo1.Font);  
 
     //set relative paths to be interpreted from the settings file location
-    FormatSettingsPath;
+    if not bFormattedSettings then
+      FormatSettingsPath;
 
     //These are all settings which have been discarded.
     //sLogFilePath := myINI.ReadString('Settings', 'LogFilePath', '.\');
@@ -627,6 +628,7 @@ begin
       sHiveLoc2 := ExtractFilePath(sSettingsFile) + sHiveLoc2;
     if LeftStr(sUserCFG,1) = '.' then
       sUserCFG := ExtractFilePath(sSettingsFile) + sUserCFG;
+    bFormattedSettings := True;
   end;
 end;
 
@@ -638,6 +640,7 @@ begin
     sAutoSaveDir := RightStr(sAutoSaveDir,Length(sAutoSaveDir)-Length(ExtractFilePath(sSettingsFile)));
     sHiveLoc2 := RightStr(sHiveLoc2,Length(sHiveLoc2)-Length(ExtractFilePath(sSettingsFile)));
     sUserCFG := RightStr(sUserCFG,Length(sUserCFG)-Length(ExtractFilePath(sSettingsFile)));
+    bFormattedSettings := False;
   end;
 end;
 
@@ -653,7 +656,8 @@ begin
 
   try
 
-    UnformatSettingsPath;
+    if bFormattedSettings then
+      UnformatSettingsPath;
     
     myINI.WriteBool('Settings', 'AutoSave', bAutoSave);
     myINI.WriteString('Settings', 'CSVDelim', sDelimCSV);
@@ -747,6 +751,7 @@ begin
   // Program startup default settings
   Width    := 640;
   Height   := 480;
+  bFormattedSettings := False;
   //bLogging := False;
   //bAutoHive := False;
   //bAutoSave    := False;
@@ -2077,6 +2082,8 @@ end;
 
 procedure TfrmMain.Options1Click(Sender: TObject);
 begin
+  if bFormattedSettings then
+    UnformatSettingsPath;
   frmOptions.Visible := True;
   frmMain.Enabled := False;
 end;
