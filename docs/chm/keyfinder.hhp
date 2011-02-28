@@ -1,0 +1,48 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=keyfinder.chm
+Contents file=Table of Contents.hhc
+Default topic=enchanted_keyfinder_documentation.html
+Display compile progress=No
+Language=0x409 English (United States)
+
+
+[FILES]
+about_enchanted_keyfinder.html
+always_on_top.html
+associated_files_index.html
+bug_and_feature_tracker.html
+change_windows_key.html
+change_windows_reg_info.html
+check_for_updates.html
+community_forums.html
+community_wiki.html
+enchanted_keyfinder_documentation.html
+exit.html
+f.a.q..html
+file_index.html
+help_index.html
+interface_index.html
+key_memo_box.html
+keyfinder.cfg.html
+keyfinder.chm.html
+keyfinder.exe.html
+keyfinder.ini.html
+load_hive.html
+menu.html
+menu_index.html
+modify_config.html
+options.html
+print.html
+refresh.html
+save_as.html
+software_listbox.html
+sourceforge_website.html
+status_bar.html
+tools_index.html
+update.ini.html
+user.cfg.html
+version_philosophy.html
+
+[INFOTYPES]
+

@@ -1,0 +1,1249 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.3/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.3/ http://www.mediawiki.org/xml/export-0.3.xsd" version="0.3" xml:lang="en">
+  <siteinfo>
+    <sitename>ekeyfinder</sitename>
+    <base>https://sourceforge.net/apps/mediawiki/ekeyfinder/index.php?title=Main_Page</base>
+    <generator>MediaWiki 1.15.1</generator>
+    <case>first-letter</case>
+    <namespaces>
+      <namespace key="-2">Media</namespace>
+      <namespace key="-1">Special</namespace>
+      <namespace key="0" />
+      <namespace key="1">Talk</namespace>
+      <namespace key="2">User</namespace>
+      <namespace key="3">User talk</namespace>
+      <namespace key="4">ekeyfinder</namespace>
+      <namespace key="5">ekeyfinder talk</namespace>
+      <namespace key="6">File</namespace>
+      <namespace key="7">File talk</namespace>
+      <namespace key="8">MediaWiki</namespace>
+      <namespace key="9">MediaWiki talk</namespace>
+      <namespace key="10">Template</namespace>
+      <namespace key="11">Template talk</namespace>
+      <namespace key="12">Help</namespace>
+      <namespace key="13">Help talk</namespace>
+      <namespace key="14">Category</namespace>
+      <namespace key="15">Category talk</namespace>
+    </namespaces>
+  </siteinfo>
+  <page>
+    <title>Enchanted Keyfinder Documentation</title>
+    <id>40</id>
+    <revision>
+      <id>290</id>
+      <timestamp>2011-02-28T19:28:59Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">[[File:EKeyfinder_docs_logo.png‎]]
+
+You could also check out the keyfinder [http://ekeyfinder.sf.net/ website] and [http://sourceforge.net/apps/phpbb/ekeyfinder/ forum].
+
+= Enchanted Keyfinder Documentation =
+Please take the time to read about our [[version philosophy]].  Before asking any questions in the forums or filing a bug please review the [[F.A.Q.]].
+
+
+== Interface ==
+[[Menu]],
+[[Software Listbox]],
+[[Key Memo Box]],
+[[Status Bar]]
+
+== Menu ==
+
+=== File ===
+[[Refresh]],
+[[Save As]],
+[[Print]],
+[[Exit]]
+
+=== Tools ===
+[[Options]],
+[[Change Windows Reg Info]],
+[[Change Windows Key]],
+[[Load Hive]],
+[[Modify Config]],
+[[Always On Top]]
+
+=== Help ===
+[[Sourceforge Website]],
+[[Bug and Feature Tracker]],
+[[Community Forums]],
+[[Community Wiki]],
+[[Check for Updates]],
+[[About Enchanted Keyfinder]]
+
+== Associated Files ==
+[[keyfinder.cfg]],
+[[keyfinder.chm]],
+[[keyfinder.exe]],
+[[keyfinder.ini]],
+[[update.ini]],
+[[user.cfg]]
+
+= Other Documentation =
+
+[http://sourceforge.net/apps/phpbb/ekeyfinder/viewtopic.php?f=1&amp;t=4 How to recover Windows key using a Linux live CD].
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>F.A.Q.</title>
+    <id>11</id>
+    <revision>
+      <id>246</id>
+      <timestamp>2011-02-28T16:13:56Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">If you see EK in this F.A.Q. then it is referring to Enchanted Keyfinder.
+
+== Can I retrieve the product key from the Windows CD? ==
+No. Product keys are not stored on CD's themselves. When you enter your key while installing, it's checked against an algorithm to verify that the key is valid. If you have an OEM CD from a company (ie. Dell, HP, Compaq) then you can look in a few places. Search the CD for the following files: WINNT.SIF, UNATTEND.TXT or OOBEINFO.INI. These SLP keys won't be of use on their own.
+
+== How do I change the Windows Product key for XP, Vista or Windows 7? ==
+For Windows XP you can change the product key from within EK by clicking ''Tools &gt; Change Windows Key''.  For Windows 7 and Windows Vista you'll have to refer to official [http://www.microsoft.com/genuine/selfhelp/PKUInstructions.aspx Microsoft documentation].  You could follow that documentation for changing your Windows XP key as well.
+
+== How does Enchanted Keyfinder change the Windows Product Key? ==
+Using modified scripts originally written by Microsoft.  It writes the script (does not extract) to the %TEMP% directory and then runs it with arguments to change the product key.
+
+[http://support.microsoft.com/default.aspx?scid=kb;en-us;Q328874 Microsoft Documentation Source]
+
+== What if the serial number I retrieve does not work? ==
+EK works 100% of the time. The key is encrypted using a algorithm and will always reverse properly. Issues arise when you are attempting to use a Windows XP Retail key with a Windows XP OEM CD. Same applies for combining upgrade, retail and OEM versions as well as various service packs. Please note if your system came preinstalled from the OEM and you have not reinstalled XP, the Product key will not likely be valid. OEM's use a SLP key to image the systems and this key will not work for reinstalling. SLP stands for System Locked Pre-install.
+
+== I don't have product key. Will your program generate one for me? ==
+No. EK is not a key or serial generator. It reads the registry and extracts the key that was used to install Windows or other programs.  That is all.
+
+== Why doesn't the product key returned match the one on my sticker? ==
+If you purchased your PC with Windows already installed from a large  manufacturer such as Dell or HP, it's likely that Windows was installed using an OEM SLP key instead of the actual key for your PC. This saves them (and you) money because it's much more efficient for these large companies to install Windows once and then clone the drive.
+
+== Does Enchanted Keyfinder contain any viruses, trojans, malware, or spyware? ==
+No.  EK contains absolutely no malicious code or spyware.  It doesn't even install onto your machine or even create registry entries for setting storage.  Since it is open source it has already been checked by talented individuals.  If you're not convinced then you can check it yourself.  That is the beauty of open source.
+
+== Can I retrieve the product key from a non-booting Windows installation? ==
+Yes, as long as the failed drive contains Windows 2000 or higher.  You can use Windows 2000 or higher or even [http://sourceforge.net/apps/phpbb/ekeyfinder/viewtopic.php?f=1&amp;t=4 Linux] to recover your product key from a failed system drive.  More to come on how to do this using the Load Hive menu.
+
+== Why did the hive load fail? ==
+# Are you pointing it to the dead Windows directory? It will fail if you try to run it on your currently running Windows directory.
+# Are you running the Keyfinder with Administrator rights? Right click on the Keyfinder and click &quot;Run As&quot; and put in the administrator information.  In Vista/7 right click on keyfinder and select Run as Administrator and try again.
+
+== Do you support Apple OS X? ==
+No.  We'll have a Linux version before creating a Mac version.
+
+== Do you support Linux? ==
+[http://sourceforge.net/apps/phpbb/ekeyfinder/viewtopic.php?f=1&amp;t=4 Sort of].  [[keyfinder.exe]] will run in [http://www.winehq.org/ Wine].  In the future we hope to have a native version.
+
+== Does Enchanted Keyfinder work with Volume License Keys (VLK) or Multiple Activation Keys (MAK)? ==
+Yes when you run Enchanted Keyfinder it will display the Volume License Key (VLK) of all versions Windows, except for Vista, Windows 7 and Server 2008.
+
+Windows Vista, Windows 7 and Server 2008 VLKs have been replaced with Multiple Activation Keys (MAK) that either activate copies through a local Key Management Server (KMS), which in turn reports back license usage to Microsoft, or activates directly in communication with Microsoft. Currently Enchanted Keyfinder does not report the MAK properly. You might see the product display the Windows Vista, Windows 7 or Server 2008 License Key as
+ BBBBB-BBBBB-BBBBB-BBBBB-BBBBB
+
+'''Note:''' If The Windows Software Licensing Managment Tool(slmgr.vbs) is used to clear the product key from the registry then the result will also be BBBBB-BBBBB-BBBBB-BBBBB-BBBBB when Enchanted Keyfinder looks for the product key.
+
+== What is a KMS key? ==
+A KMS or Key Management Server key is a Volume License Key that is used to establish an activation service that is hosted locally in your environment. After the service is established, you can activate your client and server computers by connecting to the KMS host computer. Computers activated through KMS must reactivate at least once every six months by connecting to the KMS host.
+
+A KMS key can activate six KMS hosts with 10 activations per host. Each host can be used to activate an unlimited number of computers that are running Windows Server 2008, Windows Vista Business, or Windows Vista Enterprise.  If you need more activations for your KMS key, you can call your Microsoft Activation Center to request an increase.
+
+[http://www.microsoft.com/licensing/resources/vol/ActivationFAQ/default.mspx Microsoft Documentation Source]
+
+== What is a Multiple Activation Key (MAK)? ==
+Multiple Activation Key (MAK) is a Volume License Key that activates your client and server computers by connecting them to a Microsoft activation server one time.  After the computers are activated, no further communication with Microsoft is required.
+
+There are two activation methods for MAK:
+# MAK Independent Activation. Each computer is activated individually by connecting to Microsoft servers over the Internet or by telephone.
+# MAK Proxy Activation. By using the Volume Activation Management Tool (VAMT), you can activate multiple computers at the same time through a single connection to Microsoft servers over the Internet or phone.
+
+[http://www.microsoft.com/licensing/resources/vol/ActivationFAQ/default.mspx Microsoft Documentation Source]
+
+== Does Enchanted Keyfinder connect to the Internet? ==
+Yes, but it does not do it on start up or during operation without clicking [[Check for Updates]] in the Help [[menu]].  It will only connect to the internet when a user tells it too.  When a user clicks &quot;Check for Updates&quot; EK will warn it is connecting to the internet to check for updates and gives the user the option to cancel the update before a connection is made.  Under no other circumstances does Enchanted Keyfinder connect to the internet without user consent.  No worries of phone home messages.  Want to check yourself? Go to [http://ekeyfinder.svn.sourceforge.net/viewvc/ekeyfinder/trunk/ browse the SVN Code] and open Main.pas.  TfrmMain.MnuItmWebUpdateClick calls DoDownload.  DoDownload is the only function which connects to the internet.
+
+
+In the future, this may change when we begin implementing support for remote registry connections but it still won't connect without user consent.
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Version philosophy</title>
+    <id>33</id>
+    <revision>
+      <id>247</id>
+      <timestamp>2011-02-28T16:13:58Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= Version Philosophy =
+== What is the method behind the madness of my version system? ==
+Enchanted Keyfinder adopts the same system as [http://www.gimp.org/ Gimp] for the version of the application.  Unstable cutting edge editions of Echanted keyfinder will be an odd number (1, 3, 5, 7, etc.) and stable versions will be an even number (2, 4, 6, etc.) when you analyze the minor version.
+
+=== Version Definition ===
+Take a look at this version number: v1.2.3
+# represents the major version.
+# represents the minor version.
+# represents the patch version
+
+Major versions almost never increment.  Minor versions are incremented with each major release.  Minor versions also determine the stability status of the project.
+
+Right now the version is v0.1 Beta.  This version is the only version which will use the &quot;Beta&quot; tag.  As v0.1 Beta increments it will be v0.1 Beta 2, v0.1 Beta 3, and so on.  In the next unstable release after v0.1 (v0.3) the version will be v0.3.0.  Any incrementing versions will be v0.3.1, v0.3.2, and so on.
+
+The stable versions will increment in a similar fashion to v0.3.  When version v0.2 is released it will be v0.2.0.  Any patches or fixes which improve the stability of v0.2 will increment it to v0.2.1, and so on.
+
+=== Stability Status ===
+Just remember: even numbers are '''stable''', odd numbers are '''unstable'''; when you view the minor version.
+
+The stability status refers to the version of the application.  So if the minor version (such as v0.2) is even then the stability status of the currently running application is '''stable'''.  If the minor version (such as v0.3) is odd then the stability status of the currently running application is '''unstable'''.
+
+== When should I use a stable version? ==
+For production environments it is only recommended that you run a stable version.  The features implemented will work without a hitch.  The keys decoded will be correct and have been tested on several systems.  Stable versions of the program are more heavily battle tested than unstable versions for bugs and accuracy of algorithms.
+
+== When should I use an unstable version? ==
+If you're curious about what new features will be available in an upcoming stable release of Enchanted Keyfinder.  Features are not guarunteed to work.  Algorithms aren't guaranteed to work either.  Basically since this is a development unstable release we are pulling all the bells and whistles into its development without the worry of stability.  When our feature goal is met then we'll produce a stable version out of it.
+
+We usually list our feature goals on our website under [http://ekeyfinder.sourceforge.net/index.php?lang=en&amp;page=features features].
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>User.cfg</title>
+    <id>48</id>
+    <revision>
+      <id>248</id>
+      <timestamp>2011-02-28T16:14:00Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= About user.cfg =
+This is a user defined [[cfg file]].  It uses the same convention and format as [[keyfinder.cfg]].  This was created so that a user can have their own local custom registry readings without being affected by the official [[keyfinder.cfg]] update process.  Normally [[keyfinder.cfg]] gets overwritten when a user clicks [[Check for Updates]].  This means that if they modified [[keyfinder.cfg]] with their own custom entries then they would lose their changes.  Any modifications that you wish to be made within [[keyfinder.cfg]] you should do within user.cfg.
+
+
+You do not need to keep this named user.cfg.  You can customize the name of this file by changing the UserConfig value in the [[settings file]].
+
+= Related Articles =
+See the UserConfig setting in [[keyfinder.ini]]
+
+[[Category:Documentation]]
+[[Category:Associated Files]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Update.ini</title>
+    <id>41</id>
+    <revision>
+      <id>249</id>
+      <timestamp>2011-02-28T16:14:03Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= About update.ini =
+This file is downloaded when a user clicks [[Check for Updates]].  It contains version information for the current version of both the stable and unstable version of Enchanted Keyfinder (EK).  It also contains the current version of [[keyfinder.cfg]].
+
+This file is hosted on the EK website and is only used for version information.
+
+= Sample file =
+''Note: Currently there is no stable version''
+ ; Version update by Sam Gleske
+ ; Update information for Enchanted Keyfinder
+ ; Includes Updates for config file
+ 
+ [Update Software]
+ StableVersion=0.0.0
+ StableURL=http://sourceforge.net/projects/ekeyfinder/files/
+ StableDownload=
+ UnstableVersion=0.1 Beta 6
+ UnstableURL=http://sourceforge.net/projects/ekeyfinder/files/v0.1%20Beta/
+ UnstableDownload=http://ekeyfinder.sourceforge.net/update/unstablekeyfinder.pkg
+ ConfigVersion=2.1.0.04
+ ConfigPath=http://ekeyfinder.sourceforge.net/update/keyfinder.cfg
+
+== Related Articles ==
+* See [http://sourceforge.net/apps/mediawiki/ekeyfinder/index.php?title=F.A.Q.#Does_Enchanted_Keyfinder_connect_to_the_Internet.3F Does Enchanted Keyfinder connect to the Internet?] from the [[F.A.Q.]]
+* [[Check for Updates]]
+
+[[Category:Documentation]]
+[[Category:Associated Files]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Keyfinder.ini</title>
+    <id>46</id>
+    <revision>
+      <id>250</id>
+      <timestamp>2011-02-28T16:14:05Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= About keyfinder.ini =
+Also called the settings file.
+
+This is where Enchanted Keyfinder (EK) stores all of its settings.  This file is what allows EK to be completely portable without storing any settings in the registry.  By default the settings file does not exist. To generate a settings file with the default options then simply open and close the [[Options]] dialog.
+
+= Sample keyfinder.ini file =
+ [Settings]
+ AutoSave=0
+ CSVDelim=,
+ LoadHive=0
+ PrintKeys=0
+ SavePath=.\
+ ShowBlankSerials=0
+ SoftwareHivePath=
+ UnstableUpdates=1
+ UserConfig=.\user.cfg
+ [AppListFont]
+ Font=MS Sans Serif,1,-16777208,8,0
+ [KeyListFont]
+ Font=MS Sans Serif,1,-16777208,8,1
+
+= Settings Explained =
+== Definitions ==
+* &lt;u&gt;boolean&lt;/u&gt;: takes the value 1 or 0
+* &lt;u&gt;string&lt;/u&gt;: could be any alpha-numeric character or standard extended characters (.:\ and so on)
+
+== Settings ==
+{| border=&quot;1&quot; class=&quot;wikitable sortable&quot; style=&quot;font-size: 90%; width: 80%;&quot;
+! {{Rh}} style=&quot;width: 120px&quot; | Setting
+! {{Rh}} style=&quot;width: 60px&quot; | Type
+! {{Rh}} | Description
+|-
+! {{Rh}} |AutoSave
+|boolean
+|Enables autosaving.  When EK is started it will automatically save to the path specified in the SavePath setting.  This will save in txt format.
+|-
+! {{Rh}} |CSVDelim
+|string
+|Sets the delimiter used when saving the file as a CSV.  Can also be configured in [[Options]].
+|-
+! {{Rh}} |LoadHive
+|boolean
+|Enables automatic loading of a hive for recovery.  The Hive is opened based on the path provided in SoftwareHivePath.
+|-
+! {{Rh}} |PrintKeys
+|boolean
+|Automatically send the found keys to the default printer of the local system.  AutoSave must be enabled for this setting to take effect.
+|-
+! {{Rh}} |SavePath
+|string
+|Path to where the found keys are automatically saved.
+|-
+! {{Rh}} |ShowBlankSerials
+|boolean
+|This allows blank serials to show up in the keyfinder.  [http://sourceforge.net/tracker/?func=detail&amp;aid=3146951&amp;group_id=369948&amp;atid=1541608 See details] from request.
+|-
+! {{Rh}} |SoftwareHivePath
+|string
+|Path to where a software hive which needs to be recovered is located.
+|-
+! {{Rh}} |UnstableUpdates
+|boolean
+|Enabling this will allow keyfinder to include unstable updates in the update process when a user clicks [[Check for Updates]].
+|-
+! {{Rh}} |UserConfig
+|string
+|Specifies a [[user cfg file]].  This is so that a user can have their own [[cfg file]] along with the official cfg file.
+|}
+
+== Not recommended to change ==
+The following settings are not recommended to be manually changed in the settings file.
+ [AppListFont]
+ Font=MS Sans Serif,1,-16777208,8,0
+ [KeyListFont]
+ Font=MS Sans Serif,1,-16777208,8,1
+You should change these settings through the [[Options]] dialog.
+
+= Alternate Keyfinder.ini path =
+You can specify an alternate path for keyfinder.ini by using the following setting.
+ [keyfinder]
+ Settings=.\settings\keyfinder.ini
+In this instance any settings that use a relative path that are located within keyfinder.ini will be relative to the location of the alternate settings file.  So if ''UserConfig=.\user.cfg'' then [[keyfinder.exe]] will look for ''.\settings\user.cfg''.
+
+== Custom defaults ==
+Lets say you have the following [[cfg file]].
+ [keyfinder]
+ Settings=.\settings\keyfinder.ini
+ 
+ [Settings]
+ AutoSave=0
+ CSVDelim=,
+ LoadHive=0
+ PrintKeys=0
+ SavePath=.\
+ ShowBlankSerials=0
+ SoftwareHivePath=
+ UnstableUpdates=1
+ UserConfig=.\user.cfg
+ [AppListFont]
+ Font=MS Sans Serif,1,-16777208,8,0
+ [KeyListFont]
+ Font=MS Sans Serif,1,-16777208,8,1
+If ''.\settings\keyfinder.ini'' does not exist then it will use the settings specified above as the defaults.  Then when a user opens and closes the [[Options]] dialog a [[cfg file]] will be generated to ''.\settings\keyfinder.ini'' using the settings specified above as defaults.
+
+[[Category:Documentation]]
+[[Category:Associated Files]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Keyfinder.exe</title>
+    <id>38</id>
+    <revision>
+      <id>251</id>
+      <timestamp>2011-02-28T16:14:08Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= About keyfinder.exe =
+This is the main application Enchanted Keyfinder (EK).
+
+= Command Line Interface (CLI) =
+== Syntax ==
+ keyfinder.exe [/close] [/file &lt;filename&gt;] [/hive &lt;path&gt;]
+or
+ keyfinder.exe [/close] [/hive &lt;path&gt;] [/savecsv &lt;path&gt;]
+
+== Parameters: ==
+{| border=&quot;1&quot; class=&quot;wikitable sortable&quot; style=&quot;font-size: 90%; text-align: left; width: 80%;&quot;
+! {{Rh}} style=&quot;width: 150px&quot; | Switch
+! {{Rh}} | Description
+|-
+! {{Rh}} |/close
+|No GUI displayed.
+|-
+! {{Rh}} |/hive &lt;path&gt;
+|Load product key information from another operating system on the same computer. The &lt;path&gt; would be the location of the one of three Windows folders (e.g H:\WINDOWS, H:\WINDOWS\System32, H:\WINDOWS\System32\config). This feature is only supported on Windows 2000 and later.
+|-
+! {{Rh}} |/file &lt;file.ext&gt;
+|With /save or /savecsv, use filename.ext as the filename for the saved file.
+|-
+|}
+
+You can also combine the above command-line options with the following save options in order to save product key information to a file:
+
+{| border=&quot;1&quot; class=&quot;wikitable sortable&quot; style=&quot;font-size: 90%; text-align: left; width: 80%;&quot;
+! {{Rh}} style=&quot;width: 150px&quot; | Switch
+! {{Rh}} | Description
+|-
+! {{Rh}} |/delim &lt;character&gt;
+|Many countries use a &quot;,&quot; and not a &quot;.&quot; as decimal separator. This means they can't use &quot;,&quot; as field separator, and they use another character instead.
+|-
+! {{Rh}} |/save &lt;Filename&gt;
+|Save the list of product keys as a plain text file.  The format will look the same as how the keys are viewed in the [[Key Memo Box]].
+|-
+! {{Rh}} |/savecsv &lt;Filename&gt;
+|Save the list of product keys into a comma-delimited text file.
+|-
+! {{Rh}} |/saveini &lt;Filename&gt;
+|Save the list of product keys into a ini text file.
+|-
+! {{Rh}} |/savehtml &lt;Filename&gt;
+|Save the list of product keys into a web document.
+|}
+
+== Examples ==
+=== Interactive Usage ===
+To display the product keys:
+ keyfinder
+To display keys and save them to text file .\LICENSES.TXT:
+ keyfinder /save /file LICENSES.TXT
+To retrieve keys from &quot;dead&quot; Windows XP install on hard disk letter F:
+ keyfinder /hive F:\WINDOWS
+
+=== Automated/Scripted Usage ===
+To save keys from machine WIN-XP in text file R:\LICENSES\WIN-XP.TXT without showing the GUI:
+ keyfinder /close /save R:\LICENSES\
+To save keys in CSV file &quot;Y:\ANOTHER PATH\SYSTEM LICENSES.CSV&quot; without showing the GUI:
+ keyfinder /close /savecsv &quot;Y:\ANOTHER PATH\&quot; /file &quot;SYSTEM LICENSES.CSV&quot;
+
+= System Requirements =
+* EK works on all 32-bit versions of Windows.
+* However, some features, like viewing the product keys of another operating system for instance, are only supported on Windows 2000 and XP.
+
+= Known Issues =
+* If the /hive command line is used, and the hive file listed is damaged or missing, the program will loop endlessly trying to open the hive.
+* If you bought your new PC preinstalled with Windows, you may find the CD Key that appears in keyfinder is different from the CD Key on your Windows Certificate of Authenticity. This issue can happen with the branded PC's mostly (Dell, HP, IBM, Acer etc.). [http://www.microsoft.com/resources/howtotell/windows/ Click here to see COA samples].
+* If you have no physical XP media or only restore media, the retrieval software will have limited use. 
+* Do not pay for a key retrievable utility for any reason, reinstalled, upgraded or clean installed XP since purchasing or building the computer. No paid key retrieval tool will retrieve a valid key from a OEM installation that used a generic key. 
+* In older versions of Office (Office 2000 and below), the 'Product Key' value is not available.
+
+= Related Articles =
+* See [http://sourceforge.net/apps/mediawiki/ekeyfinder/index.php?title=F.A.Q.#Does_Enchanted_Keyfinder_contain_any_viruses.2C_trojans.2C_malware.2C_or_spyware.3F Does Enchanted Keyfinder contain any viruses, trojans, malware, or spyware?] from the [[F.A.Q.]]
+
+[[Category:Documentation]]
+[[Category:Associated Files]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Keyfinder.cfg</title>
+    <id>9</id>
+    <revision>
+      <id>252</id>
+      <timestamp>2011-02-28T16:14:11Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= About keyfinder.cfg =
+Also called the cfg file.
+
+This is a configuration file which allows Enchanted Keyfinder (EK) to retrieve the serials/keys of other software other than just Microsoft Office or Windows.  This is what makes EK one of the most powerful keyfinders on the market.
+
+The user defined cfg file, [[user.cfg]], uses the same convention as the official cfg file, keyfinder.cfg.
+
+= File format =
+== Viewing the version ==
+The first line of the file is where the version of the official keyfinder.cfg file is located.  It looks similar to the following:
+ ; 2.1.0.04  February 18th, 2011
+The first number is the version number.  Any following text is seen as a comment.  In this case, the date the cfg file was last modified.
+
+== Comments ==
+You can create comment lines within the cfg file or remove keys by commenting them out. All lines that start with a semi-colon (&quot;;&quot;) are a comment.  See the following example.
+ ; this is a comment
+ ;this is also a comment
+ this; is not a comment
+
+== Key Entry format ==
+Users can create their own key entries for retrieving the serial of their software.  A key entry is a line of sub entries delimited with a vertical bar (&quot;|&quot;).  The delimiter format goes like so:
+* Application Name; this sub entry shows up in the [[Software Listbox]]
+* Version Number; the second sub entry is the version of the application.  This is not required, but recommended.
+* Serial location; the third sub entry of the entry must be the serial.  This is required.
+* Misc entry 1; this sub entry can be anything
+* Misc entry 2; this sub entry can be anything
+* Misc entry 3; this sub entry can be anything
+* Misc entry 4; this sub entry can be anything
+* Misc entry 5; this sub entry can be anything
+
+Here is a generic description of a key entry.
+ ApplicationDisplayName|Description=FullyQualifiedRegistryLocation=KeyName|Description2=FullyQualifiedRegistryLocation2=KeyName2
+You can have as many description fields as necessary. Just separate each with the pipe symbol.
+
+=== Example Entry ===
+ Counter-Strike (Retail)|Key=HKEY_CURRENT_USER\Software\Valve\CounterStrike\Settings=CDKey
+=== Sub Entry format ===
+''Note: the first sub entry does not follow this format.  It is just plain text with no special characters because it is the Application Name''
+
+For each delimited sub entry there are parts a few parts.
+* Name to display for key
+* Registry Section where key is located
+* Name of Registry Key name where the value will be read.
+
+==== Example Sub Entry ====
+ Key=HKEY_CURRENT_USER\Software\Valve\CounterStrike\Settings=CDKey
+The above example sub entry will be output like the following in the [[Key Memo Box]].
+ Key: 516513513513
+ ; 516513513513 is some random number I made up but it is to show the serial being read from HKCU\Software\Valve\CounterStrik\Settings\CDKey
+Here is another example.
+ Serial=HKEY_CURRENT_USER\Software\Valve\CounterStrike\Settings=CDKey
+The above example sub entry will be output like the following in the [[Key Memo Box]].
+ Serial: 516513513513
+
+= Known Issues =
+* It is required that the Registry Key being read is of type string.  Any other types such as Binary or Word will be output as &quot;Error! Invalid data type. Check key.&quot;
+
+[[Category:Documentation]]
+[[Category:Associated Files]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>About Enchanted Keyfinder</title>
+    <id>20</id>
+    <revision>
+      <id>253</id>
+      <timestamp>2011-02-28T16:14:13Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''Help &gt; About Enchanted Keyfinder'' in the [[Menu]] of Enchanted Keyfinder (EK).
+
+== What does it do? ==
+It displays information about the currently running application.
+
+== What is it? ==
+It shows users the application logo, where they can find support, and contributors of the project.  There's other information, such as the version number of EK, which you should mention if you're going to file a bug in the [[Bug and Feature Tracker]] or ask for support in the [[Community Forum]].  Please don't simply state &quot;latest version&quot; when you're asking for support.
+
+Understand which version of Enchanted Keyfinder you're using by viewing our [[version philosophy]].
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Check for Updates</title>
+    <id>36</id>
+    <revision>
+      <id>254</id>
+      <timestamp>2011-02-28T16:14:15Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''Help &gt; Check for Updates'' in the [[Menu]] of Enchanted Keyfinder (EK).
+
+== What does it do? ==
+Keyfinder connects to the EK website, downloads [[update.ini]], and then does a two step process for updating.
+
+'''NOTE: This is the only time Enchanted Keyfinder will ever connect to the internet'''
+
+=== Step 1 ===
+Checks for new versions of the Enchanted Keyfinder application by comparing the currently running version with the version found in [[update.ini]].  Depending on your [[Options]] it will update to the stable or unstable version.  If there is no update found then it will continue to Step 2.
+
+If it finds an update then it will prompt the user that there is an update giving the user the option of &quot;Yes&quot; or &quot;No&quot; to update.  If a user selects No then it will not download an update and the process will continue to step 2.  If a user picks &quot;Yes&quot; then it will download a file named along the lines of keyfinder.pkg.  keyfinder.pkg will be renamed to keyfinder.exe when it is downloaded and this will be the new version of your keyfinder application.  It will then quit and start the new version.  You must ''Check for Updates'' again to see if there is a keyfinder.cfg update.
+
+=== Step 2 ===
+Checks the current official [[keyfinder.cfg]] version found in [[update.ini]] and compares it with the user's local [[keyfinder.cfg]] version.  If there is an update then the program will prompt &quot;Yes&quot; or &quot;No&quot; to updating [[keyfinder.cfg]].  If the user selects &quot;No&quot; then the program will not update it and the update process will end.  If a user selects &quot;Yes&quot; then the application will download the latest [[keyfinder.cfg]] and replace the user's currently existing [[keyfinder.cfg]].
+
+Currently we're working on implementing a user defined optional cfg file which won't be affected by this process.  That way the user can have their custom keys and still download the latest official [[keyfinder.cfg]].
+
+== Related Articles ==
+* See [http://sourceforge.net/apps/mediawiki/ekeyfinder/index.php?title=F.A.Q.#Does_Enchanted_Keyfinder_connect_to_the_Internet.3F Does Enchanted Keyfinder connect to the Internet?] from the [[F.A.Q.]]
+* [[update.ini]]
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Community Wiki</title>
+    <id>19</id>
+    <revision>
+      <id>255</id>
+      <timestamp>2011-02-28T16:14:18Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''Help &gt; Community Wiki'' in the [[Menu]] of Enchanted Keyfinder (EK).
+
+== What does it do? ==
+It sends the user to the [http://sourceforge.net/apps/mediawiki/ekeyfinder/ Wiki website] of EK.  The EK application does not connect to the internet to do this.
+
+EK sends a ShellExecute call to the operating system (OS) such as Windows.  The OS handles the connection and usually opens the user's default web browser.
+
+== What is it? ==
+This is a centralized place for accumulated documentation about the application.  Currently it is maintained by the developers but steps are being taken to open up this resource for editing by the public.
+
+This should be your first stop in our several tier process of support.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Community Forums</title>
+    <id>18</id>
+    <revision>
+      <id>256</id>
+      <timestamp>2011-02-28T16:14:21Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''Help &gt; Community Forums'' in the [[Menu]] of Enchanted Keyfinder (EK).
+
+== What does it do? ==
+It sends the user to the [http://sourceforge.net/apps/phpbb/ekeyfinder/ Forum website] of EK.  The EK application does not connect to the internet to do this.
+
+EK sends a ShellExecute call to the operating system (OS) such as Windows.  The OS handles the connection and usually opens the user's default web browser.
+
+== What is it? ==
+The community forum is a place where a user can go to get support if they need it for EK.  You can ask questions or you can answer questions other users ask.
+
+It is a friendly community that even the developers participate in.  This should be your second stop in our several tier process of support.  Your first stop should be the [[Community Wiki]].
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Bug and Feature Tracker</title>
+    <id>17</id>
+    <revision>
+      <id>286</id>
+      <timestamp>2011-02-28T19:12:20Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <comment>/* What does it do? */</comment>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''Help &gt; Bug and Feature Tracker'' in the [[Menu]] of Enchanted Keyfinder (EK).
+
+== What does it do? ==
+It sends the user to the [http://sourceforge.net/tracker/?group_id=369948 Tracker website] of EK.  The EK application does not connect to the internet to do this.
+
+EK sends a ShellExecute call to the operating system (OS) such as Windows.  The OS handles the connection and usually opens the user's default web browser.
+
+== What is it? ==
+This is a place where the user can file bug reports and request features they would like to see in EK.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Sourceforge Website</title>
+    <id>16</id>
+    <revision>
+      <id>258</id>
+      <timestamp>2011-02-28T16:14:26Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''Help &gt; Sourceforge Website'' in the [[Menu]] of Enchanted Keyfinder (EK).
+
+== What does it do? ==
+It sends the user to the [http://ekeyfinder.sf.net/ project website] of EK.  The EK application does not connect to the internet to do this.
+
+EK sends a ShellExecute call to the operating system (OS) such as Windows.  The OS handles the connection and usually opens the user's default web browser.
+
+== What is it? ==
+This is a centralized source where the user can get all of the information about the project such as support resources, downloading the program and its source, or just to see what news is published by the application developers.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Always On Top</title>
+    <id>34</id>
+    <revision>
+      <id>259</id>
+      <timestamp>2011-02-28T16:14:30Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''Tools &gt; Always On Top'' in the [[Menu]] of Enchanted Keyfinder (EK).
+
+== What does it do? ==
+When you click this option then the next time you open the Tools menu you will see it is checked.  This means the EK program will always be on top of other Windows.  The only way to hide it behind other windows would be to minimize EK or uncheck the ''Always On Top'' menu option.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Modify Config</title>
+    <id>55</id>
+    <revision>
+      <id>260</id>
+      <timestamp>2011-02-28T16:14:32Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= Modify Config =
+This opens keyfinder.cfg with the built in text editor Notepad.exe.  That's it.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Load Hive</title>
+    <id>56</id>
+    <revision>
+      <id>261</id>
+      <timestamp>2011-02-28T16:14:33Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= About Load Hive =
+Many people do not understand this option however it is very simple.  The Windows Registry has to be stored somewhere.  It is collectively store in a file called a Registry Hive.  The default location for the Windows registry hives are located in:
+
+ %SystemDrive%\WINDOWS\system32\config\
+
+The registry hive which is of concern to Enchanted Keyfinder (EK) is the Software registry hive.  It is where your Windows Product Key is located and also where your the majority of your installed software keys should be located.  The Software registry hive is a file called ''software'' located at:
+
+ %SystemDrive%\WINDOWS\system32\config\software
+
+When you click on Load Hive and select a folder it will look for a file called software in one of four locations relative to the folder path you select:
+* .\WINDOWS\system32\config\software
+* .\system32\config\software
+* .\config\software
+* .\software
+
+This way it is very difficult for a user to incorrectly select the correct path to the software registry hive.
+
+= How to open the software registry hive =
+# Click on ''Tools &gt; Load Hive'' and select the root of the drive where your dead Windows is located.  You could also point it to a backup of the software registry hive.
+# The [[status bar]] will show that a hive has been successfully loaded.
+# When you're done and have backed up the install keys you need then run ''Tools &gt; Unload Hive'' to unload the hive.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Change Windows Key</title>
+    <id>54</id>
+    <revision>
+      <id>262</id>
+      <timestamp>2011-02-28T16:14:36Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= Change Windows Key =
+[[File:Change_windows_key.png|thumb|Screenshot of the Change Windows Key dialog.]]
+
+This allows you change your Windows product key without you having to reinstall.  This option only works in Windows XP and is untested in other operating systems.  Therefore, it is only enabled when on a Windows XP machine.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Change Windows Reg Info</title>
+    <id>53</id>
+    <revision>
+      <id>263</id>
+      <timestamp>2011-02-28T16:14:38Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= Change Windows Reg Info =
+[[File:Change_registration_information.png‎|thumb|Screenshot of the Windows Registration dialog.]]
+
+This will allow you to change the registration information in Windows.  This includes the registered owner and organization.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Options</title>
+    <id>32</id>
+    <revision>
+      <id>264</id>
+      <timestamp>2011-02-28T16:14:41Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= Options =
+[[File:Options.png|thumb|Screenshot of the options dialog.]]
+
+Currently there are a limited number of options in the options dialog.
+
+== How to run it? ==
+Execute this option by clicking on ''Tools &gt; Options'' in the [[Menu]] of Enchanted Keyfinder (EK).
+
+== What does it do? ==
+It displays the options dialog shown in the screenshot.  When you change options here it will automatically save the settings by writing to [[keyfinder.ini]] when you close the options dialog.  If there is no [[keyfinder.ini]] file then it will create one.  If you don't change any settings and there is no [[keyfinder.ini]] file then it will generate a [[keyfinder.ini]] file with the default options.
+
+If you don't like the options you make and you wish to reset EK back to its default options then close EK, delete [[keyfinder.ini]], and open EK again.
+
+== What are my options? ==
+The options dialog does not contain the full scope of options available to use to customize the usage of Enchanted Keyfinder.  For all available options see [[keyfinder.ini]].
+
+=== Font Settings ===
+You can change the font settings to the [[application list]] or the font settings to the [[key display]].
+
+=== Error Logging ===
+Currently the option shows up as available in the options dialog.  But EK does not do any kind of logging yet.  This is a feature which will be implemented in the future however changing these options will not modify how the program runs in any way.
+
+=== CSV Delimiter ===
+This changes the delimiter used for a comma separated value (CSV) file when you export your found keys using the [[Save As]] function.
+
+=== Allow Unstable Updates ===
+By default, when you download the stable version of EK this will be unchecked.  This means that it will only update if there is a new stable version.  For example if you v0.2, then it will only update if v0.2.1 is available or v0.4.  It will not update to v0.3 (unstable).
+
+By default when you download an unstable version of EK this will be checked.  This means it will download an update if there is a new stable or unstable version.  It doesn't matter.  So it will update to v0.2, v0.3, or v0.4 as it doesn't matter.
+
+To learn more about how Enchanted Keyfinder versions work see [[version philosophy]].
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Exit</title>
+    <id>15</id>
+    <revision>
+      <id>265</id>
+      <timestamp>2011-02-28T16:14:43Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''File &gt; Exit'' in the [[Menu]] of Enchanted Keyfinder.
+
+== What does it do? ==
+Quit the Enchanted Keyfinder application.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Print</title>
+    <id>14</id>
+    <revision>
+      <id>266</id>
+      <timestamp>2011-02-28T16:14:49Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''File &gt; Print'' in the [[Menu]] of Enchanted Keyfinder.
+
+== What does it do? ==
+It sends the found keys/serials to a printer of the user's choice so the user can save for viewing later such as when they restore the software later.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Save As</title>
+    <id>13</id>
+    <revision>
+      <id>267</id>
+      <timestamp>2011-02-28T16:14:51Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''File &gt; Save As...'' in the [[Menu]] of Enchanted Keyfinder.
+
+== What does it do? ==
+It exports the found keys/serials to a format the user can save for viewing later such as when they restore the software later.
+
+Currently the available formats to save are: csv, html, ini, or txt.
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Refresh</title>
+    <id>12</id>
+    <revision>
+      <id>268</id>
+      <timestamp>2011-02-28T16:14:54Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== How to run it? ==
+Execute this option by clicking on ''File &gt; Refresh'' in the [[Menu]] of Enchanted Keyfinder.
+
+== What does it do? ==
+It reads the file [[keyfinder.cfg]] again without the user having to restart the application.  If the cfg file has changed with more keys added then they will show up if detected.
+
+This option does not refresh the settings found in [[keyfinder.ini]].
+
+[[Category:Documentation]]
+[[Category:Menu]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Status Bar</title>
+    <id>30</id>
+    <revision>
+      <id>269</id>
+      <timestamp>2011-02-28T16:14:56Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">[[File:Interface_statusbar.png]]
+
+== Status Bar ==
+The status bar can be split up into three sections: Left, Middle, and Right.
+
+=== Left ===
+The Left section by default doesn't display anything.  However, when you choose to load a hive then it will display the status of your connection with the hive (see [[Load Hive]]).  Such as hive loaded or hive unloaded.  Eventually this will display the status of a remote connection when it is implemented.
+
+=== Middle ===
+This displays the number of key locations available to be detected.  This value comes from the number of entries found in [[keyfinder.cfg]] and does not include software that Enchanted Keyfinder detects by default (Windows and Microsoft Office keys) in its statistic.
+
+=== Right ===
+This shows you the number of software keys EK actually detected on your computer.  This comes from the [[Software Listbox]] and includes software that EK detects by default.
+
+[[Category:Documentation]]
+[[Category:Interface]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Key Memo Box</title>
+    <id>29</id>
+    <revision>
+      <id>270</id>
+      <timestamp>2011-02-28T16:14:58Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">[[File:Interface_key_memobox.png]]
+
+== Key Memo Box ==
+Also called the Key Display.
+
+The part boxed in red is the Key Memo Box.  It displays the key/serial used to install the software.  By default it shows you your Windows key and registration information.  To view other software see the [[Software Listbox]].
+
+[[Category:Documentation]]
+[[Category:Interface]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Software Listbox</title>
+    <id>28</id>
+    <revision>
+      <id>271</id>
+      <timestamp>2011-02-28T16:15:00Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">[[File:Interface_software_listbox.png]]
+== Software Listbox ==
+Also called the Application List.
+
+The part boxed in red is the Software Listbox.  It shows you what software has been detected on your system.  If you click on different names then you can display the associated serial/key used to install the program displayed in the [[Key Memo Box]].
+
+[[Category:Documentation]]
+[[Category:Interface]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Menu</title>
+    <id>27</id>
+    <revision>
+      <id>272</id>
+      <timestamp>2011-02-28T16:15:02Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">[[File:Interface_menu.png]]
+
+== Menu ==
+The part boxed in red is the Menu in Enchanted Keyfinder (EK).  This is where you access other more advanced features of the application.
+
+[[Category:Documentation]]
+[[Category:Interface]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Menu Index</title>
+    <id>59</id>
+    <revision>
+      <id>282</id>
+      <timestamp>2011-02-28T18:15:15Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <comment>/* Tools */</comment>
+      <text xml:space="preserve">== Menu ==
+
+=== File ===
+* [[Refresh]]
+* [[Save As]]
+* [[Print]]
+* [[Exit]]
+
+=== Tools ===
+* [[Options]]
+* [[Change Windows Reg Info]]
+* [[Change Windows Key]]
+* [[Load Hive]]
+* [[Modify Config]]
+* [[Always On Top]]
+
+=== Help ===
+* [[Sourceforge Website]]
+* [[Bug and Feature Tracker]]
+* [[Community Forums]]
+* [[Community Wiki]]
+* [[Check for Updates]]
+* [[About Enchanted Keyfinder]]
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Interface Index</title>
+    <id>60</id>
+    <revision>
+      <id>275</id>
+      <timestamp>2011-02-28T17:40:40Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">== Interface ==
+* [[Menu]]
+* [[Software Listbox]]
+* [[Key Memo Box]]
+* [[Status Bar]]
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Associated Files Index</title>
+    <id>61</id>
+    <revision>
+      <id>280</id>
+      <timestamp>2011-02-28T17:52:46Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <comment>/* Associated Files */</comment>
+      <text xml:space="preserve">== Associated Files ==
+* [[keyfinder.cfg]]
+* [[keyfinder.chm]]
+* [[keyfinder.exe]]
+* [[keyfinder.ini]]
+* [[update.ini]]
+* [[user.cfg]]
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Keyfinder.chm</title>
+    <id>62</id>
+    <revision>
+      <id>281</id>
+      <timestamp>2011-02-28T17:55:00Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <text xml:space="preserve">= About keyfinder.chm =
+Also called the Enchanged Keyfinder (EK) local documentation
+
+This is a local copy of the EK documentation.  It is specific to the version of Enchanted Keyfinder you download.  Each stable release comes with its own version.  It is the most reliable documentation a user has available for their copy of the EK software.
+
+Unstable releases are mostly undocumented with exception for viewing the changelog and source code.  We update the [http://sourceforge.net/apps/mediawiki/ekeyfinder/ EK wiki] as the unstable version comes closer to a stable release.
+
+[[Category:Documentation]]
+[[Category:Associated Files]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>File Index</title>
+    <id>63</id>
+    <revision>
+      <id>283</id>
+      <timestamp>2011-02-28T18:16:09Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <comment>Created page with '== File == * [[Refresh]] * [[Save As]] * [[Print]] * [[Exit]]  [[Category:Documentation]] [[Category:CHM]]'</comment>
+      <text xml:space="preserve">== File ==
+* [[Refresh]]
+* [[Save As]]
+* [[Print]]
+* [[Exit]]
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Tools Index</title>
+    <id>64</id>
+    <revision>
+      <id>284</id>
+      <timestamp>2011-02-28T18:16:38Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <comment>Created page with '== Tools == * [[Options]] * [[Change Windows Reg Info]] * [[Change Windows Key]] * [[Load Hive]] * [[Modify Config]] * [[Always On Top]]  [[Category:Documentation]] [[Category:CH…'</comment>
+      <text xml:space="preserve">== Tools ==
+* [[Options]]
+* [[Change Windows Reg Info]]
+* [[Change Windows Key]]
+* [[Load Hive]]
+* [[Modify Config]]
+* [[Always On Top]]
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Help Index</title>
+    <id>65</id>
+    <revision>
+      <id>285</id>
+      <timestamp>2011-02-28T18:17:23Z</timestamp>
+      <contributor>
+        <username>Sag47</username>
+        <id>7</id>
+      </contributor>
+      <comment>Created page with '== Help == * [[Sourceforge Website]] * [[Bug and Feature Tracker]] * [[Community Forums]] * [[Community Wiki]] * [[Check for Updates]] * [[About Enchanted Keyfinder]]  [[Category…'</comment>
+      <text xml:space="preserve">== Help ==
+* [[Sourceforge Website]]
+* [[Bug and Feature Tracker]]
+* [[Community Forums]]
+* [[Community Wiki]]
+* [[Check for Updates]]
+* [[About Enchanted Keyfinder]]
+
+[[Category:Documentation]]
+[[Category:CHM]]</text>
+    </revision>
+  </page>
+</mediawiki>
