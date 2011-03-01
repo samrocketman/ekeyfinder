@@ -100,7 +100,7 @@ class PageFormatter:
             line = re.sub(r"&",r"&amp;",line) #replace all & with &amp;
             line = re.sub(r" > ",r" &gt; ",line) #replace all > with &gt;
             line = re.sub(r" < ",r" &lt; ",line) #replace all < with &lt;
-        line = re.sub(r"&lt;center&gt;(.*?)&lt;/center&gt;",r"<center>\1</center>",line) #for some reason stupid media wiki exports center tags with &lt;center&gt;
+        line = re.sub(r"&lt;(.*?)&gt;(.*?)&lt;/(.*?)&gt;",r"<\1>\2</\3>",line)#for some reason stupid media wiki exports center tags with &lt;center&gt; this fixes that
         line = re.sub(r"'''(.*?)'''",r"<b>\1</b>",line) #replace wiki formatting for bold
         line = re.sub(r"''(.*?)''",r"<em>\1</em>",line) #replace wiki formatting for italic
         line = re.sub(r"\[\[Category:.*?\]\]",r"",line) #remove wiki categories
