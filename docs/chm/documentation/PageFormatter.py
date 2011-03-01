@@ -34,7 +34,7 @@ import re,sys,os.path,string
 #here's some cross platform settings
 htm_ext = ".html"
 #this way changing what type of file is parsed and generated is easy.  Whether EOL be Windows (\r\n), Unix (\n), or Mac (\r).
-NEW_LINE = "\r\n" #this is the EOL format of the generated docs
+NEW_LINE = "\n" #this is the EOL format of the generated docs
 INPUT_NEW_LINE = "\n" #this is the EOL format of the input documents
 
 class PageFormatter:

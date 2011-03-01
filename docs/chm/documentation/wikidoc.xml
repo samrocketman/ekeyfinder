@@ -775,13 +775,13 @@ This opens keyfinder.cfg with the built in text editor Notepad.exe.  That's it.
     <title>Load Hive</title>
     <id>56</id>
     <revision>
-      <id>293</id>
-      <timestamp>2011-02-28T20:27:08Z</timestamp>
+      <id>295</id>
+      <timestamp>2011-03-01T00:05:48Z</timestamp>
       <contributor>
         <username>Sag47</username>
         <id>7</id>
       </contributor>
-      <comment>/* About Load Hive */</comment>
+      <comment>/* How to open the software registry hive */</comment>
       <text xml:space="preserve">= About Load Hive =
 Many people do not understand this option however it is very simple.  The Windows Registry has to be stored somewhere.  It is collectively store in a file called a Registry Hive.  The default location for the Windows registry hives are located in:
 
@@ -806,10 +806,12 @@ This way it is very difficult for a user to incorrectly select the correct path 
 
 Simply select the path of your software hive backup or the drive of a dead Windows installation.  If the hive is not corrupted then Enchanted Keyfinder will be able to open it.
 
-= How to open the software registry hive =
+=== How to open the software registry hive ===
 # Click on ''Tools &gt; Load Hive'' and select the root of the drive where your dead Windows is located.  You could also point it to a backup of the software registry hive.
 # The [[status bar]] will show that a hive has been successfully loaded.
 # When you're done and have backed up the install keys you need then run ''Tools &gt; Unload Hive'' to unload the hive.
+
+'''Note:''' You can't open the software hive of your currently running system.  EK opens and detects keys from that by default.
 
 [[Category:Documentation]]
 [[Category:Menu]]
