@@ -2,6 +2,7 @@
 '''
   Created by Sam Gleske
   Created 02-28-2011 (mm-dd-yyyy)
+  MIT License (http://www.opensource.org/licenses/mit-license.php)
   
   This python script parses mediawiki xml schema exported from the
   MediaWiki wiki interface (admin function).  During parsing it

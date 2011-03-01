@@ -1,3 +1,5 @@
+All information within this chm folder is governed by the MIT license.
+
 Step 1:
 Install HTML Help Workshop
     http://www.microsoft.com/downloads/en/details.aspx?displaylang=en&FamilyID=00535334-c8a6-452f-9aa0-d597d16580cc
