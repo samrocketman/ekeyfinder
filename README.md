@@ -1,6 +1,6 @@
 # Enchanted Keyfinder
 
-* Project Status: Abandoned in 2012
+* Project Status: Abandoned in 2012 migrated from [SourceForge][ekeyfinder]
 * License: [GNU GPL v3](license.txt)
 
 This is a migration of the enchanted keyfinder source code base from
@@ -151,5 +151,6 @@ do (EK v0.1). The Enchanted Keyfinder project isn't attempting to copy the
 original MJB KF, we're trying to evolve it into something more with our own set
 of features and goals in mind.
 
+[ekeyfinder]: https://sourceforge.net/projects/ekeyfinder/
 [lazarus]: http://www.lazarus-ide.org/
 [tango]: http://tango.freedesktop.org/Tango_Icon_Library
