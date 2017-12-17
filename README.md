@@ -2,6 +2,7 @@
 
 * Project Status: Abandoned in 2012 migrated from [SourceForge][ekeyfinder]
 * License: [GNU GPL v3](license.txt)
+* Downloads: [See releases page][releases]
 
 This is a migration of the enchanted keyfinder source code base from
 SourceForge.  This is purely meant as an archive of my sourceforge project.
@@ -153,4 +154,5 @@ of features and goals in mind.
 
 [ekeyfinder]: https://sourceforge.net/projects/ekeyfinder/
 [lazarus]: http://www.lazarus-ide.org/
+[releases]: https://github.com/samrocketman/ekeyfinder/releases
 [tango]: http://tango.freedesktop.org/Tango_Icon_Library
